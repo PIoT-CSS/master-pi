@@ -17,7 +17,7 @@ MasterCSS
 #### Uninstallation
 
 ```bash
-pip3 uninstall CSS
+pip3 uninstall MasterCSS
 ```
 
 
