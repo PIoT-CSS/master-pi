@@ -1,0 +1,19 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="CSS",
+    version="1.0.0",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    include_package_data=True,
+    entry_points={"console_scripts": ["CSS = CSS.cli:main",],},
+    install_requires=[
+        "pytest",
+        "flask",
+        "requests",
+        "oauthlib",
+        "pyOpenSSL",
+        "Flask-Login",
+        "pymysql",
+    ],
+)
