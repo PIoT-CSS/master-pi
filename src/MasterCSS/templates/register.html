@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register | CSS</title>
+</head>
+
+<body>
+    <h1>CSS Customer Registration</h1>
+
+    <form name="registration_form" action={{url_for("auth_controllers.register")}} method="post">
+        Username:
+        <input name="username" type="text" pattern="[A-Za-z0-9]+" required>
+        </br>
+        Password:
+        <input name="password" type="password" required>
+        </br>
+        Email:
+        <input name="email" type="email" required>
+        </br>
+        <input type="submit" name="register" value="Sign up">
+    </form>
+</body>
+
+</html>

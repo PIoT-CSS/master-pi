@@ -18,6 +18,11 @@ def login():
     return render_template('login.html')
 
 
+@controllers.route("/register")
+def register():
+    return render_template('register.html')
+
+
 # custom 404 page
 @controllers.app_errorhandler(404)
 def not_found(e):
