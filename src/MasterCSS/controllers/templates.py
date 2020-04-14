@@ -19,12 +19,12 @@ def login():
 
 
 # custom 404 page
-@controllers.errorhandler(404)
+@controllers.app_errorhandler(404)
 def not_found(e):
     return render_template("errors/404.html"), 404
 
 
 # custom 401/unauthorised page
-@controllers.errorhandler(401)
+@controllers.app_errorhandler(401)
 def unauthorised(e):
     return render_template("errors/401.html"), 401
