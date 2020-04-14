@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="CSS",
+    name="MasterCSS",
     version="1.0.0",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    entry_points={"console_scripts": ["CSS = CSS.cli:main",],},
+    entry_points={"console_scripts": ["MasterCSS = MasterCSS.cli:main",],},
     install_requires=[
         "pytest",
         "flask",

@@ -11,7 +11,7 @@ pip3 install -e .
 #### To run
 
 ```bash
-CSS
+MasterCSS
 ```
 
 #### Uninstallation

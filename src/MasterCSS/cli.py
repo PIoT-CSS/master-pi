@@ -1,6 +1,6 @@
 from flask import Flask
 import os
-import CSS.templates.controllers as TemplateControllers
+import MasterCSS.templates.controllers as TemplateControllers
 
 def bind_controllers(app):
     app.register_blueprint(TemplateControllers.controllers)
