@@ -1,4 +1,4 @@
-## Car Share System: Master Pi
+## Car Share System (CSS): Master Pi
 
 #### Installation
 
@@ -20,3 +20,8 @@ CSS
 pip3 uninstall CSS
 ```
 
+
+
+### Note
+
+To add/remove dependency packages, please modify `install_requires` in `setup.py` then reinstall the app.
