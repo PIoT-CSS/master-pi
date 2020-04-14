@@ -20,4 +20,5 @@ def bind_controllers(app):
 def main():
     app = Flask(__name__)
     bind_controllers(app)
+    set_configs(app)
     app.run(debug=True)
