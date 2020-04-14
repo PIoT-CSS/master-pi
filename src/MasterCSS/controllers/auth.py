@@ -22,5 +22,5 @@ def register():
     password = request.form.get("password")
     email = request.form.get("email")
     # TODO: to implement register method
-    usertype = "USER"
+    usertype = "CUSTOMER"
     return render_template('errors/todo.html')
