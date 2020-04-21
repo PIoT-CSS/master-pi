@@ -14,6 +14,12 @@ pip3 install -e .
 MasterCSS
 ```
 
+or
+
+```bash
+python3 -m MasterCSS.cli
+```
+
 #### Uninstallation
 
 ```bash
