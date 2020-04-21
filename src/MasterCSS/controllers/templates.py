@@ -1,7 +1,13 @@
 from flask import (
     render_template,
     Blueprint,
-    request
+    request,
+    redirect,
+    url_for
+)
+from flask_login import (
+    current_user,
+    login_required
 )
 
 # notify flask about external controllers
@@ -10,17 +16,26 @@ controllers = Blueprint("template_controllers", __name__)
 
 @controllers.route("/")
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return render_template('dashboard.html')
+    else:
+        return render_template('index.html')
 
 
 @controllers.route("/login")
 def login():
-    return render_template('login.html')
+    if current_user.is_authenticated:
+        return redirect(url_for("template_controllers.index"))
+    else:
+        return render_template("login.html")
 
 
 @controllers.route("/register")
 def register():
-    return render_template('register.html')
+    if current_user.is_authenticated:
+        return redirect(url_for("template_controllers.index"))
+    else:
+        return render_template('register.html')
 
 
 # custom 404 page

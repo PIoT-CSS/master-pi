@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS Dashboard</title>
+</head>
+
+<body>
+    <h1>You're now logged in to Car Share System!</h1>
+
+    <h2>User info:</h2>
+    </br>
+    <p>User ID: {{current_user.id}}</p>
+    </br>
+    <p>Username: {{current_user.username}}</p>
+    </br>
+    <p>Phone number: {{current_user.phone_number}}</p>
+    </br>
+    <p>First name: {{current_user.first_name}}</p>
+    </br>
+    <p>Last name: {{current_user.last_name}}</p>
+    </br>
+    <p>Email: {{current_user.email}}</p>
+    </br>
+    <p>Password: {{current_user.password}}</p>
+    </br>
+    <p>User Type: {{current_user.user_type}}</p>
+    </br>
+    <a href={{url_for("auth_controllers.logout")}}>Logout</a>
+</body>
+
+</html>

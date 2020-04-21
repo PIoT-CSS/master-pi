@@ -1,32 +1,43 @@
 """
 db.py module contains database setup.
-Currently using MySQL, awaiting reply from teaching team if NoSQL is allowed.
 """
 from flask import current_app, g
 import pymysql
 
 
-def init_db():
+def init():
+    g.db = pymysql.connect(host=current_app.config['MYSQL_HOST'],
+                            user=current_app.config['MYSQL_USERNAME'],
+                            password=current_app.config['MYSQL_PASSWORD'])
     # obtain database cursor
     cursor = g.db.cursor()
-    # initialise database if not exist
-    cursor.execute('create database if not exists ' +
-                   current_app.config['DATABASE'])
-    # select database for use
+    # # initialise database if not exist
+    cursor.execute("create database if not exists " +
+                    current_app.config['DATABASE'] + ";")
     g.db.select_db(current_app.config['DATABASE'])
+    # create user table, can move into its function?
+    cursor.execute("""
+            create table if not exists User (
+                id int not null auto_increment,
+                firstname text not null,
+                lastname text not null,
+                username text not null,
+                email text not null,
+                password text not null,
+                phonenumber text not null,
+                usertype text not null, 
+                constraint PK_User primary key (id)
+            );""")
+    g.db.commit()
 
 
 def get_db():
     if 'db' not in g:
-        g.db = pymysql.connect(host=current_app.config['MYSQL_HOST'],
-                               user=current_app.config['MYSQL_USERNAME'],
-                               password=current_app.config['MYSQL_PASSWORD'])
-        init_db()
-        return g.db
+        init()
+    return g.db
 
 
-def close_db(e=None):
+def close(e=None):
     db = g.pop('db', None)
-
     if db is not None:
         db.close()
