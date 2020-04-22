@@ -1,5 +1,12 @@
 ## Car Share System (CSS): Master Pi
 
+#### Recommend: making virutal environment
+
+```bash
+python3 -m venv venv
+. venv/bin/activate
+```
+
 #### Installation
 
 Execute the following in the root folder.
