@@ -13,8 +13,7 @@ from pathlib import Path
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
-env_path = Path("../../")
-load_dotenv(dotenv_path=env_path)
+load_dotenv()
 
 def set_configs(app):
     # TODO use env
