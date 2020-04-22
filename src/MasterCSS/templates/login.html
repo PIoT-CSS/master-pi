@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login | CSS</title>
+</head>
+
+<body>
+    <h1>Login to CSS</h1>
+
+    <form name="login_form" action={{url_for("auth_controllers.login")}} method="post">
+        Username:
+        <input name="username" type="text" pattern="[A-Za-z0-9]+" required>
+        </br>
+        Password:
+        <input name="password" type="password" required>
+        </br>
+        <input type="submit" name="login" value="Login">
+    </form>
+    <p>{{err}}</p>
+</body>
+
+</html>
