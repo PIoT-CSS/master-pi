@@ -14,6 +14,7 @@ setup(
         "oauthlib",
         "pyOpenSSL",
         "Flask-Login",
-        "pymysql"
+        "pymysql",
+        "load_dotenv"
     ],
 )
