@@ -8,17 +8,20 @@ import MasterCSS.controllers.templates as TemplateControllers
 import MasterCSS.controllers.auth as AuthControllers
 from MasterCSS.models.user import User
 import MasterCSS.db as Db
+from dotenv import load_dotenv
+from pathlib import Path
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
-
+env_path = Path("../../")
+load_dotenv(dotenv_path=env_path)
 
 def set_configs(app):
     # TODO use env
-    app.config['MYSQL_HOST'] = "localhost"
-    app.config['MYSQL_USERNAME'] = "root"
-    app.config['MYSQL_PASSWORD'] = "rootroot"
-    app.config['DATABASE'] = "css_test_1"
+    app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
+    app.config['MYSQL_USERNAME'] = os.getenv("MYSQL_USERNAME")
+    app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
+    app.config['DATABASE'] = os.getenv("DATABASE")
 
 
 def bind_controllers(app):
