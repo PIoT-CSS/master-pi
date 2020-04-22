@@ -43,4 +43,4 @@ def main():
     set_configs(app)
     with app.app_context():
         Db.init()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
