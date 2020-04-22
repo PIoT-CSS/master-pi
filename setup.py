@@ -15,6 +15,6 @@ setup(
         "pyOpenSSL",
         "Flask-Login",
         "pymysql",
-        "dotenv"
+        "python-dotenv"
     ],
 )
