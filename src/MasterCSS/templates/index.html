@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Carshare Homepage{% endblock %}
+{% block title %}Carshare - Homepage{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -17,9 +17,9 @@
   <img src="static/car.svg" width=300 class="mx-auto mb-8"/>
   <h1 class="title">Welcome to Car Share System!</h1>
   <p class="subtitle is-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum earum officiis aut, incidunt natus fugiat dolores sapiente, at, odit quos unde et est architecto? Quod aliquid atque error veritatis expedita.</p>
-  <div class="flex justify-center">
-    <a class="button is-info is-light mr-2" href={{url_for("template_controllers.login")}}>Login</a>
-    <a class="button is-primary is-light" href={{url_for("template_controllers.register")}}>Register</a>
+  <div class="flex justify-center buttons">
+    <a class="button is-primary" href={{url_for("template_controllers.login")}}>Login</a>
+    <a class="button is-black is-light" href={{url_for("template_controllers.register")}}>Register</a>
   </div>
 </div>
 
