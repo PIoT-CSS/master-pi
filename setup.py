@@ -14,7 +14,11 @@ setup(
         "oauthlib",
         "pyOpenSSL",
         "Flask-Login",
+        "Flask-SQLAlchemy",
+        "Flask-Marshmallow",
+        "python-dotenv",
+        "marshmallow-sqlalchemy",
+        "mysql-connector",
         "pymysql",
-        "python-dotenv"
     ],
 )

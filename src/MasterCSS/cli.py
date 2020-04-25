@@ -4,43 +4,48 @@ from flask_login import (
     current_user
 )
 import os
-import MasterCSS.controllers.templates as TemplateControllers
-import MasterCSS.controllers.auth as AuthControllers
-from MasterCSS.models.user import User
-import MasterCSS.db as Db
 from dotenv import load_dotenv
 from pathlib import Path
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from MasterCSS.controllers.templates import controllers as TemplateControllers
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 load_dotenv()
 
-def set_configs(app):
-    # TODO use env
-    app.config['MYSQL_HOST'] = os.getenv("MYSQL_HOST")
-    app.config['MYSQL_USERNAME'] = os.getenv("MYSQL_USERNAME")
-    app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
-    app.config['DATABASE'] = os.getenv("DATABASE")
+# configuring flask app
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
+    os.getenv("MYSQL_USERNAME"),
+    os.getenv("MYSQL_PASSWORD"),
+    os.getenv("MYSQL_HOST"),
+    os.getenv("DATABASE")
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 
+# initialise db
+db = SQLAlchemy(app)
+ma = Marshmallow()
 
-def bind_controllers(app):
-    app.register_blueprint(TemplateControllers.controllers)
-    app.register_blueprint(AuthControllers.controllers)
+from MasterCSS.controllers.auth import controllers as AuthControllers
+from MasterCSS.models.user import User
 
+db.create_all()
+db.session.commit()
 
 # allow initialisation of login_manager with flask_app object
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# adding controllers
+app.register_blueprint(TemplateControllers)
+app.register_blueprint(AuthControllers)
+
 
 @login_manager.user_loader
 def load_user(id):
-    return User.get_user(id)
+    return User.query.get(id)
 
 
 def main():
-    bind_controllers(app)
-    set_configs(app)
-    with app.app_context():
-        Db.init()
     app.run(debug=True, host="0.0.0.0")
