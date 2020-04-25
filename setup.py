@@ -18,7 +18,7 @@ setup(
         "Flask-Marshmallow",
         "python-dotenv",
         "marshmallow-sqlalchemy",
-        "mysql-python",
-        "pymysql"
+        "mysql-connector",
+        "pymysql",
     ],
 )
