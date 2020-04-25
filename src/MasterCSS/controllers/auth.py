@@ -19,10 +19,10 @@ from MasterCSS.cli import db
 from MasterCSS.models.user import User
 
 # define hashing configs
-SALT_LENGTH = 32
-HASH_TYPE = 'sha256'
-ENCODING_FORMAT = 'utf-8'
-ITERATIONS = 100000
+SALT_LENGTH =  int(os.getenv('SALT_LENGTH'))
+HASH_TYPE = os.getenv('HASH_TYPE')
+ENCODING_FORMAT = os.getenv('ENCODING_FORMAT')
+ITERATIONS = int(os.getenv('ITERATIONS'))
 
 # notify flask about external controllers
 controllers = Blueprint("auth_controllers", __name__)
