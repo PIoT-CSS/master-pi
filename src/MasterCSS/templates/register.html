@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block title %}Carshare Homepage{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 
-<head>
-    <title>Register | CSS</title>
-</head>
-
-<body>
-    <h1>CSS Customer Registration</h1>
-
-    <form name="registration_form" action={{url_for("auth_controllers.register")}} method="post">
-        Username:
-        <input name="username" type="text" {{ "placeholder=" + placeholders["username"] if placeholders != None else '' }} pattern="[A-Za-z0-9]+" required>
-        </br>
-        Password:
-        <input name="password" type="password" required>
-        </br>
-        Email:
-        <input name="email" {{ "placeholder=" + placeholders["email"] if placeholders != None else '' }} type="email" required>
-        </br>
-        First name:
-        <input name="firstname" {{ "placeholder=" + placeholders["firstname"] if placeholders != None else '' }} type="text" required>
-        </br>
-        Last name:
-        <input name="lastname" {{ "placeholder=" + placeholders["lastname"] if placeholders != None else '' }} type="text" required>
-        </br>
-        Phone number:
-        <input name="phonenumber" {{ "placeholder=" + placeholders["phonenumber"] if placeholders != None else '' }} type="text" required>
-        </br>
-        <input type="submit" name="register" value="Sign up">
-    </form>
-    <p>{{taken_message}}</p>
-</body>
-
-</html>
+{% block content %}
+<form name="registration_form" action={{url_for("auth_controllers.register")}} method="post">
+    Username:
+    <input name="username" type="text" {{ "placeholder=" + placeholders["username"] if placeholders != None else '' }} pattern="[A-Za-z0-9]+" required>
+    </br>
+    Password:
+    <input name="password" type="password" required>
+    </br>
+    Email:
+    <input name="email" {{ "placeholder=" + placeholders["email"] if placeholders != None else '' }} type="email" required>
+    </br>
+    First name:
+    <input name="firstname" {{ "placeholder=" + placeholders["firstname"] if placeholders != None else '' }} type="text" required>
+    </br>
+    Last name:
+    <input name="lastname" {{ "placeholder=" + placeholders["lastname"] if placeholders != None else '' }} type="text" required>
+    </br>
+    Phone number:
+    <input name="phonenumber" {{ "placeholder=" + placeholders["phonenumber"] if placeholders != None else '' }} type="text" required>
+    </br>
+    <input type="submit" name="register" value="Sign up">
+</form>
+<p>{{taken_message}}</p>
+{% endblock %}

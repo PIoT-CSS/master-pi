@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block title %}Carshare Homepage{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 
-<head>
-    <title>Login | CSS</title>
-</head>
-
-<body>
-    <h1>Login to CSS</h1>
-
-    <form name="login_form" action={{url_for("auth_controllers.login")}} method="post">
-        Username:
-        <input name="username" type="text" pattern="[A-Za-z0-9]+" required>
-        </br>
-        Password:
-        <input name="password" type="password" required>
-        </br>
-        <input type="submit" name="login" value="Login">
-    </form>
-    <p>{{err}}</p>
-</body>
-
-</html>
+{% block content %}
+<form name="login_form" action={{url_for("auth_controllers.login")}} method="post">
+    Username:
+    <input name="username" type="text" pattern="[A-Za-z0-9]+" required>
+    </br>
+    Password:
+    <input name="password" type="password" required>
+    </br>
+    <input type="submit" name="login" value="Login">
+</form>
+<p>{{err}}</p>
+{% endblock %}
