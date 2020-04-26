@@ -1,35 +1,87 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block title %}Carshare - Register{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 
-<head>
-    <title>Register | CSS</title>
-</head>
-
-<body>
-    <h1>CSS Customer Registration</h1>
-
+{% block content %}
+<style>
+    body{
+      background-color: lightblue;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+</style>
+<div class="box max-w-sm w-full mx-auto">
+    {% if taken_message %}
+    <div class="notification is-danger is-light">
+        <p>{{taken_message}}</p>
+    </div>
+    {% endif %}
+    <h1 class="title is-4">Register</h1>
     <form name="registration_form" action={{url_for("auth_controllers.register")}} method="post">
-        Username:
-        <input name="username" type="text" {{ "placeholder=" + placeholders["username"] if placeholders != None else '' }} pattern="[A-Za-z0-9]+" required>
-        </br>
-        Password:
-        <input name="password" type="password" required>
-        </br>
-        Email:
-        <input name="email" {{ "placeholder=" + placeholders["email"] if placeholders != None else '' }} type="email" required>
-        </br>
-        First name:
-        <input name="firstname" {{ "placeholder=" + placeholders["firstname"] if placeholders != None else '' }} type="text" required>
-        </br>
-        Last name:
-        <input name="lastname" {{ "placeholder=" + placeholders["lastname"] if placeholders != None else '' }} type="text" required>
-        </br>
-        Phone number:
-        <input name="phonenumber" {{ "placeholder=" + placeholders["phonenumber"] if placeholders != None else '' }} type="text" required>
-        </br>
-        <input type="submit" name="register" value="Sign up">
-    </form>
-    <p>{{taken_message}}</p>
-</body>
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
+                <input class="input" name="username" type="text" {{ "placeholder=" + placeholders["username"] if placeholders != None else '' }} pattern="[A-Za-z0-9]+" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+        </div>
 
-</html>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+                <input class="input" name="password" type="password" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <input class="input" name="email" {{ "placeholder=" + placeholders["email"] if placeholders != None else '' }} type="email" required>
+                <span class="icon is-small is-left">
+                    <i class="fas  fa-envelope"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">First name</label>
+            <div class="control">
+                <input class="input" name="firstname" {{ "placeholder=" + placeholders["firstname"] if placeholders != None else '' }} type="text" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Last name</label>
+            <div class="control">
+                <input class="input" name="lastname" {{ "placeholder=" + placeholders["lastname"] if placeholders != None else '' }} type="text" required>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label class="label">Phone number</label>
+            <div class="control">
+                <input class="input" name="phonenumber" {{ "placeholder=" + placeholders["phonenumber"] if placeholders != None else '' }} type="text" required>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-left">
+                <input class="button is-info" type="submit" name="register" value="Sign up">
+            </div>
+            <div class="level-right">
+                <a href={{url_for("template_controllers.login")}}>Already have an account?</a>
+            </div>
+
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

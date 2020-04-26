@@ -1,23 +1,53 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block title %}Carshare - Login{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 
-<head>
-    <title>Login | CSS</title>
-</head>
-
-<body>
-    <h1>Login to CSS</h1>
-
+{% block content %}
+<style>
+    body{
+      background-color: lightblue;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+</style>
+<div class="box max-w-sm w-full mx-auto">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
+    <h1 class="title is-4">Login</h1>
     <form name="login_form" action={{url_for("auth_controllers.login")}} method="post">
-        Username:
-        <input name="username" type="text" pattern="[A-Za-z0-9]+" required>
-        </br>
-        Password:
-        <input name="password" type="password" required>
-        </br>
-        <input type="submit" name="login" value="Login">
-    </form>
-    <p>{{err}}</p>
-</body>
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
+                <input class="input" name="username" type="text" pattern="[A-Za-z0-9]+" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+        </div>
 
-</html>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+                <input class="input" name="password" type="password" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
+        <div class="buttons">
+            
+            <input class="button is-primary" type="submit" name="login" value="Login">
+            
+            
+            <a class="button is-black is-light" href={{url_for("template_controllers.register")}}>Register</a>
+            
+        </div>
+    </form>
+</div>
+{% endblock %}
