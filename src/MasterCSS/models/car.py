@@ -11,7 +11,7 @@ class CarSchema(ma.Schema):
         super().__init__(strict=strict, **kwargs)
 
     class Meta:
-        fields = ("ID", "Make", "Seats", "BodyType", "Latitude", "Longitude",
+        fields = ("ID", "Make", "Seats", "BodyType", "Coordinates",
                   "Colour", "CostPerHour", "FuelType", "RenterID")
 
 
@@ -21,21 +21,19 @@ class Car(db.Model):
     Make = db.Column(db.Text, nullable=False)
     Seats = db.Column(db.Integer, nullable=False)
     BodyType = db.Column(db.Text, nullable=False)
-    Latitude = db.Column(db.Text, nullable=False)
-    Longitude = db.Column(db.Text, nullable=False)
+    Coordinates = db.Column(db.Text, nullable=False)
     Colour = db.Column(db.Text, nullable=False)
     CostPerHour = db.Column(db.Text, nullable=False)
     FuelType = db.Column(db.Text, nullable=False)
     RenterID = db.Column(db.Integer)
 
-    def __init__(self, Make, Seats, BodyType, Latitude,
-                 Longitude, Colour, CostPerHour, FuelType, RenterID, ID=None):
+    def __init__(self, Make, Seats, BodyType, Coordinates,
+                 Colour, CostPerHour, FuelType, RenterID, ID=None):
         self.ID = ID
         self.Make = Make
         self.Seats = Seats
         self.BodyType = BodyType
-        self.Latitude = Latitude
-        self.Longitude = Longitude
+        self.Coordinates = Coordinates
         self.Colour = Colour
         self.CostPerHour = CostPerHour
         self.FuelType = FuelType

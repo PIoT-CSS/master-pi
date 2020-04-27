@@ -20,6 +20,5 @@ setup(
         "marshmallow-sqlalchemy",
         "mysql-connector",
         "pymysql",
-        "geoalchemy2",
     ],
 )
