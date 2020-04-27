@@ -23,7 +23,7 @@ class Car(db.Model):
     BodyType = db.Column(db.Text, nullable=False)
     Coordinates = db.Column(db.Text, nullable=False)
     Colour = db.Column(db.Text, nullable=False)
-    CostPerHour = db.Column(db.Text, nullable=False)
+    CostPerHour = db.Column(db.Float, nullable=False)
     FuelType = db.Column(db.Text, nullable=False)
     RenterID = db.Column(db.Integer)
 
