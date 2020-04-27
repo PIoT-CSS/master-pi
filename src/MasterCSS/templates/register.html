@@ -14,9 +14,9 @@
     }
 </style>
 <div class="box max-w-sm w-full mx-auto">
-    {% if taken_message %}
+    {% if err %}
     <div class="notification is-danger is-light">
-        <p>{{taken_message}}</p>
+        <p>{{err}}</p>
     </div>
     {% endif %}
     <h1 class="title is-4">Register</h1>
@@ -24,7 +24,7 @@
         <div class="field">
             <label class="label">Username</label>
             <div class="control has-icons-left">
-                <input class="input" name="username" type="text" {{ "placeholder=" + placeholders["username"] if placeholders != None else '' }} pattern="[A-Za-z0-9]+" required>
+                <input class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -44,7 +44,7 @@
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left">
-                <input class="input" name="email" {{ "placeholder=" + placeholders["email"] if placeholders != None else '' }} type="email" required>
+                <input class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
                 <span class="icon is-small is-left">
                     <i class="fas  fa-envelope"></i>
                 </span>
@@ -54,14 +54,14 @@
         <div class="field">
             <label class="label">First name</label>
             <div class="control">
-                <input class="input" name="firstname" {{ "placeholder=" + placeholders["firstname"] if placeholders != None else '' }} type="text" required>
+                <input class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
 
         <div class="field">
             <label class="label">Last name</label>
             <div class="control">
-                <input class="input" name="lastname" {{ "placeholder=" + placeholders["lastname"] if placeholders != None else '' }} type="text" required>
+                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
         <div class="field">
             <label class="label">Phone number</label>
             <div class="control">
-                <input class="input" name="phonenumber" {{ "placeholder=" + placeholders["phonenumber"] if placeholders != None else '' }} type="text" required>
+                <input class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
         <div class="level">
