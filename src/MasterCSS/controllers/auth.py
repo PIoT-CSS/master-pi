@@ -18,6 +18,10 @@ from base64 import b64encode, b64decode
 from MasterCSS.cli import db
 from MasterCSS.models.user import User
 from MasterCSS.exceptions.error_value_exception import ErrorValueException
+from MasterCSS.validators.phone_validator import PhoneValidator
+from MasterCSS.validators.email_validator import EmailValidator
+from MasterCSS.validators.username_validator import UsernameValidator
+
 
 # define hashing configs
 SALT_LENGTH =  int(os.getenv('SALT_LENGTH'))
@@ -70,6 +74,7 @@ def register():
             salt,
             ITERATIONS
         )
+
         new_user = User(
             request.form.get("firstname"),
             request.form.get("lastname"),
@@ -79,37 +84,48 @@ def register():
             request.form.get("phonenumber"),
             "CUSTOMER"
         )
-        # TODO: input validation
-        # check if username, email, phonenumber has been taken
+
+        defaultValues = {
+            "firstname": new_user.FirstName,
+            "lastname": new_user.LastName,
+            "username": new_user.Username,
+            "email": new_user.Email,
+            "phonenumber": new_user.PhoneNumber
+        }
         
-        takens = list()
-
-        if db.session.query(User).filter_by(Username=new_user.Username).scalar() is not None:
-            takens.append("username")
-        if db.session.query(User).filter_by(Email=new_user.Email).scalar() is not None:
-            takens.append("email")
-        if db.session.query(User).filter_by(PhoneNumber=new_user.PhoneNumber).scalar() is not None:
-            takens.append("phone number")
-
         try:
+            phoneValidator = PhoneValidator()
+            emailValidator = EmailValidator()
+            usernameValidator = UsernameValidator()
+
+            if phoneValidator.check(new_user.PhoneNumber) is None:
+                raise ErrorValueException(phoneValidator.message(), payload=defaultValues)
+
+            if emailValidator.check(new_user.Email) is None:
+                raise ErrorValueException(emailValidator.message(), payload=defaultValues)
+
+            if usernameValidator.check(new_user.Username) is None:
+                raise ErrorValueException(usernameValidator.message(), payload=defaultValues)
+
+            takens = list()
+
+            if db.session.query(User).filter_by(Username=new_user.Username).scalar() is not None:
+                takens.append("username")
+            if db.session.query(User).filter_by(Email=new_user.Email).scalar() is not None:
+                takens.append("email")
+            if db.session.query(User).filter_by(PhoneNumber=new_user.PhoneNumber).scalar() is not None:
+                takens.append("phone number")
+
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
-
                 for i in range(len(takens)):
                     error_message = error_message + takens[i]
                     if i != len(takens) - 1:
                         error_message = error_message + ", "
-
-                defaultValues = {
-                    "firstname": new_user.FirstName,
-                    "lastname": new_user.LastName,
-                    "username": new_user.Username,
-                    "email": new_user.Email,
-                    "phonenumber": new_user.PhoneNumber
-                }
-
                 raise ErrorValueException(error_message, payload=defaultValues)
+
             else:
+
                 db.session.add(new_user)
                 db.session.commit()
                 print(new_user.ID)
@@ -117,7 +133,6 @@ def register():
                 return redirect(url_for("template_controllers.index"))
             
         except ErrorValueException as e:
-            print("debug", e.payload)
             return render_template("register.html", err=str(e.message), defaultValues=e.payload)
 
 
