@@ -35,7 +35,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("template_controllers.index"))
     else:
-        return render_template('register.html', placeholders=None)
+        return render_template('register.html', defaultValues=None)
 
 
 # custom 404 page
