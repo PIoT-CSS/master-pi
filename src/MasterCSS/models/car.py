@@ -12,7 +12,7 @@ class CarSchema(ma.Schema):
 
     class Meta:
         fields = ("ID", "Make", "Seats", "BodyType", "Coordinates",
-                  "Colour", "CostPerHour", "FuelType", "RenterID")
+                  "Colour", "CostPerHour", "FuelType", "RentalID")
 
 
 class Car(db.Model):
@@ -25,10 +25,10 @@ class Car(db.Model):
     Colour = db.Column(db.Text, nullable=False)
     CostPerHour = db.Column(db.Float, nullable=False)
     FuelType = db.Column(db.Text, nullable=False)
-    RenterID = db.Column(db.Integer)
+    RentalID = db.Column(db.Integer)
 
     def __init__(self, Make, Seats, BodyType, Coordinates,
-                 Colour, CostPerHour, FuelType, RenterID, ID=None):
+                 Colour, CostPerHour, FuelType, RentalID, ID=None):
         self.ID = ID
         self.Make = Make
         self.Seats = Seats
@@ -37,4 +37,4 @@ class Car(db.Model):
         self.Colour = Colour
         self.CostPerHour = CostPerHour
         self.FuelType = FuelType
-        self.RenterID = RenterID
+        self.RentalID = RentalID
