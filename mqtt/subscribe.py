@@ -1,8 +1,6 @@
-
 import paho.mqtt.client as mqtt
 import json
 import os
-import utility.loadconfig as loadconfig
 from dotenv import load_dotenv
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
@@ -31,4 +29,16 @@ class Subscriber:
         print("log ", buf)
 
     def subscribe(self):
-        
+        broker_address = self.BROKER_IP
+        print(broker_address)
+        # initialise MQTT Client
+        client = mqtt.Client("toagentpi")
+
+        # binds functions defined above, on connection, message and log
+        client.on_connect = self.on_connect
+        client.on_message = self.on_message
+        client.on_log = self.on_log
+
+        # client.username_pw_set(user, password)
+        client.connect(broker_address)
+        client.loop_forever()

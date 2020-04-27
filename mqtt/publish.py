@@ -2,7 +2,6 @@ import paho.mqtt.client as mqtt
 import json
 import logging
 import os
-import utility
 from dotenv import load_dotenv
 load_dotenv()
 env_path = './.env'
@@ -38,7 +37,23 @@ class Publisher:
         client.loop_stop()
         print("client disconnected OK")
 
-    def publish(self, pub, arduinopayload):
-        
+    def publish(self, payload):
+        # setting topic to publish to
+        topic = "template"
+        id = "id"
+        payload_new = {'pi-id' : id, 'payload': payload}
+
+        # create new instance
+        client = mqtt.Client("toagentpi")
+        client.on_publish = self.on_publish
+        client.on_disconnect = self.on_disconnect
+
+        # set broker address of raspberry pis
+        # connect to pi
+        client.connect(self.broker_address, self.port)
+
+        # Publish to topic
+        client.publish(topic, json.dumps(payload_new))
+        client.disconnect()
             
 
