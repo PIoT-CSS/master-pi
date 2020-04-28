@@ -27,8 +27,10 @@ app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 db = SQLAlchemy(app)
 ma = Marshmallow()
 
+# import other python files which depend on db instance created
 from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.models.user import User
+from MasterCSS.models.car import Car
 
 db.create_all()
 db.session.commit()
