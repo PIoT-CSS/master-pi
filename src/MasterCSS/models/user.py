@@ -2,27 +2,21 @@
 userModel.py contains model for user and database logic.
 """
 import os
-import hashlib, uuid
-from base64 import b64encode, b64decode
 from flask_login import (
     UserMixin
 )
 from MasterCSS.cli import db, ma
 from flask import Flask
 
-# define hashing configs
-SALT_LENGTH = 32
-HASH_NAME = 'sha256'
-ENCODING_FORMAT = 'utf-8'
-ITERATIONS = 100000
 
 class UserSchema(ma.Schema):
     def __init__(self, strict=True, **kwargs):
         super().__init__(strict=strict, **kwargs)
-    
+
     class Meta:
         fields = ("ID", "FirstName", "LastName", "Username", "Email",
-                "Password", "PhoneNumber", "UserType")
+                  "Password", "PhoneNumber", "UserType")
+
 
 class User(db.Model, UserMixin):
     __tablename__ = "User"
@@ -35,7 +29,8 @@ class User(db.Model, UserMixin):
     PhoneNumber = db.Column(db.Text, nullable=False)
     UserType = db.Column(db.Text, nullable=False)
 
-    def __init__(self, FirstName, LastName, Username, Email, Password, PhoneNumber, UserType, ID = None):
+    def __init__(self, FirstName, LastName, Username, Email, Password,
+                 PhoneNumber, UserType, ID=None):
         self.ID = ID
         self.FirstName = FirstName
         self.LastName = LastName
@@ -44,7 +39,7 @@ class User(db.Model, UserMixin):
         self.Password = Password
         self.PhoneNumber = PhoneNumber
         self.UserType = UserType
-    
+
     # for flask_login
     def get_id(self):
         return (self.ID)
