@@ -19,7 +19,7 @@ class BookingSchema(ma.Schema):
 class Booking(db.Model):
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    UserID = db.Column(db.Integer, nullable=False)
+    UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=False)
     DateTimeBooked = db.Column(db.DateTime, nullable=False)
     DateTimeStart = db.Column(db.DateTime, nullable=False)
     DateTimeEnd = db.Column(db.DateTime, nullable=False)
