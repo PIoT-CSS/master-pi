@@ -28,7 +28,7 @@ class Car(db.Model):
     FuelType = db.Column(db.Text, nullable=False)
     TotalDistance = db.Column(db.Float, nullable=False)
     NumberPlate = db.Column(db.Text, nullable=False)
-    CurrentBookingID = db.Column(db.Integer)
+    CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
 
     def __init__(self, Make, Seats, BodyType, Coordinates,
                  Colour, CostPerHour, FuelType, TotalDistance, NumberPlate, 
