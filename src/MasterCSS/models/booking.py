@@ -11,7 +11,7 @@ class BookingSchema(ma.Schema):
         super().__init__(strict=strict, **kwargs)
 
     class Meta:
-        fields = ("ID", "UserID", "DateTimeBooked", "DateTimeStart",
+        fields = ("ID", "UserID", "CarID", "DateTimeBooked", "DateTimeStart",
                   "DateTimeEnd", "Cost", "PickupCoordinates",
                   "DropCoordinates", "Distance", "Status")
 
@@ -30,11 +30,12 @@ class Booking(db.Model):
     Distance = db.Column(db.Float, nullable=False)
     Status = db.Column(db.Text, nullable=False)
 
-    def __init__(self, UserID, DateTimeBooked, DateTimeStart,
+    def __init__(self, UserID, CarID, DateTimeBooked, DateTimeStart,
                  DateTimeEnd, Cost, PickupCoordinates, DropCoordinates,
                  Distance, Status, ID=None):
         self.ID = ID
         self.UserID = UserID
+        self.CarID = CarID
         self.DateTimeBooked = DateTimeBooked
         self.DateTimeStart = DateTimeStart
         self.DateTimeEnd = DateTimeEnd
