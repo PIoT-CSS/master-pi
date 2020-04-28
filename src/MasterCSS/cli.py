@@ -31,6 +31,7 @@ ma = Marshmallow()
 from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.models.user import User
 from MasterCSS.models.car import Car
+from MasterCSS.models.booking import Booking
 
 db.create_all()
 db.session.commit()
