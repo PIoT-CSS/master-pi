@@ -1,24 +1,75 @@
 {% extends "layouts/dashboard-layout.html" %}
 
 {% block container %} 
-<h1>You're now logged in to Car Share System!</h1>
 
-<h2>User info:</h2>
-</br>
-<p>User ID: {{current_user.ID}}</p>
-</br>
-<p>Username: {{current_user.Username}}</p>
-</br>
-<p>Phone number: {{current_user.PhoneNumber}}</p>
-</br>
-<p>First name: {{current_user.FirstName}}</p>
-</br>
-<p>Last name: {{current_user.LastName}}</p>
-</br>
-<p>Email: {{current_user.Email}}</p>
-</br>
-<p>Password: {{current_user.Password}}</p>
-</br>
-<p>User Type: {{current_user.UserType}}</p>
-</br>
+
+<div class="container">
+
+    <section class="hero">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              My information
+            </h1>
+            <h2 class="subtitle">
+              Here is your information stuff.
+            </h2>
+          </div>
+        </div>
+      </section>
+    
+    <section>
+        <div class="box">
+            <div class="flex">
+                <div class="w-full">
+                    <div class="field">
+                        <label class="label">User ID</label>
+                        <div class="control">
+                            {{current_user.ID}}
+                        </div>
+                    </div>
+                
+            
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                            {{current_user.Username}}
+                        </div>
+                    </div>
+            
+                    <div class="field">
+                        <label class="label">Phone Number</label>
+                        <div class="control">
+                            {{current_user.Username}}
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div class="field">
+                        <label class="label">First name</label>
+                        <div class="control">
+                            {{current_user.FirstName}}
+                        </div>
+                    </div>
+            
+            
+                    <div class="field">
+                        <label class="label">Last name</label>
+                        <div class="control">
+                            {{current_user.LastName}}
+                        </div>
+                    </div>
+            
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            {{current_user.Email}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

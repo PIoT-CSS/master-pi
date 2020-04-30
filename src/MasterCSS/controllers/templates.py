@@ -5,6 +5,8 @@ from flask import (
     redirect,
     url_for
 )
+from MasterCSS.cli import db
+from MasterCSS.models.car import Car
 from flask_login import (
     current_user,
     login_required
@@ -17,7 +19,7 @@ controllers = Blueprint("template_controllers", __name__)
 @controllers.route("/")
 def index():
     if current_user.is_authenticated:
-        return render_template('dashboard.html')
+        return render_template('dashboard.html', cars = db.session.query(Car).all())
     else:
         return render_template('index.html')
 

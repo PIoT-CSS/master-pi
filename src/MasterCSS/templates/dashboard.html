@@ -3,5 +3,62 @@
 
 
 {% block container %} 
-    {{ current_user.Username }}
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          My information
+        </h1>
+        <h2 class="subtitle">
+          Here is your information stuff.
+        </h2>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        {% include "components/search.html" %}
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>BodyType</th>
+                            <th>Colour</th>
+                            <th>CostPerHour</th>
+                            <th>FuelType</th>
+                            <th>Availablility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for car in cars %}
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>{{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                                <td>
+                                    {% if not car.CurrentBookingID %}
+                                        <button class="button is-success">Book</button>
+                                    {% else %}
+                                        <button class="button is-disabled">Unavailable</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
 {% endblock %}
