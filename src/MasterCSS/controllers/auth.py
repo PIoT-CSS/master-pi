@@ -41,7 +41,6 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         user = db.session.query(User).filter_by(Username=username).scalar()
-        print(user)
         if user:
             # match hashed password
             salt = b64decode(user.Password)[:SALT_LENGTH]
