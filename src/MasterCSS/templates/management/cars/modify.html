@@ -1,0 +1,39 @@
+<h1>Modify car</h1>
+<form action={{url_for("car_controllers.modify_car", id=car.ID)}} method="post">
+    Secret key
+    <input name="secretkey" type="text" required>
+    Make
+    <input name="make" value='{{car.Make}}' type="text" required>
+    Seats
+    <input name="seats" value='{{car.Seats}}' type="number" required>
+    Body type
+    <select name="bodytype" value='{{car.BodyType}}'' required>
+        <option value="Sedan">Sedan</option>
+        <option value="MPV">MPV</option>
+        <option value="Sports">Sports</option>
+    </select>
+    Coordinates
+    <select name="coordinates" value='{{car.Coordinates}}' required>
+        <option value="(-37.812082, 144.983072)">(-37.812082, 144.983072)</option>
+    </select>
+    Colour
+    <select name="colour" value='{{car.Colour}}' required>
+        <option value="White">White</option>
+        <option value="Black">Black</option>
+        <option value="Yellow">Yellow</option>
+    </select>
+    Cost Per Hour
+    <input name="costperhour" type="number" value='{{car.CostPerHour}}' required>
+    Total distance
+    <input name="totaldistance" type="number" value='{{car.TotalDistance}}' required>
+    Fuel type
+    <select name="fueltype" value='{{car.FuelType}}' required>
+        <option value="Petrol">Petrol</option>
+        <option value="Diesel">Diesel</option>
+    </select>
+    Number Plate
+    <input name="numberplate" value='{{car.NumberPlate}}' type="text" required>
+    Current Booking ID
+    <input name="currentbookingid" type="number" value='{{car.CurrentBookingID}}'>
+    <input type="submit" name="modify" value="Modify">
+</form>

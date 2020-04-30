@@ -1,0 +1,45 @@
+<!-- {% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %}  -->
+
+<h1>Add a car</h1>
+<form action={{url_for("car_controllers.add_car")}} method="post">
+    Secret key
+    <input name="secretkey" type="text" required>
+    Make
+    <input name="make" type="text" required>
+    Seats
+    <input name="seats" type="number" required>
+    Body type
+    <select name="bodytype" required>
+        <option value="Sedan">Sedan</option>
+        <option value="MPV">MPV</option>
+        <option value="Sports">Sports</option>
+    </select>
+    Coordinates
+    <select name="coordinates" required>
+        <option value="(-37.812082, 144.983072)">(-37.812082, 144.983072)</option>
+    </select>
+    Colour
+    <select name="colour" required>
+        <option value="White">White</option>
+        <option value="Black">Black</option>
+        <option value="Yellow">Yellow</option>
+    </select>
+    Cost Per Hour
+    <input name="costperhour" type="number" required>
+    Total distance
+    <input name="totaldistance" type="number" required>
+    Fuel type
+    <select name="fueltype" required>
+        <option value="Petrol">Petrol</option>
+        <option value="Diesel">Diesel</option>
+    </select>
+    Number Plate
+    <input name="numberplate" type="text" required>
+    <input type="submit" name="register" value="Add car">
+</form>
+
+<!-- {% endblock %} -->

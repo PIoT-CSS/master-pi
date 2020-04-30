@@ -33,7 +33,7 @@ class Car(db.Model):
 
     def __init__(self, Make, Seats, BodyType, Coordinates,
                  Colour, CostPerHour, FuelType, TotalDistance, NumberPlate, 
-                 CurrentBookingID, ID=None):
+                 CurrentBookingID=None, ID=None):
         self.ID = ID
         self.Make = Make
         self.Seats = Seats
