@@ -1,0 +1,39 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <h1 class="title is-4">Carshare</h1>
+      </a>
+  
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+            <div class="buttons">
+                <div class="navbar-item has-dropdown is-hoverable button is-white">
+                    <a class="navbar-link">
+                      {{ username }}
+                    </a>
+            
+                    <div class="navbar-dropdown">
+                      <a class="navbar-item" href="/myinfo">
+                        My Informations
+                      </a>
+                      <hr class="navbar-divider">
+                      <a class="navbar-item">
+                        My History
+                      </a>
+                    </div>
+                </div>
+                <a class="button is-info" href={{url_for("auth_controllers.logout")}}>Logout</a>
+            </div>
+        </div>
+      </div>
+    </div>
+</nav>

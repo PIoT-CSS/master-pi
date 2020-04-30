@@ -1,0 +1,24 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+{% block container %} 
+<h1>You're now logged in to Car Share System!</h1>
+
+<h2>User info:</h2>
+</br>
+<p>User ID: {{current_user.ID}}</p>
+</br>
+<p>Username: {{current_user.Username}}</p>
+</br>
+<p>Phone number: {{current_user.PhoneNumber}}</p>
+</br>
+<p>First name: {{current_user.FirstName}}</p>
+</br>
+<p>Last name: {{current_user.LastName}}</p>
+</br>
+<p>Email: {{current_user.Email}}</p>
+</br>
+<p>Password: {{current_user.Password}}</p>
+</br>
+<p>User Type: {{current_user.UserType}}</p>
+</br>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Carshare - Homepage{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+
+    {% with username=current_user.Username %}
+        {% include "components/nav.html" %}
+    {% endwith %}
+
+    {% block container %} {% endblock %}
+
+
+
+{% endblock %}

@@ -37,6 +37,13 @@ def register():
     else:
         return render_template('register.html', defaultValues=None)
 
+@controllers.route("/myinfo")
+def myinfo():
+    if current_user.is_authenticated:
+        return render_template('myinformation.html')
+    else:
+        return redirect(url_for("template_controllers.index"))
+
 
 # custom 404 page
 @controllers.app_errorhandler(404)
