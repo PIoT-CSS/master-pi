@@ -127,7 +127,6 @@ def register():
 
                 db.session.add(new_user)
                 db.session.commit()
-                print(new_user.ID)
                 login_user(new_user)
                 return redirect(url_for("template_controllers.index"))
             
