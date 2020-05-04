@@ -34,14 +34,14 @@
                 <td>{{car.TotalDistance}}</td>
                 <td>{{car.NumberPlate}}</td>
                 <td>{{car.CurrentBookingID}}</td>
-                <td><a href={{url_for('car_management_controllers.view_car', id=car.ID)}}>View</a></td>
-                <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}}>Modify</a></td>
+                <td><a href={{url_for('car_management_controllers.view_car', id=car.ID)}} class="button is-link is-outlined">View</a></td>
+                <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-link is-outlined">Modify</a></td>
             </tr>
         {% endfor %}
     </tbody>
     
 </table>
 
-<a href={{url_for('car_management_controllers.add_car')}}>Add car</a>
+<a href={{url_for('car_management_controllers.add_car')}} class="button is-link is-outlined">Add car</a>
 
 {% endblock %}
