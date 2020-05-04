@@ -27,7 +27,7 @@ car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
 controllers = Blueprint("car_controllers", __name__)
 
 @login_required
-@controllers.route('/cars/search', methods=['POST'])
+@controllers.route(CAR_API_URL+ '/search', methods=['POST'])
 def search_car():
     car_query = db.session.query(Car)
     make = request.form.get('make')
