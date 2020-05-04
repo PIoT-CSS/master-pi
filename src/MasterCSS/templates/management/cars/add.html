@@ -11,22 +11,28 @@
     Make
     <input name="make" type="text" required>
     Seats
-    <input name="seats" type="number" required>
+    <select name="seats" required>
+        {% for seats in car_seats %}
+            <option value="{{seats}}">{{seats}}</option>
+        {% endfor %}
+    </select>
     Body type
     <select name="bodytype" required>
-        <option value="Sedan">Sedan</option>
-        <option value="MPV">MPV</option>
-        <option value="Sports">Sports</option>
+        {% for body_type in car_body_types %}
+            <option value="{{body_type}}">{{body_type}}</option>
+        {% endfor %}
     </select>
     Coordinates
     <select name="coordinates" required>
-        <option value="(-37.812082, 144.983072)">(-37.812082, 144.983072)</option>
+        {% for coordinates in car_coordinates %}
+            <option value="{{coordinates}}">{{coordinates}}</option>
+        {% endfor %}
     </select>
     Colour
     <select name="colour" required>
-        <option value="White">White</option>
-        <option value="Black">Black</option>
-        <option value="Yellow">Yellow</option>
+        {% for colour in car_colours %}
+            <option value="{{colour}}">{{colour}}</option>
+        {% endfor %}
     </select>
     Cost Per Hour
     <input name="costperhour" type="number" required>
@@ -34,8 +40,9 @@
     <input name="totaldistance" type="number" required>
     Fuel type
     <select name="fueltype" required>
-        <option value="Petrol">Petrol</option>
-        <option value="Diesel">Diesel</option>
+        {% for fuel_type in car_fuel_types %}
+            <option value="{{fuel_type}}">{{fuel_type}}</option>
+        {% endfor %}
     </select>
     Number Plate
     <input name="numberplate" type="text" required>

@@ -1,7 +1,7 @@
 """
 car.py contains car management controllers.
 """
-
+import os, json
 from MasterCSS.models.car import Car
 from MasterCSS.cli import db
 from http import HTTPStatus
@@ -15,6 +15,12 @@ from flask import (
 )
 
 CAR_API_URL = '/management/cars'
+
+car_colours = json.loads(os.environ['CAR_COLOURS'])
+car_body_types = json.loads(os.environ['CAR_BODY_TYPES'])
+car_seats = json.loads(os.environ['CAR_SEATS'])
+car_fuel_types = json.loads(os.environ['CAR_FUEL_TYPES'])
+car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
 
 controllers = Blueprint("car_controllers", __name__)
 
@@ -42,7 +48,14 @@ def add_car():
         else:
             return redirect(url_for("template_controllers.unauthorised"))
     elif request.method == 'GET':
-        return render_template("management/cars/add.html")
+        return render_template(
+            "management/cars/add.html", 
+            car_colours = car_colours,
+            car_body_types = car_body_types,
+            car_seats = car_seats,
+            car_fuel_types = car_fuel_types,
+            car_coordinates = car_coordinates
+        )
 
 
 @controllers.route(CAR_API_URL, methods=['GET'])
@@ -72,7 +85,15 @@ def modify_car(id):
         else:
             return redirect(url_for("template_controllers.unauthorised"))
     elif request.method == 'GET':
-        return render_template("management/cars/modify.html", car=db.session.query(Car).filter_by(ID=id).scalar())
+        return render_template(
+            "management/cars/modify.html", 
+            car=db.session.query(Car).filter_by(ID=id).scalar(),
+            car_colours = car_colours,
+            car_body_types = car_body_types,
+            car_seats = car_seats,
+            car_fuel_types = car_fuel_types,
+            car_coordinates = car_coordinates
+        )
 
 @controllers.route('/management/cars/<int:id>', methods=['GET'])
 def view_car(id):
