@@ -12,6 +12,10 @@ from flask import (
     redirect,
     render_template
 )
+from flask_login import (
+    current_user,
+    login_required
+)
 
 CAR_API_URL = '/cars'
 car_colours = json.loads(os.environ['CAR_COLOURS'])
@@ -22,7 +26,7 @@ car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
 
 controllers = Blueprint("car_controllers", __name__)
 
-
+@login_required
 @controllers.route('/cars/search', methods=['POST'])
 def search_car():
     car_query = db.session.query(Car)

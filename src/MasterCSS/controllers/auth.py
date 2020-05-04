@@ -13,7 +13,8 @@ from flask_login import (
     login_required
 )
 import os
-import hashlib, uuid
+import hashlib
+import uuid
 from base64 import b64encode, b64decode
 from MasterCSS.cli import db
 from MasterCSS.models.user import User
@@ -24,7 +25,7 @@ from MasterCSS.validators.username_validator import UsernameValidator
 
 
 # define hashing configs
-SALT_LENGTH =  int(os.getenv('SALT_LENGTH'))
+SALT_LENGTH = int(os.getenv('SALT_LENGTH'))
 HASH_TYPE = os.getenv('HASH_TYPE')
 ENCODING_FORMAT = os.getenv('ENCODING_FORMAT')
 ITERATIONS = int(os.getenv('ITERATIONS'))
@@ -45,9 +46,9 @@ def login():
             # match hashed password
             salt = b64decode(user.Password)[:SALT_LENGTH]
             key = hashlib.pbkdf2_hmac(
-                HASH_TYPE, 
-                password.encode(ENCODING_FORMAT), 
-                salt, 
+                HASH_TYPE,
+                password.encode(ENCODING_FORMAT),
+                salt,
                 ITERATIONS
             )
             if key == (b64decode(user.Password)[SALT_LENGTH:]):
@@ -68,7 +69,7 @@ def register():
         # password hashing with salt and sha64, then store in base64
         salt = os.urandom(SALT_LENGTH)
         key = hashlib.pbkdf2_hmac(
-            HASH_TYPE, 
+            HASH_TYPE,
             request.form.get("password").encode(ENCODING_FORMAT),
             salt,
             ITERATIONS
@@ -91,20 +92,23 @@ def register():
             "email": new_user.Email,
             "phonenumber": new_user.PhoneNumber
         }
-        
+
         try:
             phoneValidator = PhoneValidator()
             emailValidator = EmailValidator()
             usernameValidator = UsernameValidator()
 
             if phoneValidator.check(new_user.PhoneNumber) is None:
-                raise ErrorValueException(phoneValidator.message(), payload=defaultValues)
+                raise ErrorValueException(
+                    phoneValidator.message(), payload=defaultValues)
 
             if emailValidator.check(new_user.Email) is None:
-                raise ErrorValueException(emailValidator.message(), payload=defaultValues)
+                raise ErrorValueException(
+                    emailValidator.message(), payload=defaultValues)
 
             if usernameValidator.check(new_user.Username) is None:
-                raise ErrorValueException(usernameValidator.message(), payload=defaultValues)
+                raise ErrorValueException(
+                    usernameValidator.message(), payload=defaultValues)
 
             takens = list()
 
@@ -129,12 +133,11 @@ def register():
                 db.session.commit()
                 login_user(new_user)
                 return redirect(url_for("template_controllers.index"))
-            
+
         except ErrorValueException as e:
             return render_template("register.html", err=str(e.message), defaultValues=e.payload)
 
 
-        
 @login_required
 @controllers.route("/logout", methods=["GET"])
 def logout():
