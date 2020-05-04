@@ -5,7 +5,7 @@
 {% block container %}  -->
 
 <h1>Add a car</h1>
-<form action={{url_for("car_controllers.add_car")}} method="post">
+<form action={{url_for("car_management_controllers.add_car")}} method="post">
     Secret key
     <input name="secretkey" type="text" required>
     Make

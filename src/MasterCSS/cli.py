@@ -28,8 +28,9 @@ ma = Marshmallow()
 
 # import other python files which depend on db instance created
 from MasterCSS.controllers.auth import controllers as AuthControllers
-from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.management.car import controllers as CarManagementControllers
 from MasterCSS.controllers.templates import controllers as TemplateControllers
+from MasterCSS.controllers.car import controllers as CarControllers
 from MasterCSS.models.user import User
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
@@ -44,6 +45,7 @@ login_manager.init_app(app)
 # adding controllers
 app.register_blueprint(TemplateControllers)
 app.register_blueprint(AuthControllers)
+app.register_blueprint(CarManagementControllers)
 app.register_blueprint(CarControllers)
 
 

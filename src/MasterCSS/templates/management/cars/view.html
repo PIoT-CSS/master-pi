@@ -30,7 +30,7 @@
             <td>{{car.TotalDistance}}</td>
             <td>{{car.NumberPlate}}</td>
             <td>{{car.CurrentBookingID}}</td>
-            <td><a href={{url_for('car_controllers.modify_car', id=car.ID)}}>Modify</a></td>
+            <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}}>Modify</a></td>
         </tr>
     </tbody>
 </table>
