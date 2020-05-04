@@ -31,6 +31,7 @@
             <td>{{car.NumberPlate}}</td>
             <td>{{car.CurrentBookingID}}</td>
             <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-link is-outlined">Modify</a></td>
+            <td><a href={{url_for('car_management_controllers.remove_car', id=car.ID)}} class="button is-link is-outlined">Remove</a></td>
         </tr>
     </tbody>
 </table>

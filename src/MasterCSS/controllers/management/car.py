@@ -1,7 +1,8 @@
 """
 car.py contains car management controllers.
 """
-import os, json
+import os
+import json
 from MasterCSS.models.car import Car
 from MasterCSS.cli import db
 from flask import (
@@ -47,12 +48,12 @@ def add_car():
             return redirect(url_for("template_controllers.unauthorised"))
     elif request.method == 'GET':
         return render_template(
-            "management/cars/add.html", 
-            car_colours = car_colours,
-            car_body_types = car_body_types,
-            car_seats = car_seats,
-            car_fuel_types = car_fuel_types,
-            car_coordinates = car_coordinates
+            "management/cars/add.html",
+            car_colours=car_colours,
+            car_body_types=car_body_types,
+            car_seats=car_seats,
+            car_fuel_types=car_fuel_types,
+            car_coordinates=car_coordinates
         )
 
 
@@ -61,7 +62,7 @@ def view_all_cars():
     return render_template("management/cars/viewall.html", cars=db.session.query(Car).all())
 
 
-@controllers.route('/management/cars/<int:id>/modify', methods=['GET', 'POST'])
+@controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
 def modify_car(id):
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
@@ -84,17 +85,24 @@ def modify_car(id):
             return redirect(url_for("template_controllers.unauthorised"))
     elif request.method == 'GET':
         return render_template(
-            "management/cars/modify.html", 
+            "management/cars/modify.html",
             car=db.session.query(Car).filter_by(ID=id).scalar(),
-            car_colours = car_colours,
-            car_body_types = car_body_types,
-            car_seats = car_seats,
-            car_fuel_types = car_fuel_types,
-            car_coordinates = car_coordinates
+            car_colours=car_colours,
+            car_body_types=car_body_types,
+            car_seats=car_seats,
+            car_fuel_types=car_fuel_types,
+            car_coordinates=car_coordinates
         )
 
-@controllers.route('/management/cars/<int:id>', methods=['GET'])
+
+@controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
 def view_car(id):
     # TODO: show bookings for cars
     return render_template("management/cars/view.html", car=db.session.query(Car).filter_by(ID=id).scalar())
 
+
+@controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])
+def remove_car(id):
+    db.session.query(Car).filter_by(ID=id).delete()
+    db.session.commit()
+    return redirect(url_for('car_management_controllers.view_all_cars'))

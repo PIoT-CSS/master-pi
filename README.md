@@ -38,6 +38,7 @@ pip3 uninstall MasterCSS
 #### Note
 
 - To add/remove dependency packages, please modify `install_requires` in `setup.py` then reinstall the app.
+- To manage cars, please go to 'host:5000/management/cars'.
 
 
 
