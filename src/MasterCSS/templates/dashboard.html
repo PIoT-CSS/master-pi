@@ -1,32 +1,64 @@
-<!DOCTYPE html>
-<html>
+{% extends "layouts/dashboard-layout.html" %}
 
-<head>
-    <title>CSS Dashboard</title>
-</head>
 
-<body>
-    <h1>You're now logged in to Car Share System!</h1>
 
-    <h2>User info:</h2>
-    </br>
-    <p>User ID: {{current_user.ID}}</p>
-    </br>
-    <p>Username: {{current_user.Username}}</p>
-    </br>
-    <p>Phone number: {{current_user.PhoneNumber}}</p>
-    </br>
-    <p>First name: {{current_user.FirstName}}</p>
-    </br>
-    <p>Last name: {{current_user.LastName}}</p>
-    </br>
-    <p>Email: {{current_user.Email}}</p>
-    </br>
-    <p>Password: {{current_user.Password}}</p>
-    </br>
-    <p>User Type: {{current_user.UserType}}</p>
-    </br>
-    <a href={{url_for("auth_controllers.logout")}}>Logout</a>
-</body>
+{% block container %} 
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Welcome to Carshare!
+        </h1>
+        <h2 class="subtitle">
+          Let's book you a car!
+        </h2>
+      </div>
+    </div>
+</section>
 
-</html>
+<section>
+    <div class="container">
+        {% include "components/search.html" %}
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>Body type</th>
+                            <th>Colour</th>
+                            <th>Cost per Hour</th>
+                            <th>Fuel type</th>
+                            <th>Availablility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for car in cars %}
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>{{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                                <td>
+                                    {% if not car.CurrentBookingID %}
+                                        <button class="button is-success">Book</button>
+                                    {% else %}
+                                        <button class="button is-disabled">Unavailable</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

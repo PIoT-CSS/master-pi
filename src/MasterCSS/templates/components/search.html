@@ -1,0 +1,100 @@
+<nav class="panel">
+    <p class="panel-heading">
+      Search for a car
+    </p>
+<form action={{url_for("car_controllers.search_car")}} method="post">
+    <div class="panel-block">
+      <p class="control has-icons-left">
+        <input class="input" type="text" name="make" placeholder="Make search">
+        <span class="icon is-left">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </span>
+      </p>
+    </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Fuel type</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="fueltype">
+                        <option>Any</option>
+                        {% for fuel_type in car_fuel_types %}
+                            <option value="{{fuel_type}}">{{fuel_type}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Seats</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="seats">
+                        <option>Any</option>
+                        {% for seats in car_seats %}
+                            <option value="{{seats}}">{{seats}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Body type</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="bodytype">
+                        <option>Any</option>
+                        {% for body_type in car_body_types %}
+                            <option value="{{body_type}}">{{body_type}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Colour</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="colour">
+                        <option>Any</option>
+                        {% for colour in car_colours %}
+                            <option value="{{colour}}">{{colour}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <label class="panel-block">
+        <input type="checkbox" name="available" value="True">
+        Available only
+    </label>
+    <div class="panel-block">
+      <input type="submit" value="Search" class="button is-link is-outlined is-fullwidth">
+    </div>
+  </nav>
+</form>
+  
