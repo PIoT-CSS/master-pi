@@ -31,6 +31,7 @@ from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.controllers.management.car import controllers as CarManagementControllers
 from MasterCSS.controllers.templates import controllers as TemplateControllers
 from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.booking import controllers as BookingControllers
 from MasterCSS.models.user import User
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
@@ -47,6 +48,7 @@ app.register_blueprint(TemplateControllers)
 app.register_blueprint(AuthControllers)
 app.register_blueprint(CarManagementControllers)
 app.register_blueprint(CarControllers)
+app.register_blueprint(BookingControllers)
 
 
 @login_manager.user_loader

@@ -50,8 +50,20 @@
 <section>
     <div class="container">
         <div class="box">
-            Select a date:
-            <input type="datetime-local">
+            <h1 class="title">
+                When?
+            </h1>
+            <form action={{url_for("booking_controllers.check_car_availability", car_id=car.ID)}} method="post">
+                <h2 class="subtitle">
+                    Pickup:
+                </h2>
+                <input type="datetime-local" name="pickup_datetime" step=600 required></br>
+                <h2 class="subtitle">
+                    Return:
+                </h2>
+                <input type="datetime-local" name="return_datetime" step=600 required></br>
+                <input type="submit" name="checkavailability" value="Check availability" class="button is-success">
+            </form>
         </div>
     </div>
 </section>
