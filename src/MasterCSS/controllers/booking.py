@@ -102,6 +102,9 @@ def book():
     booking = Booking(current_user.get_id(), car.ID, datetime.now(), 
                       pickup_datetime, return_datetime, cost, pickup_coordinates, return_coordinates, 0, 
                       "Active")
+    
+    db.session.add(booking)
+    db.session.commit()
 
     # TODO booking takes place here
     # pass booking details into page
