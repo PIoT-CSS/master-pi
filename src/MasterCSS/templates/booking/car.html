@@ -1,16 +1,14 @@
 {% extends "layouts/dashboard-layout.html" %}
 
-
-
 {% block container %} 
 <section class="hero">
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          Welcome to Carshare!
+          You've selected {{car.Make}}.
         </h1>
         <h2 class="subtitle">
-          Let's book you a car!
+          Car ID: {{car.ID}}
         </h2>
       </div>
     </div>
@@ -18,7 +16,6 @@
 
 <section>
     <div class="container">
-        {% include "components/search.html" %}
         <div class="box">
             <div class="table-container">
                 <table class="table w-full text-center">
@@ -31,11 +28,9 @@
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
-                            <th>Availablility</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for car in cars %}
                             <tr>
                                 <td>{{car.ID}}</td>
                                 <td>{{car.Make}}</td>
@@ -44,21 +39,20 @@
                                 <td>{{car.Colour}}</td>
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
-                                <td>
-                                    {% if not car.CurrentBookingID %}
-                                        <a href={{url_for('template_controllers.car_booking', car_id=car.ID)}} class="button is-success">Book</a>
-                                    {% else %}
-                                        <button class="button is-disabled">Unavailable</button>
-                                    {% endif %}
-                                </td>
                             </tr>
-                        {% endfor %}
                     </tbody>
-                    
                 </table>
             </div>
         </div>
+    </div>
+</section>
 
+<section>
+    <div class="container">
+        <div class="box">
+            Select a date:
+            <input type="datetime-local">
+        </div>
     </div>
 </section>
 {% endblock %}

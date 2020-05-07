@@ -1,4 +1,5 @@
-import os, json
+import os
+import json
 from flask import (
     render_template,
     Blueprint,
@@ -27,13 +28,13 @@ controllers = Blueprint("template_controllers", __name__)
 def index():
     if current_user.is_authenticated:
         return render_template(
-            'dashboard.html', 
-            cars = db.session.query(Car).all(),
-            car_colours = car_colours,
-            car_body_types = car_body_types,
-            car_seats = car_seats,
-            car_fuel_types = car_fuel_types,
-            car_coordinates = car_coordinates
+            'dashboard.html',
+            cars=db.session.query(Car).all(),
+            car_colours=car_colours,
+            car_body_types=car_body_types,
+            car_seats=car_seats,
+            car_fuel_types=car_fuel_types,
+            car_coordinates=car_coordinates
         )
     else:
         return render_template('index.html')
@@ -54,12 +55,19 @@ def register():
     else:
         return render_template('register.html', defaultValues=None)
 
+
+@login_required
 @controllers.route("/myinfo")
 def myinfo():
-    if current_user.is_authenticated:
-        return render_template('myinformation.html')
-    else:
-        return redirect(url_for("template_controllers.index"))
+    return render_template('myinformation.html')
+
+
+@login_required
+@controllers.route("/booking/car/<int:car_id>")
+def car_booking(car_id):
+    car = db.session.query(Car).filter_by(ID=car_id).scalar()
+    # TODO if car == None?
+    return render_template('booking/car.html', car=car)
 
 
 # custom 404 page

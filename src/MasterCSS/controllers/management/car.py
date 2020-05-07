@@ -98,6 +98,7 @@ def modify_car(id):
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
 def view_car(id):
     # TODO: show bookings for cars
+    # TODO: if car == None?
     return render_template("management/cars/view.html", car=db.session.query(Car).filter_by(ID=id).scalar())
 
 
