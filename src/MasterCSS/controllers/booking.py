@@ -24,7 +24,14 @@ HTML_DATETIME_FORMAT = '%Y-%m-%dT%H:%M'
 DEFAULT_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 controllers = Blueprint("booking_controllers", __name__)
-car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
+from MasterCSS.constant import Constant
+from ast import literal_eval as make_tuple
+
+# car_colours = Constant.CAR_COLOURS
+# car_body_types = Constant.CAR_BODY_TYPES
+# car_seats = Constant.CAR_SEATS
+# car_fuel_types = Constant.CAR_FUEL_TYPES
+car_coordinates = Constant.CAR_COORDINATES
 
 
 @login_required
@@ -60,6 +67,8 @@ def check_car_availability(car_id):
     cost = car.CostPerHour * dateTimeDifferenceInHours
 
     available = True
+    pickup_coordinates = make_tuple(pickup_coordinates)
+    return_coordinates = make_tuple(return_coordinates)
 
     if  dateTimeDifferenceInHours < 1:
         return render_template('booking/car.html',

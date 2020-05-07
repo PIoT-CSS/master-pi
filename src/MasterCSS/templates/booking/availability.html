@@ -56,8 +56,13 @@
                 </div>
             </article>
             
+            <input type="hidden" name="pickup" name="pickup_map" data-x={{pickup_coordinates[0]}} data-y={{pickup_coordinates[1]}}/>
             <p> <strong>Pickup time: </strong> {{pickup_datetime}}, location: {{pickup_coordinates}} </p>
+            <div id="pickup_map" style="width:500px;height:200px;"></div>
+
             <p> <strong>Return time: </strong> {{return_datetime}}, location: {{return_coordinates}} </p>
+            <input type="hidden" name="return" name="return_map" data-x={{return_coordinates[0]}} data-y={{return_coordinates[1]}}/>
+            <div id="return_map" style="width:500px;height:200px;"></div>
 
             <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
             {% if available %}
@@ -73,4 +78,36 @@
         </div>
     </div>
 </section>
+
+<script>
+function initMap() {
+    let pickup_data = document.querySelector("input[name='pickup']");
+    let pickup_lat = pickup_data.getAttribute("data-x");
+    let pickup_lng = pickup_data.getAttribute("data-y");
+
+    let return_data = document.querySelector("input[name='return']");
+    let return_lat = return_data.getAttribute("data-x");
+    let return_lng = return_data.getAttribute("data-y");
+
+    console.log(pickup_data, return_data);
+
+    let google = window.google;
+    
+    if(google) {
+        var pickup_loc = { lat: parseFloat(pickup_lat), lng: parseFloat(pickup_lng) };
+        var pickup_map = new google.maps.Map(
+        document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
+        var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
+
+        var return_loc = { lat: parseFloat(return_lat), lng: parseFloat(return_lng) };
+        var return_map = new google.maps.Map(
+        document.getElementById('return_map'), {zoom: 15, center: return_loc});
+        var marker = new google.maps.Marker({position: return_loc, map: return_map});
+    }
+}
+
+initMap();
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6gYrFF5NEKEa9R2rDNCILa6i2RGvvWw&callback=initMap" type="text/javascript"></script>
+
 {% endblock %}

@@ -12,14 +12,15 @@ from flask import (
     redirect,
     render_template
 )
+from MasterCSS.constant import Constant
 
 CAR_MANAGEMENT_API_URL = '/management/cars'
 
-car_colours = json.loads(os.environ['CAR_COLOURS'])
-car_body_types = json.loads(os.environ['CAR_BODY_TYPES'])
-car_seats = json.loads(os.environ['CAR_SEATS'])
-car_fuel_types = json.loads(os.environ['CAR_FUEL_TYPES'])
-car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
+car_colours = Constant.CAR_COLOURS
+car_body_types = Constant.CAR_BODY_TYPES
+car_seats = Constant.CAR_SEATS
+car_fuel_types = Constant.CAR_FUEL_TYPES
+car_coordinates = Constant.CAR_COORDINATES
 
 controllers = Blueprint("car_management_controllers", __name__)
 
