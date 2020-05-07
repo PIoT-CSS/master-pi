@@ -7,12 +7,17 @@
         <h1 class="title">
           Your booking has been confirmed, thank you!
         </h1>
-        <h2 class="subtitle">
-          Booking ID: BOOKING ID PLACEHOLDER
-          Car ID: {{car.ID}}
-          Pickup datetime: BOOKING PICKUP DATE PLACEHOLDER
-          Return datetime: BOOKING PICKUP DATE PLACEHOLDER
-        </h2>
+        <article class="message">
+            <div class="message-header">
+                Your booking details
+            </div>
+            <div class="message-body">
+                <p><strong>Booking ID: </strong> {{booking.ID}}</p>
+                <p><strong>Car ID: </strong> {{car.ID}}</p>
+                <p><strong>Pickup datetime: </strong> {{booking.DateTimeStart}}</p>
+                <p><strong>Return datetime: </strong> {{booking.DateTimeEnd}}</p>
+            </div>
+        <article>
       </div>
     </div>
 </section>
@@ -54,7 +59,7 @@
     <div class="container">
         <div class="box">
             <h2 class="subtitle">
-                BOOKING DETAILS GOES HERE
+                BOOKING DETAILS
             </h2>
             <div class="table-container">
                 <table class="table w-full text-center">
@@ -75,7 +80,7 @@
                     </thead>
                     <tbody>
                             <tr>
-                                <!-- <td>{{booking.ID}}</td>
+                                <td>{{booking.ID}}</td>
                                 <td>{{booking.UserID}}</td>
                                 <td>{{booking.CarID}}</td>
                                 <td>{{booking.DateTimeBooked}}</td>
@@ -85,7 +90,7 @@
                                 <td>{{booking.PickupCoordinates}}</td>
                                 <td>{{booking.DropCoordinates}}</td>
                                 <td>{{booking.Distance}}</td>
-                                <td>{{booking.Status}}</td> -->
+                                <td>{{booking.Status}}</td>
                             </tr>
                     </tbody>
                 </table>

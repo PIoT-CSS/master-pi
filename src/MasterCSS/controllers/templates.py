@@ -59,7 +59,7 @@ def register():
 @login_required
 @controllers.route("/myinfo")
 def myinfo():
-    return render_template('myinformation.html')
+    return render_template('myInformation.html')
 
 
 @login_required

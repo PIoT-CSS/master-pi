@@ -50,15 +50,16 @@
 <section>
     <div class="container">
         <div class="box">
-            <h1 class="title">
-                Availability: {{ 'Yes!' if available != False else 'No, sorry!' }}
-            </h1>
-            <h2 class="subtitle">
-                Pickup time: {{pickup_datetime}}, location: {{pickup_coordinates}}
-            </h2>
-            <h2 class="subtitle">
-                Return time: {{return_datetime}}, location: {{return_coordinates}}
-            </h2>
+            <article class="message {{'is-success' if available != false else 'is-danger'}}">
+                <div class="message-body">
+                    <p> <strong>Availability: </strong> {{ 'Yes!' if available != False else 'No, sorry!' }} </p>
+                </div>
+            </article>
+            
+            <p> <strong>Pickup time: </strong> {{pickup_datetime}}, location: {{pickup_coordinates}} </p>
+            <p> <strong>Return time: </strong> {{return_datetime}}, location: {{return_coordinates}} </p>
+
+            <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
             {% if available %}
             <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
                 <input type="hidden" name="car_id" value="{{car.ID}}">
@@ -66,7 +67,7 @@
                 <input type="hidden" name="return_datetime" value="{{return_datetime}}">
                 <input type="hidden" name="pickup_coordinates" value="{{pickup_coordinates}}">
                 <input type="hidden" name="return_coordinates" value="{{return_coordinates}}">
-                <input class="button is-info" type="submit" name="book" value="Book">
+                <p><input class="button is-info" type="submit" name="book" value="Book"></p>
             </form>
             {% endif %}
         </div>
