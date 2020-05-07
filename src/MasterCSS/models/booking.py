@@ -28,7 +28,9 @@ class Booking(db.Model):
     PickupCoordinates = db.Column(db.Text, nullable=False)
     DropCoordinates = db.Column(db.Text, nullable=False)
     Distance = db.Column(db.Float, nullable=False)
-    Status = db.Column(db.Text, nullable=False)
+    Status = db.Column(db.Integer, nullable=False)
+    ACTIVE = 1
+    INACTIVE = 0
 
     def __init__(self, UserID, CarID, DateTimeBooked, DateTimeStart,
                  DateTimeEnd, Cost, PickupCoordinates, DropCoordinates,
@@ -44,3 +46,11 @@ class Booking(db.Model):
         self.DropCoordinates = DropCoordinates
         self.Distance = Distance
         self.Status = Status
+
+    @staticmethod
+    def getStatus(id):
+        if id == Booking.ACTIVE:
+            return "Active"
+        elif id == Booking.INACTIVE:
+            return "Inactive"
+
