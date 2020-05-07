@@ -21,6 +21,7 @@ from flask_login import (
 
 BOOKING_API_URL = '/booking'
 HTML_DATETIME_FORMAT = '%Y-%m-%dT%H:%M'
+DEFAULT_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 controllers = Blueprint("booking_controllers", __name__)
 
@@ -37,4 +38,13 @@ def check_car_availability(car_id):
     # if len(car.Booking)
     # for booking in car.Bookings:
     #     pass
-    return render_template('booking/availability.html', car=car)
+    available = True
+    return render_template('booking/availability.html', car=car, pickup_datetime=pickup_datetime, return_datetime=return_datetime, available=available)
+
+@login_required
+@controllers.route(BOOKING_API_URL+ '/book', methods=['POST'])
+def book():
+    pickup_datetime = datetime.strptime(request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
+    return_datetime = datetime.strptime(request.form.get('return_datetime'), DEFAULT_DATETIME_FORMAT)
+    car=db.session.query(Car).filter_by(ID=int(request.form.get('car_id'))).scalar()
+    return render_template('booking/success.html', car=car, pickup_datetime=pickup_datetime, return_datetime=return_datetime)

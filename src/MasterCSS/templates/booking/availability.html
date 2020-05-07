@@ -1,5 +1,73 @@
 {% extends "layouts/dashboard-layout.html" %}
 
 {% block container %} 
-Hey
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          You've selected {{car.Make}}.
+        </h1>
+        <h2 class="subtitle">
+          Car ID: {{car.ID}}
+        </h2>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>Body type</th>
+                            <th>Colour</th>
+                            <th>Cost per Hour</th>
+                            <th>Fuel type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>{{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="box">
+            <h1 class="title">
+                Availability: {{ 'Yes!' if available != False else 'No, sorry!' }}
+            </h1>
+            <h2 class="subtitle">
+                Pickup: {{pickup_datetime}}
+            </h2>
+            <h2 class="subtitle">
+                Return: {{pickup_datetime}}
+            </h2>
+            {% if available %}
+            <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
+                <input type="hidden" name="car_id" value="{{car.ID}}">
+                <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
+                <input type="hidden" name="return_datetime" value="{{return_datetime}}">
+                <input class="button is-info" type="submit" name="book" value="Book">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
 {% endblock %}
