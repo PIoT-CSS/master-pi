@@ -1,5 +1,97 @@
 {% extends "layouts/dashboard-layout.html" %}
 
 {% block container %} 
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Your booking has been confirmed, thank you!
+        </h1>
+        <h2 class="subtitle">
+          Booking ID: BOOKING ID PLACEHOLDER
+          Car ID: {{car.ID}}
+          Pickup datetime: BOOKING PICKUP DATE PLACEHOLDER
+          Return datetime: BOOKING PICKUP DATE PLACEHOLDER
+        </h2>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>Body type</th>
+                            <th>Colour</th>
+                            <th>Cost per Hour</th>
+                            <th>Fuel type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>{{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="box">
+            <h2 class="subtitle">
+                BOOKING DETAILS GOES HERE
+            </h2>
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>BookingID</th>
+                            <th>UserID</th>
+                            <th>CarID</th>
+                            <th>DateTimeBooked</th>
+                            <th>DateTimeStart</th>
+                            <th>DateTimeEnd</th>
+                            <th>Cost</th>
+                            <th>PickupCoordinates</th>
+                            <th>DropCoordinates</th>
+                            <th>Distance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{booking.ID}}</td>
+                                <td>{{booking.UserID}}</td>
+                                <td>{{booking.CarID}}</td>
+                                <td>{{booking.DateTimeBooked}}</td>
+                                <td>{{booking.DateTimeStart}}</td>
+                                <td>{{booking.DateTimeEnd}}</td>
+                                <td>{{booking.Cost}}</td>
+                                <td>{{booking.PickupCoordinates}}</td>
+                                <td>{{booking.DropCoordinates}}</td>
+                                <td>{{booking.Distance}}</td>
+                                <td>{{booking.Status}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

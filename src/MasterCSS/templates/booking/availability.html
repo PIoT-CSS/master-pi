@@ -54,16 +54,18 @@
                 Availability: {{ 'Yes!' if available != False else 'No, sorry!' }}
             </h1>
             <h2 class="subtitle">
-                Pickup: {{pickup_datetime}}
+                Pickup time: {{pickup_datetime}}, location: {{pickup_coordinates}}
             </h2>
             <h2 class="subtitle">
-                Return: {{pickup_datetime}}
+                Return time: {{return_datetime}}, location: {{return_coordinates}}
             </h2>
             {% if available %}
             <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
                 <input type="hidden" name="car_id" value="{{car.ID}}">
                 <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
                 <input type="hidden" name="return_datetime" value="{{return_datetime}}">
+                <input type="hidden" name="pickup_coordinates" value="{{pickup_coordinates}}">
+                <input type="hidden" name="return_coordinates" value="{{return_coordinates}}">
                 <input class="button is-info" type="submit" name="book" value="Book">
             </form>
             {% endif %}

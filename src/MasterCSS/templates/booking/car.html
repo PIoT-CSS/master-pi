@@ -51,17 +51,33 @@
     <div class="container">
         <div class="box">
             <h1 class="title">
-                When?
+                When and where?
             </h1>
             <form action={{url_for("booking_controllers.check_car_availability", car_id=car.ID)}} method="post">
                 <h2 class="subtitle">
-                    Pickup:
+                    Pickup time:
                 </h2>
                 <input type="datetime-local" name="pickup_datetime" step=600 required></br>
                 <h2 class="subtitle">
-                    Return:
+                    Pickup location:
+                </h2>
+                <select name="pickup_coordinates" required>
+                    {% for coordinates in all_coordinates %}
+                        <option value="{{coordinates}}">{{coordinates}}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="subtitle">
+                    Return time:
                 </h2>
                 <input type="datetime-local" name="return_datetime" step=600 required></br>
+                <h2 class="subtitle">
+                    Return location:
+                </h2>
+                <select name="return_coordinates" required>
+                    {% for coordinates in all_coordinates %}
+                        <option value="{{coordinates}}">{{coordinates}}</option>
+                    {% endfor %}
+                </select>
                 <input type="submit" name="checkavailability" value="Check availability" class="button is-success">
             </form>
         </div>

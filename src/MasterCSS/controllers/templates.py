@@ -68,7 +68,7 @@ def car_booking(car_id):
     car = db.session.query(Car).filter_by(ID=car_id).scalar()
     # TODO if car == None?
     # TODO show when the car is available?
-    return render_template('booking/car.html', car=car)
+    return render_template('booking/car.html', car=car, all_coordinates=car_coordinates)
 
 
 # custom 404 page
