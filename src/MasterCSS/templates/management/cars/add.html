@@ -24,8 +24,8 @@
     </select>
     Coordinates
     <select name="coordinates" required>
-        {% for coordinates in car_coordinates %}
-            <option value="{{coordinates}}">{{coordinates}}</option>
+        {% for coordinates, location in car_coordinates.items() %}
+            <option value="{{coordinates}}">{{location}}</option>
         {% endfor %}
     </select>
     Colour

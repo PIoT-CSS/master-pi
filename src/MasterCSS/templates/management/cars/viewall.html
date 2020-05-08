@@ -9,7 +9,7 @@
             <th>Make</th>
             <th>Seats</th>
             <th>BodyType</th>
-            <th>Coordinates</th>
+            <th>Location</th>
             <th>Colour</th>
             <th>CostPerHour</th>
             <th>FuelType</th>
@@ -27,7 +27,7 @@
                 <td>{{car.Make}}</td>
                 <td>{{car.Seats}}</td>
                 <td>{{car.BodyType}}</td>
-                <td>{{car.Coordinates}}</td>
+                <td>{{car_coordinates[tuple(eval(car.Coordinates))]}}</td>
                 <td>{{car.Colour}}</td>
                 <td>{{car.CostPerHour}}</td>
                 <td>{{car.FuelType}}</td>

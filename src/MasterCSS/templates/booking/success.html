@@ -72,8 +72,8 @@
                             <th>DateTimeStart</th>
                             <th>DateTimeEnd</th>
                             <th>Cost</th>
-                            <th>PickupCoordinates</th>
-                            <th>DropCoordinates</th>
+                            <th>Pickup Location</th>
+                            <th>Return Location</th>
                             <th>Distance</th>
                             <th>Status</th>
                         </tr>
@@ -87,8 +87,8 @@
                                 <td>{{booking.DateTimeStart}}</td>
                                 <td>{{booking.DateTimeEnd}}</td>
                                 <td>{{booking.Cost}}</td>
-                                <td>{{booking.PickupCoordinates}}</td>
-                                <td>{{booking.DropCoordinates}}</td>
+                                <td>{{car_coordinates[tuple(eval(booking.PickupCoordinates))]}}</td>
+                                <td>{{car_coordinates[tuple(eval(booking.DropCoordinates))]}}</td>
                                 <td>{{booking.Distance}}</td>
                                 <td>{{bookingStatus}}</td>
                             </tr>

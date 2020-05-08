@@ -60,7 +60,7 @@ def add_car():
 
 @controllers.route(CAR_MANAGEMENT_API_URL, methods=['GET'])
 def view_all_cars():
-    return render_template("management/cars/viewall.html", cars=db.session.query(Car).all())
+    return render_template("management/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
@@ -100,7 +100,10 @@ def modify_car(id):
 def view_car(id):
     # TODO: show bookings for cars
     # TODO: if car == None?
-    return render_template("management/cars/view.html", car=db.session.query(Car).filter_by(ID=id).scalar())
+    car=db.session.query(Car).filter_by(ID=id).scalar()
+    res = tuple(eval(car.Coordinates))
+    print(car_coordinates[res])
+    return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])

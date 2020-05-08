@@ -17,9 +17,9 @@
         {% endfor %}
     </select>
     Coordinates
-    <select name="coordinates" value='{{car.Coordinates}}' required>
-        {% for coordinates in car_coordinates %}
-            <option value="{{coordinates}}">{{coordinates}}</option>
+    <select name="coordinates" value='{{car_coordinates[tuple(eval(car.Coordinates))]}}' required>
+        {% for coordinates, location in car_coordinates.items() %}
+            <option value="{{coordinates}}">{{location}}</option>
         {% endfor %}
     </select>
     Colour

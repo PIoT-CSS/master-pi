@@ -27,10 +27,6 @@ controllers = Blueprint("booking_controllers", __name__)
 from MasterCSS.constant import Constant
 from ast import literal_eval as make_tuple
 
-# car_colours = Constant.CAR_COLOURS
-# car_body_types = Constant.CAR_BODY_TYPES
-# car_seats = Constant.CAR_SEATS
-# car_fuel_types = Constant.CAR_FUEL_TYPES
 car_coordinates = Constant.CAR_COORDINATES
 
 
@@ -57,6 +53,7 @@ def check_car_availability(car_id):
     # for booking in car.Bookings:
     #     if len(car)
     #     pass
+    available = True
 
     # CALCULATE PRICE and show
     # show pickup and drop locations
@@ -66,16 +63,15 @@ def check_car_availability(car_id):
 
     cost = car.CostPerHour * dateTimeDifferenceInHours
 
-    available = True
     pickup_coordinates = make_tuple(pickup_coordinates)
     return_coordinates = make_tuple(return_coordinates)
 
-    if  dateTimeDifferenceInHours < 1:
+    if dateTimeDifferenceInHours < 1:
         return render_template('booking/car.html',
                                 car=car,
                                 pickup_datetime=pickup_datetime,
                                 return_datetime=return_datetime,
-                                all_coordinates=car_coordinates,
+                                car_coordinates=car_coordinates,
                                 err="The minimum booking is one hour",
                                 available=available)
 
@@ -86,6 +82,7 @@ def check_car_availability(car_id):
         return_datetime=return_datetime,
         pickup_coordinates=pickup_coordinates,
         return_coordinates=return_coordinates,
+        car_coordinates=car_coordinates,
         cost = cost,
         available=available
     )
@@ -121,5 +118,6 @@ def book():
         'booking/success.html',
         booking=booking,
         bookingStatus = bookingStatus,
+        car_coordinates=car_coordinates,
         car=car
     )

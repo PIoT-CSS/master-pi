@@ -57,10 +57,10 @@
             </article>
             
             <input type="hidden" name="pickup" name="pickup_map" data-x={{pickup_coordinates[0]}} data-y={{pickup_coordinates[1]}}/>
-            <p> <strong>Pickup time: </strong> {{pickup_datetime}}, location: {{pickup_coordinates}} </p>
+            <p> <strong>Pickup time: </strong> {{pickup_datetime}}, location: {{all_coordinates[tuple(eval(pickup_coordinates))]}} </p>
             <div id="pickup_map" style="width:500px;height:200px;"></div>
 
-            <p> <strong>Return time: </strong> {{return_datetime}}, location: {{return_coordinates}} </p>
+            <p> <strong>Return time: </strong> {{return_datetime}}, location: {{all_coordinates[tuple(eval(return_coordinates))]}} </p>
             <input type="hidden" name="return" name="return_map" data-x={{return_coordinates[0]}} data-y={{return_coordinates[1]}}/>
             <div id="return_map" style="width:500px;height:200px;"></div>
 

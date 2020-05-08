@@ -69,8 +69,8 @@
                     <div class="control">
                         <div class="select">
                             <select name="pickup_coordinates" for="pickup" required>
-                                {% for coordinates in all_coordinates %}
-                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{coordinates}}</option>
+                                {% for coordinates, location in all_coordinates.items() %}
+                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{location}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -91,8 +91,8 @@
                     <div class="control">
                         <div class="select">
                             <select name="return_coordinates" for="return" required>
-                                {% for coordinates in all_coordinates %}
-                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{coordinates}}</option>
+                                {% for coordinates, location in all_coordinates.items() %}
+                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{location}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -120,6 +120,8 @@
         </div>
     </div>
 </section>
+
+
 
 
 <script>

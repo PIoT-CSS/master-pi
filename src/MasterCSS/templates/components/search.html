@@ -87,10 +87,29 @@
             </div>
         </div>
     </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Pickup Location</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="pickup_coordinates">
+                        <option>Any</option>
+                        {% for coordinates, location in car_coordinates.items() %}
+                            <option value="{{coordinates}}">{{location}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <label class="panel-block">
-        <input type="checkbox" name="available" value="True">
-        Available only
+        <input type="checkbox" name="available_now" value="True">
+        Available Now
     </label>
     <div class="panel-block">
       <input type="submit" value="Search" class="button is-link is-outlined is-fullwidth">
