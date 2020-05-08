@@ -1,0 +1,70 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Congrats!
+        </h1>
+        <h2 class="subtitle">
+            These are the available cars from <code>{{pickup_datetime}}</code> to <code>{{return_datetime}}</code>
+        </h2>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+
+        {% include "components/search.html" %}
+
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>Body type</th>
+                            <th>Location</th>
+                            <th>Colour</th>
+                            <th>Cost per Hour</th>
+                            <th>Fuel type</th>
+                            <th>Availablility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for car in cars %}
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>{{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                                <td>
+                                    {% if not car.CurrentBookingID %}
+                                        <a href={{url_for('template_controllers.car_booking', car_id=car.ID)}} class="button is-success">Book</a>
+                                    {% else %}
+                                        <button class="button is-disabled">Unavailable</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
