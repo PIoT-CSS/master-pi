@@ -13,9 +13,18 @@
             </div>
             <div class="message-body">
                 <p><strong>Booking ID: </strong> {{booking.ID}}</p>
-                <p><strong>Car ID: </strong> {{car.ID}}</p>
-                <p><strong>Pickup datetime: </strong> {{booking.DateTimeStart}}</p>
-                <p><strong>Return datetime: </strong> {{booking.DateTimeEnd}}</p>
+                <p><strong>Car ID: </strong> {{booking.CarID}}</p>
+                <p><strong>User ID: </strong> {{booking.UserID}}</p>
+                <p><strong>Booking time: </strong> {{booking.DateTimeBooked}}</p>
+                <p><strong>Pickup time: </strong> {{booking.DateTimeStart}}</p>
+                <p><strong>Return time: </strong> {{booking.DateTimeEnd}}</p>
+                <p><strong>Cost: </strong> ${{booking.Cost}}</p>
+                <p><strong>Status: </strong>{{bookingStatus}}</p>
+                <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}} </p>
+            </div>
+            <div name="map">
+                <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
+                <div id="pickup_map" style="width:500px;height:200px;"></div>
             </div>
         <article>
       </div>
@@ -25,6 +34,9 @@
 <section>
     <div class="container">
         <div class="box">
+            <h1 class="title">
+                Car details:
+            </h1>
             <div class="table-container">
                 <table class="table w-full text-center">
                     <thead>
@@ -33,6 +45,7 @@
                             <th>Make</th>
                             <th>Seats</th>
                             <th>Body type</th>
+                            <th>Location</th>
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
@@ -44,6 +57,7 @@
                                 <td>{{car.Make}}</td>
                                 <td>{{car.Seats}}</td>
                                 <td>{{car.BodyType}}</td>
+                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
                                 <td>{{car.Colour}}</td>
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
@@ -55,48 +69,28 @@
     </div>
 </section>
 
-<section>
-    <div class="container">
-        <div class="box">
-            <h2 class="subtitle">
-                BOOKING DETAILS
-            </h2>
-            <div class="table-container">
-                <table class="table w-full text-center">
-                    <thead>
-                        <tr>
-                            <th>BookingID</th>
-                            <th>UserID</th>
-                            <th>CarID</th>
-                            <th>DateTimeBooked</th>
-                            <th>DateTimeStart</th>
-                            <th>DateTimeEnd</th>
-                            <th>Cost</th>
-                            <th>Pickup Location</th>
-                            <th>Return Location</th>
-                            <th>Distance</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr>
-                                <td>{{booking.ID}}</td>
-                                <td>{{booking.UserID}}</td>
-                                <td>{{booking.CarID}}</td>
-                                <td>{{booking.DateTimeBooked}}</td>
-                                <td>{{booking.DateTimeStart}}</td>
-                                <td>{{booking.DateTimeEnd}}</td>
-                                <td>{{booking.Cost}}</td>
-                                <td>{{car_coordinates[tuple(eval(booking.PickupCoordinates))]}}</td>
-                                <td>{{car_coordinates[tuple(eval(booking.DropCoordinates))]}}</td>
-                                <td>{{booking.Distance}}</td>
-                                <td>{{bookingStatus}}</td>
-                            </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
+<script>
+
+function initMap() {
+    let pickup_data = document.querySelector("input[name='pickup']");
+    let pickup_lat = pickup_data.getAttribute("data-x");
+    let pickup_lng = pickup_data.getAttribute("data-y");
+
+    let google = window.google;
+    
+    if(google) {
+        var pickup_loc = { lat: parseFloat(pickup_lat), lng: parseFloat(pickup_lng) };
+        var pickup_map = new google.maps.Map(
+        document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
+        var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
+    }
+}
+
+initMap();
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6gYrFF5NEKEa9R2rDNCILa6i2RGvvWw&callback=initMap" type="text/javascript"></script>
+
+</script>
 
 {% endblock %}

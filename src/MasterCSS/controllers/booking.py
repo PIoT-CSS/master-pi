@@ -39,8 +39,6 @@ def check_car_availability(car_id):
         request.form.get('pickup_datetime'), HTML_DATETIME_FORMAT)
     return_datetime = datetime.strptime(
         request.form.get('return_datetime'), HTML_DATETIME_FORMAT)
-    pickup_coordinates = request.form.get('pickup_coordinates')
-    return_coordinates = request.form.get('return_coordinates')
     car = db.session.query(Car).filter_by(ID=car_id).scalar()
 
 
@@ -56,15 +54,11 @@ def check_car_availability(car_id):
     available = True
 
     # CALCULATE PRICE and show
-    # show pickup and drop locations
 
     timeDelta = return_datetime - pickup_datetime
     dateTimeDifferenceInHours = timeDelta.total_seconds() / 3600
 
     cost = car.CostPerHour * dateTimeDifferenceInHours
-
-    pickup_coordinates = make_tuple(pickup_coordinates)
-    return_coordinates = make_tuple(return_coordinates)
 
     if dateTimeDifferenceInHours < 1:
         return render_template('booking/car.html',
@@ -80,8 +74,6 @@ def check_car_availability(car_id):
         car=car,
         pickup_datetime=pickup_datetime,
         return_datetime=return_datetime,
-        pickup_coordinates=pickup_coordinates,
-        return_coordinates=return_coordinates,
         car_coordinates=car_coordinates,
         cost = cost,
         available=available
@@ -95,19 +87,17 @@ def book():
         'pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(request.form.get(
         'return_datetime'), DEFAULT_DATETIME_FORMAT)
-    pickup_coordinates = request.form.get('pickup_coordinates')
-    return_coordinates = request.form.get('return_coordinates')
     car = db.session.query(Car).filter_by(
         ID=int(request.form.get('car_id'))).scalar()
 
     timeDelta = return_datetime - pickup_datetime
     dateTimeDifferenceInHours = timeDelta.total_seconds() / 3600
 
-    cost = car.CostPerHour * dateTimeDifferenceInHours
+    cost = round(car.CostPerHour * dateTimeDifferenceInHours, 2)
 
     booking = Booking(current_user.get_id(), car.ID, datetime.now(), 
-                      pickup_datetime, return_datetime, cost, pickup_coordinates, return_coordinates, 0, 
-                      Booking.ACTIVE)
+                      pickup_datetime, return_datetime, cost, car.HomeCoordinates, 0, 
+                      Booking.CONFIRMED)
     bookingStatus = Booking.getStatus(booking.Status)
     db.session.add(booking)
     db.session.commit()

@@ -16,12 +16,6 @@
             <option value="{{body_type}}">{{body_type}}</option>
         {% endfor %}
     </select>
-    Coordinates
-    <select name="coordinates" value='{{car_coordinates[tuple(eval(car.Coordinates))]}}' required>
-        {% for coordinates, location in car_coordinates.items() %}
-            <option value="{{coordinates}}">{{location}}</option>
-        {% endfor %}
-    </select>
     Colour
     <select name="colour" value='{{car.Colour}}' required>
         {% for colour in car_colours %}
@@ -42,5 +36,7 @@
     <input name="numberplate" value='{{car.NumberPlate}}' type="text" required>
     Current Booking ID
     <input name="currentbookingid" type="number" value='{{car.CurrentBookingID}}'>
+    Agent ID
+    <input name="agent_id" type="text" value='{{car.AgentID}}'>
     <input type="submit" name="modify" value="Modify">
 </form>

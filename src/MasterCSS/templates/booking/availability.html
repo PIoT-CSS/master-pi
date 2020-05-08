@@ -25,6 +25,7 @@
                             <th>Make</th>
                             <th>Seats</th>
                             <th>Body type</th>
+                            <th>Location</th>
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
@@ -36,6 +37,7 @@
                                 <td>{{car.Make}}</td>
                                 <td>{{car.Seats}}</td>
                                 <td>{{car.BodyType}}</td>
+                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
                                 <td>{{car.Colour}}</td>
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
@@ -56,22 +58,20 @@
                 </div>
             </article>
             
-            <input type="hidden" name="pickup" name="pickup_map" data-x={{pickup_coordinates[0]}} data-y={{pickup_coordinates[1]}}/>
-            <p> <strong>Pickup time: </strong> {{pickup_datetime}}, location: {{all_coordinates[tuple(eval(pickup_coordinates))]}} </p>
+            <p> <strong>Pickup time: </strong> {{pickup_datetime}} </p>
+            
+            <p> <strong>Return time: </strong> {{return_datetime}} </p>
+
+            <p> <strong>Pickup and return location: </strong> {{car_coordinates[tuple(eval(car.HomeCoordinates))]}} </p>
+            <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
             <div id="pickup_map" style="width:500px;height:200px;"></div>
-
-            <p> <strong>Return time: </strong> {{return_datetime}}, location: {{all_coordinates[tuple(eval(return_coordinates))]}} </p>
-            <input type="hidden" name="return" name="return_map" data-x={{return_coordinates[0]}} data-y={{return_coordinates[1]}}/>
-            <div id="return_map" style="width:500px;height:200px;"></div>
-
+            
             <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
             {% if available %}
             <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
                 <input type="hidden" name="car_id" value="{{car.ID}}">
                 <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
                 <input type="hidden" name="return_datetime" value="{{return_datetime}}">
-                <input type="hidden" name="pickup_coordinates" value="{{pickup_coordinates}}">
-                <input type="hidden" name="return_coordinates" value="{{return_coordinates}}">
                 <p><input class="button is-info" type="submit" name="book" value="Book"></p>
             </form>
             {% endif %}
@@ -85,12 +85,6 @@ function initMap() {
     let pickup_lat = pickup_data.getAttribute("data-x");
     let pickup_lng = pickup_data.getAttribute("data-y");
 
-    let return_data = document.querySelector("input[name='return']");
-    let return_lat = return_data.getAttribute("data-x");
-    let return_lng = return_data.getAttribute("data-y");
-
-    console.log(pickup_data, return_data);
-
     let google = window.google;
     
     if(google) {
@@ -98,11 +92,6 @@ function initMap() {
         var pickup_map = new google.maps.Map(
         document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
         var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
-
-        var return_loc = { lat: parseFloat(return_lat), lng: parseFloat(return_lng) };
-        var return_map = new google.maps.Map(
-        document.getElementById('return_map'), {zoom: 15, center: return_loc});
-        var marker = new google.maps.Marker({position: return_loc, map: return_map});
     }
 }
 

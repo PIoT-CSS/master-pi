@@ -11,9 +11,8 @@ class CarSchema(ma.Schema):
         super().__init__(strict=strict, **kwargs)
 
     class Meta:
-        fields = ("ID", "Make", "Seats", "BodyType", "Coordinates", "Colour",
-                  "CostPerHour", "FuelType", "TotalDistance", 
-                  "NumberPlate", "CurrentBookingID")
+        fields = ("ID", "Make", "Seats", "BodyType", "HomeCoordinates" ,"Coordinates", 
+        "Colour", "CostPerHour", "FuelType", "TotalDistance", "NumberPlate", "CurrentBookingID", "AgentID")
 
 
 class Car(db.Model):
@@ -23,25 +22,30 @@ class Car(db.Model):
     Seats = db.Column(db.Integer, nullable=False)
     BodyType = db.Column(db.Text, nullable=False)
     Coordinates = db.Column(db.Text, nullable=False)
+    HomeCoordinates = db.Column(db.Text, nullable=False)
     Colour = db.Column(db.Text, nullable=False)
     CostPerHour = db.Column(db.Float, nullable=False)
     FuelType = db.Column(db.Text, nullable=False)
     TotalDistance = db.Column(db.Float, nullable=False)
     NumberPlate = db.Column(db.Text, nullable=False)
     CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
+    AgentID = db.Column(db.Text, nullable=False)
     Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID]) 
 
-    def __init__(self, Make, Seats, BodyType, Coordinates,
+    def __init__(self, Make, Seats, BodyType, Coordinates, HomeCoordinates,
                  Colour, CostPerHour, FuelType, TotalDistance, NumberPlate, 
+                 AgentID,
                  CurrentBookingID=None, ID=None):
         self.ID = ID
         self.Make = Make
         self.Seats = Seats
         self.BodyType = BodyType
         self.Coordinates = Coordinates
+        self.HomeCoordinates = HomeCoordinates
         self.Colour = Colour
         self.CostPerHour = CostPerHour
         self.FuelType = FuelType
         self.TotalDistance = TotalDistance
         self.NumberPlate = NumberPlate
         self.CurrentBookingID = CurrentBookingID
+        self.AgentID = AgentID

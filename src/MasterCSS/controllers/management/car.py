@@ -34,13 +34,14 @@ def add_car():
                 request.form.get('make'),
                 int(request.form.get('seats')),
                 request.form.get('bodytype'),
-                request.form.get('coordinates'),
+                request.form.get('home_coordinates'),
+                request.form.get('home_coordinates'),
                 request.form.get('colour'),
                 float(request.form.get('costperhour')),
                 request.form.get('fueltype'),
                 float(request.form.get('totaldistance')),
                 request.form.get('numberplate'),
-                None
+                request.form.get('agent_id')
             )
             db.session.add(new_car)
             db.session.commit()
@@ -72,7 +73,7 @@ def modify_car(id):
             car.Make = request.form.get('make')
             car.Seats = int(request.form.get('seats'))
             car.BodyType = request.form.get('bodytype')
-            car.Coordinates = request.form.get('coordinates')
+            car.HomeCoordinates = request.form.get('home_coordinates')
             car.Colour = request.form.get('colour')
             car.CostPerHour = float(request.form.get('costperhour'))
             car.FuelType = request.form.get('fueltype')
@@ -80,6 +81,7 @@ def modify_car(id):
             car.NumberPlate = request.form.get('numberplate')
             currentBookingID = request.form.get('currentbookingid')
             car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
+            car.AgentID = request.form.get('agent_id')
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=car.ID))
         else:
@@ -101,8 +103,6 @@ def view_car(id):
     # TODO: show bookings for cars
     # TODO: if car == None?
     car=db.session.query(Car).filter_by(ID=id).scalar()
-    res = tuple(eval(car.Coordinates))
-    print(car_coordinates[res])
     return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
 
 

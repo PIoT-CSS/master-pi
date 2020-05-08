@@ -43,17 +43,14 @@ def search_car():
     colour = request.form.get('colour')
     if colour != "Any":
         car_query = car_query.filter(Car.Colour.like(colour))
-    # TODO: CHOOSE LOCATION
     pickup_coordinates = request.form.get('pickup_coordinates')
     if pickup_coordinates != "Any":
-        car_query = car_query.filter(Car.Coordinates.like(pickup_coordinates))
+        car_query = car_query.filter(Car.HomeCoordinates.like(pickup_coordinates))
     body_type = request.form.get('bodytype')
     if body_type != "Any":
         car_query = car_query.filter(Car.BodyType.like(body_type))
-    # TODO: FILTER AVAILABLE NOW
     available_now = request.form.get('available_now')
     if available_now == "True":
-        # LOOP THROUGH BOOKINGS and see if any booking now compare time
         car_query = car_query.filter(Car.CurrentBookingID.is_(None))
     return render_template(
         'dashboard.html',

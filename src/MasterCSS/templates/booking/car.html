@@ -25,6 +25,7 @@
                             <th>Make</th>
                             <th>Seats</th>
                             <th>Body type</th>
+                            <th>Location</th>
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
@@ -36,6 +37,7 @@
                                 <td>{{car.Make}}</td>
                                 <td>{{car.Seats}}</td>
                                 <td>{{car.BodyType}}</td>
+                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
                                 <td>{{car.Colour}}</td>
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
@@ -51,7 +53,7 @@
     <div class="container">
         <div class="box">
             <h1 class="title">
-                When and where?
+                When?
             </h1>
             <form action={{url_for("booking_controllers.check_car_availability", car_id=car.ID)}} method="post">
                 <div class="field">
@@ -62,45 +64,13 @@
                         <input class="input" type="datetime-local" name="pickup_datetime" step=600 required>
                     </div>
                 </div>
-                <div class="field">
-                    <div class="label">
-                        Pickup location:
-                    </div>
-                    <div class="control">
-                        <div class="select">
-                            <select name="pickup_coordinates" for="pickup" required>
-                                {% for coordinates, location in all_coordinates.items() %}
-                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{location}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div id="pickup_map" style="width:500px;height:200px;"></div>
-                </div>
+
                 
                 <div class="field">
                     <div class="label"> Return time:</div>
                     <div class="control">
                         <input class="input" type="datetime-local" name="return_datetime" step=600 required></br>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="label"> Return location:</div>
-                    <div class="control">
-                        <div class="select">
-                            <select name="return_coordinates" for="return" required>
-                                {% for coordinates, location in all_coordinates.items() %}
-                                    <option value="{{coordinates}}" data-x="{{ coordinates[0] }}" data-y="{{ coordinates[1] }}">{{location}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <div id="return_map" style="width:500px;height:200px;"></div>
                 </div>
                 
                 {% if err %}
@@ -113,6 +83,11 @@
                 </div>
                 {% endif %}
                 
+                <div class="field">
+                    <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
+                    <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</p> 
+                    <div id="pickup_map" style="width:500px;height:200px;"></div>
+                </div>
                     
                 <input type="submit" name="checkavailability" value="Check availability" class="button is-success">
                 
@@ -125,27 +100,23 @@
 
 
 <script>
-let changeMap = (event) => {
-    let type = event.target.getAttribute("for");
-    console.log("type", type);
-    let selected = event.target[event.target.selectedIndex];
-    let lat = selected.getAttribute("data-x");
-    let lng = selected.getAttribute("data-y");
-    var uluru = { lat: parseFloat(lat), lng: parseFloat(lng) };
-    var map = new google.maps.Map(document.getElementById(`${type}_map`), {zoom: 15, center: uluru});
-    var marker = new google.maps.Marker({position: uluru, map: map});
-}
+// let changeMap = (event) => {
+//     let type = event.target.getAttribute("for");
+//     console.log("type", type);
+//     let selected = event.target[event.target.selectedIndex];
+//     let lat = selected.getAttribute("data-x");
+//     let lng = selected.getAttribute("data-y");
+//     var uluru = { lat: parseFloat(lat), lng: parseFloat(lng) };
+//     var map = new google.maps.Map(document.getElementById(`${type}_map`), {zoom: 15, center: uluru});
+//     var marker = new google.maps.Marker({position: uluru, map: map});
+// }
     
-[...document.querySelectorAll("select")].map(e => e.addEventListener("change", changeMap, false));
+// [...document.querySelectorAll("select")].map(e => e.addEventListener("change", changeMap, false));
 
 function initMap() {
-    let pickup_select = document.querySelector("select[name='pickup_coordinates']");
-    let pickup_lat = pickup_select[pickup_select.selectedIndex].getAttribute("data-x");
-    let pickup_lng = pickup_select[pickup_select.selectedIndex].getAttribute("data-y");
-
-    let return_select = document.querySelector("select[name='return_coordinates']");
-    let return_lat = return_select[return_select.selectedIndex].getAttribute("data-x");
-    let return_lng = return_select[return_select.selectedIndex].getAttribute("data-y");
+    let pickup_data = document.querySelector("input[name='pickup']");
+    let pickup_lat = pickup_data.getAttribute("data-x");
+    let pickup_lng = pickup_data.getAttribute("data-y");
 
     let google = window.google;
     
@@ -154,11 +125,6 @@ function initMap() {
         var pickup_map = new google.maps.Map(
         document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
         var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
-
-        var return_loc = { lat: parseFloat(return_lat), lng: parseFloat(return_lng) };
-        var return_map = new google.maps.Map(
-        document.getElementById('return_map'), {zoom: 15, center: return_loc});
-        var marker = new google.maps.Marker({position: return_loc, map: return_map});
     }
 }
 
