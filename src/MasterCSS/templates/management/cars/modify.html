@@ -1,5 +1,5 @@
 <h1>Modify car</h1>
-<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} method="post">
+<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} enctype=multipart/form-data method="post">
     Secret key
     <input name="secretkey" type="text" required>
     Make
@@ -38,5 +38,8 @@
     <input name="currentbookingid" type="number" value='{{car.CurrentBookingID}}'>
     Agent ID
     <input name="agent_id" type="text" value='{{car.AgentID}}'>
+    Modify Image
+    <input type="file" name="image" accept="image/*">
+    <img src="{{car.Image}}">
     <input type="submit" name="modify" value="Modify">
 </form>

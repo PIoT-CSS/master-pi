@@ -5,7 +5,7 @@
 {% block container %}  -->
 
 <h1>Add a car</h1>
-<form action={{url_for("car_management_controllers.add_car")}} method="post">
+<form action={{url_for("car_management_controllers.add_car")}} enctype=multipart/form-data method="post">
     Secret key
     <input name="secretkey" type="text" required>
     Make
@@ -48,6 +48,8 @@
     <input name="numberplate" type="text" required>
     Agent ID
     <input name="agent_id" type="text">
+    Image
+    <input type="file" name="image" accept="image/*" required>
     <input type="submit" name="register" value="Add car">
 </form>
 

@@ -12,7 +12,7 @@ class CarSchema(ma.Schema):
 
     class Meta:
         fields = ("ID", "Make", "Seats", "BodyType", "HomeCoordinates" ,"Coordinates", 
-        "Colour", "CostPerHour", "FuelType", "TotalDistance", "NumberPlate", "CurrentBookingID", "AgentID")
+        "Colour", "CostPerHour", "FuelType", "TotalDistance", "NumberPlate", "CurrentBookingID", "AgentID", "Image")
 
 
 class Car(db.Model):
@@ -30,12 +30,12 @@ class Car(db.Model):
     NumberPlate = db.Column(db.Text, nullable=False)
     CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
     AgentID = db.Column(db.Text, nullable=False)
+    Image = db.Column(db.Text(4294000000), nullable=False)
     Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID]) 
 
     def __init__(self, Make, Seats, BodyType, Coordinates, HomeCoordinates,
                  Colour, CostPerHour, FuelType, TotalDistance, NumberPlate, 
-                 AgentID,
-                 CurrentBookingID=None, ID=None):
+                 AgentID, Image, CurrentBookingID=None, ID=None):
         self.ID = ID
         self.Make = Make
         self.Seats = Seats
@@ -49,3 +49,4 @@ class Car(db.Model):
         self.NumberPlate = NumberPlate
         self.CurrentBookingID = CurrentBookingID
         self.AgentID = AgentID
+        self.Image = Image

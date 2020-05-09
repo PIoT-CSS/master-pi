@@ -3,6 +3,7 @@ car.py contains car management controllers.
 """
 import os
 import json
+import base64
 from MasterCSS.models.car import Car
 from MasterCSS.cli import db
 from flask import (
@@ -30,6 +31,9 @@ def add_car():
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
+            image = request.files
+            image_encoded = base64.b64encode(image["image"].read())
+            image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
             new_car = Car(
                 request.form.get('make'),
                 int(request.form.get('seats')),
@@ -41,7 +45,8 @@ def add_car():
                 request.form.get('fueltype'),
                 float(request.form.get('totaldistance')),
                 request.form.get('numberplate'),
-                request.form.get('agent_id')
+                request.form.get('agent_id'),
+                image_encoded
             )
             db.session.add(new_car)
             db.session.commit()
@@ -73,7 +78,6 @@ def modify_car(id):
             car.Make = request.form.get('make')
             car.Seats = int(request.form.get('seats'))
             car.BodyType = request.form.get('bodytype')
-            car.HomeCoordinates = request.form.get('home_coordinates')
             car.Colour = request.form.get('colour')
             car.CostPerHour = float(request.form.get('costperhour'))
             car.FuelType = request.form.get('fueltype')
@@ -82,6 +86,12 @@ def modify_car(id):
             currentBookingID = request.form.get('currentbookingid')
             car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
             car.AgentID = request.form.get('agent_id')
+            print(request.files)
+            if request.files.get('image', None):
+                image = request.files
+                image_encoded = base64.b64encode(image["image"].read())
+                image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
+                car.Image = image_encoded
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=car.ID))
         else:

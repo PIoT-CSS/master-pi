@@ -17,6 +17,7 @@
             <th>NumberPlate</th>
             <th>CurrentBookingID</th>
             <th>Agent ID</th>
+            <th>Image</th>
             <th></th>
             <th></th>
         </tr>
@@ -36,6 +37,7 @@
             <td>{{car.NumberPlate}}</td>
             <td>{{car.CurrentBookingID}}</td>
             <td>{{car.AgentID}}</td>
+            <td><img src="{{car.Image}}"></td>
             <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-link is-outlined">Modify</a></td>
             <td><a href={{url_for('car_management_controllers.remove_car', id=car.ID)}} class="button is-link is-outlined">Remove</a></td>
         </tr>
