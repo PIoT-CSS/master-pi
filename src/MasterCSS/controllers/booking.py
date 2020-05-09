@@ -31,13 +31,13 @@ car_coordinates = Constant.CAR_COORDINATES
 
 
 @login_required
-@controllers.route(BOOKING_API_URL + '/cars/<int:car_id>', methods=['POST'])
-def check_car_availability(car_id):
+@controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
+def confirm_booking():
     pickup_datetime = datetime.strptime(
         request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(
         request.form.get('return_datetime'), DEFAULT_DATETIME_FORMAT)
-    car = db.session.query(Car).filter_by(ID=car_id).scalar()
+    car = db.session.query(Car).filter_by(ID=int(request.form.get('car_id'))).scalar()
 
     timeDelta = return_datetime - pickup_datetime
     dateTimeDifferenceInHours = timeDelta.total_seconds() / 3600
@@ -45,7 +45,7 @@ def check_car_availability(car_id):
     cost = car.CostPerHour * dateTimeDifferenceInHours
 
     return render_template(
-        'booking/availability.html',
+        'booking/confirmation.html',
         car=car,
         pickup_datetime=pickup_datetime,
         return_datetime=return_datetime,
@@ -55,7 +55,7 @@ def check_car_availability(car_id):
 
 
 @login_required
-@controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
+@controllers.route(BOOKING_API_URL + '/confirm', methods=['POST'])
 def book():
     pickup_datetime = datetime.strptime(request.form.get(
         'pickup_datetime'), DEFAULT_DATETIME_FORMAT)

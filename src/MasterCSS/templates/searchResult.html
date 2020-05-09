@@ -49,7 +49,8 @@
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
                                 <td>
-                                    <form action={{url_for('booking_controllers.check_car_availability', car_id=car.ID)}} method="post">
+                                    <form action={{url_for('booking_controllers.confirm_booking')}} method="post">
+                                        <input type="hidden" name="car_id" value = "{{car.ID}}">
                                         <input type="hidden" name="pickup_datetime" value = "{{pickup_datetime}}">
                                         <input type="hidden" name="return_datetime" value = "{{return_datetime}}">
                                         <input type="submit" class="button is-success" name="book" value="Book">
