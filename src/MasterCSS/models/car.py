@@ -5,6 +5,7 @@ import os
 from flask import Flask
 from MasterCSS.cli import db, ma
 
+LONGTEXT_LENGTH = 4294000000
 
 class CarSchema(ma.Schema):
     def __init__(self, strict=True, **kwargs):
@@ -30,7 +31,7 @@ class Car(db.Model):
     NumberPlate = db.Column(db.Text, nullable=False)
     CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
     AgentID = db.Column(db.Text, nullable=False)
-    Image = db.Column(db.Text(4294000000), nullable=False)
+    Image = db.Column(db.Text(LONGTEXT_LENGTH), nullable=False)
     Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID]) 
 
     def __init__(self, Make, Seats, BodyType, Coordinates, HomeCoordinates,
