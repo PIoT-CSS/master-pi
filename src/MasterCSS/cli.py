@@ -4,7 +4,6 @@ from flask_login import (
     current_user
 )
 import os
-import base64
 from dotenv import load_dotenv
 from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
@@ -52,7 +51,7 @@ app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 
 # enable function calls from jinja
-app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str, base64=base64)
+app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str)
 
 @login_manager.user_loader
 def load_user(id):
