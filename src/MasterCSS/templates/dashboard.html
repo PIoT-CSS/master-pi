@@ -171,6 +171,7 @@
         $('input[name="datetimes"]').daterangepicker({
           timePicker: true,
           startDate: moment().startOf('hour'),
+          isInvalidDate: function (date) { return date < moment().subtract(1, 'days') },
           endDate: moment().startOf('hour').add(32, 'hour'),
           locale: {
             format: 'DD/MM/YYYY HH:mm'

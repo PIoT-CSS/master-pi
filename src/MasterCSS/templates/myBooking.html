@@ -1,0 +1,63 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          My booking!
+        </h1>
+        <h2 class="subtitle">
+           These are your booking
+        </h2>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Car ID</th>
+                            <th>Booked Date</th>
+                            <th>Pickup Date</th>
+                            <th>Return Date</th>
+                            <th>Location</th>
+                            <th>Cost</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{booking.ID}}</td>
+                                <td>{{booking.CarID}}</td>
+                                <td>{{booking.DateTimeBooked}}</td>
+                                <td>{{booking.DateTimeStart}}</td>
+                                <td>{{booking.DateTimeEnd}}</td>
+                                <td>{{booking.HomeCoordinates}}</td>
+                                <td>{{booking.Cost}}</td>
+                                <td>{{booking.Status}}</td>
+                                <td>
+                                    <button class="button is-danger">Cancel</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

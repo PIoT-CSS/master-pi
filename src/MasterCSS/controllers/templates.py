@@ -9,6 +9,8 @@ from flask import (
 )
 from MasterCSS.cli import db
 from MasterCSS.models.car import Car
+from MasterCSS.models.booking import Booking
+
 from flask_login import (
     current_user,
     login_required
@@ -63,6 +65,11 @@ def register():
 def myinfo():
     return render_template('myInformation.html')
 
+@login_required
+@controllers.route("/mybookings")
+def mybookings():
+    bookings = db.session.query(Booking).filter_by(UserID=current_user.ID)
+    return render_template('myBooking.html', bookings=bookings)
 
 @login_required
 @controllers.route("/booking/car/<int:car_id>")
