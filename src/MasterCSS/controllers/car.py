@@ -126,9 +126,7 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
         if len(car_bookings) != 0:
             for booking in car_bookings:
                 if booking.Status != Booking.INACTIVE:
-                    available = (booking.DateTimeStart <= return_datetime and booking.DateTimeEnd >= return_datetime)\
-                            or (booking.DateTimeStart <= pickup_datetime and booking.DateTimeEnd >= return_datetime)\
-                            or (booking.DateTimeStart >= pickup_datetime and booking.DateTimeEnd >= return_datetime)
+                    available = max(booking.DateTimeStart, booking.DateTimeEnd) < min(pickup_datetime, return_datetime)
                     if available == False:
                         break
         if available == True:
