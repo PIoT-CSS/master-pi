@@ -37,21 +37,18 @@ controllers = Blueprint("car_controllers", __name__)
 @controllers.route(CAR_API_URL+ '/filter', methods=['POST'])
 def filter_car():
     car_query = db.session.query(Car)
+    cars = car_query.all()
     datetimes = request.form.get('datetimes')
-
     times_str = [i.strip() for i in datetimes.split('-')]
-
     return_datetime = datetime.strptime(
         times_str[1], HTML_DATETIME_FORMAT)
-
     pickup_datetime = datetime.strptime(
         times_str[0], HTML_DATETIME_FORMAT)
+    if pickup_datetime >= return_datetime:
+        return render_template("dashboard.html", err="Invalid date range! Please try again.", cars=cars)
 
-    car_query = car_query.filter(Car.CurrentBookingID.is_(None))
-    cars = car_query.all()
-    
     available_cars = get_available_cars(pickup_datetime, return_datetime, cars)
-    
+
     if(len(available_cars) == 0):
         return render_template("dashboard.html", err="No cars are available at the moment.", cars=cars)
     return render_template(
