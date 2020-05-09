@@ -10,8 +10,8 @@ class Subscriber:
 
     def __init__(self):
         self.topic = "test"
-        self.BROKER_IP = os.getenv("BROKER_IP")
-        self.BROKER_PORT = os.getenv("BROKER_PORT")
+        self.BROKER_IP = str(os.getenv("MASTER_IP"))
+        self.BROKER_PORT = int(os.getenv("BROKER_PORT"))
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
@@ -22,14 +22,13 @@ class Subscriber:
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
-        payload = {"message": "On"}
-        client.publish(self.topic, json.dumps(payload))
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
 
     def subscribe(self):
         broker_address = self.BROKER_IP
+        broker_port = self.BROKER_PORT
         print(broker_address)
         # initialise MQTT Client
         client = mqtt.Client("toagentpi")
@@ -40,5 +39,5 @@ class Subscriber:
         client.on_log = self.on_log
 
         # client.username_pw_set(user, password)
-        client.connect(broker_address)
+        client.connect(broker_address, broker_port)
         client.loop_forever()
