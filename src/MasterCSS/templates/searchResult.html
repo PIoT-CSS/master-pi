@@ -35,7 +35,6 @@
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
-                            <th>Availablility</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,11 +49,11 @@
                                 <td>{{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
                                 <td>
-                                    {% if not car.CurrentBookingID %}
-                                        <a href={{url_for('template_controllers.car_booking', car_id=car.ID)}} class="button is-success">Book</a>
-                                    {% else %}
-                                        <button class="button is-disabled">Unavailable</button>
-                                    {% endif %}
+                                    <form action={{url_for('booking_controllers.check_car_availability', car_id=car.ID)}} method="post">
+                                        <input type="hidden" name="pickup_datetime" value = "{{pickup_datetime}}">
+                                        <input type="hidden" name="return_datetime" value = "{{return_datetime}}">
+                                        <input type="submit" class="button is-success" name="book" value="Book">
+                                    </form>
                                 </td>
                             </tr>
                         {% endfor %}

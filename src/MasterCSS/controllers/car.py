@@ -42,10 +42,10 @@ def filter_car():
     times_str = [i.strip() for i in datetimes.split('-')]
 
     return_datetime = datetime.strptime(
-        times_str[0], HTML_DATETIME_FORMAT)
+        times_str[1], HTML_DATETIME_FORMAT)
 
     pickup_datetime = datetime.strptime(
-        times_str[1], HTML_DATETIME_FORMAT)
+        times_str[0], HTML_DATETIME_FORMAT)
 
     car_query = car_query.filter(Car.CurrentBookingID.is_(None))
     cars = car_query.all()

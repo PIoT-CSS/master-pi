@@ -33,41 +33,16 @@ car_coordinates = Constant.CAR_COORDINATES
 @login_required
 @controllers.route(BOOKING_API_URL + '/cars/<int:car_id>', methods=['POST'])
 def check_car_availability(car_id):
-    # TODO: validate datetime input and return error
-    # return_datetime cant be earlier than pickup_datetime
     pickup_datetime = datetime.strptime(
-        request.form.get('pickup_datetime'), HTML_DATETIME_FORMAT)
+        request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(
-        request.form.get('return_datetime'), HTML_DATETIME_FORMAT)
+        request.form.get('return_datetime'), DEFAULT_DATETIME_FORMAT)
     car = db.session.query(Car).filter_by(ID=car_id).scalar()
-
-
-    #  1111-02-25 12:00:00
- 
-
-    # check booking status with Booking.Status and see what's active
-    # if active, check datetime.
-    # if len(car.Booking)
-    # for booking in car.Bookings:
-    #     if len(car)
-    #     pass
-    available = True
-
-    # CALCULATE PRICE and show
 
     timeDelta = return_datetime - pickup_datetime
     dateTimeDifferenceInHours = timeDelta.total_seconds() / 3600
 
     cost = car.CostPerHour * dateTimeDifferenceInHours
-
-    if dateTimeDifferenceInHours < 1:
-        return render_template('booking/car.html',
-                                car=car,
-                                pickup_datetime=pickup_datetime,
-                                return_datetime=return_datetime,
-                                car_coordinates=car_coordinates,
-                                err="The minimum booking is one hour",
-                                available=available)
 
     return render_template(
         'booking/availability.html',
@@ -75,8 +50,7 @@ def check_car_availability(car_id):
         pickup_datetime=pickup_datetime,
         return_datetime=return_datetime,
         car_coordinates=car_coordinates,
-        cost = cost,
-        available=available
+        cost = cost
     )
 
 
@@ -102,8 +76,6 @@ def book():
     db.session.add(booking)
     db.session.commit()
 
-    # TODO booking takes place here
-    # pass booking details into page
     return render_template(
         'booking/success.html',
         booking=booking,

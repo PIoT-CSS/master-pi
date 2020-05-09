@@ -54,7 +54,7 @@
         <div class="box">
             <article class="message {{'is-success' if available != false else 'is-danger'}}">
                 <div class="message-body">
-                    <p> <strong>Availability: </strong> {{ 'Yes!' if available != False else 'No, sorry!' }} </p>
+                    <p> <strong>Available!</strong></p>
                 </div>
             </article>
             
@@ -67,14 +67,12 @@
             <div id="pickup_map" style="width:500px;height:200px;"></div>
             
             <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
-            {% if available %}
             <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
                 <input type="hidden" name="car_id" value="{{car.ID}}">
                 <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
                 <input type="hidden" name="return_datetime" value="{{return_datetime}}">
-                <p><input class="button is-info" type="submit" name="book" value="Book"></p>
+                <p><input class="button is-info" type="submit" name="book" value="Confirm booking"></p>
             </form>
-            {% endif %}
         </div>
     </div>
 </section>
