@@ -7,7 +7,18 @@ load_dotenv(dotenv_path=env_path)
 
 
 class Subscriber:
+    """
+    A class to initiate a subscriber via MQTT topic
 
+    Methods
+    -------
+    subscribe(self):
+        Initiates a MQTT Client, connects and listens for publishes to a specified topic
+    on_connect(self, client, userdata, flags, rc):
+        A callback function that is called when the client connects to a broker, a specified address.
+
+
+    """
     def __init__(self):
         self.topic = "test"
         self.BROKER_IP = str(os.getenv("MASTER_IP"))
