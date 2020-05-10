@@ -132,7 +132,7 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
-                return redirect(url_for("template_controllers.index"))
+                return redirect(url_for("template_controllers.oauth"))
 
         except ErrorValueException as e:
             return render_template("register.html", err=str(e.message), defaultValues=e.payload)

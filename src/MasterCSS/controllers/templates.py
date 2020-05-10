@@ -44,6 +44,12 @@ def index():
         return render_template('index.html')
 
 
+@login_required
+@controllers.route("/oauth")
+def oauth():
+    return render_template('oauth.html')
+
+
 @controllers.route("/login")
 def login():
     if current_user.is_authenticated:
