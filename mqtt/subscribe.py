@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import publish as Publisher
+from mqtt.publish import *
 import json
 import os
 from dotenv import load_dotenv
@@ -38,7 +38,9 @@ class Subscriber:
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         if msg.topic == 'AUTH/FR':
+            print("[DEBUG] issues with creating a publisher")
             pub = Publisher()
+            print("[DEBUG] tried to publish")
             pub.file_publish('alex', 1)
         elif msg.topic == 'AUTH/UP':
             pub = Publisher()

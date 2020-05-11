@@ -96,9 +96,9 @@ class Publisher:
         client.loop_stop() #stop loop
 
     def file_publish(self, file_name, qos):
-        #Publish file
+        
         client = mqtt.Client("toagentpi")
-        res, mid = client
+        payload = 'test'
         res,mid=client.publish(self.topic, payload, qos)
         
         if res==0: 
@@ -122,7 +122,7 @@ class Publisher:
         send_header(client, filename, topic, qos)
         data_block_size=2000
         fo=open(filename,"rb")
-        fout=open("1out.txt","wb") #use a different filename
+        # fout=open("1out.txt","wb") #use a different filename
 
         while Run_flag:
             chunk=fo.read(data_block_size)
@@ -139,11 +139,7 @@ class Publisher:
                 #print("out Message ",out_message)
                 res,mid=client.publish("data/files",out_message,qos=1)
                 Run_flag=False
-        
-        time_taken=time.time()-start
-        print("took ",time_taken)
-        time.sleep(4)
-        fout.close() #close files
+    
         fo.close()
             
 
