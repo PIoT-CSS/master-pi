@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import publish as Publisher
 import json
 import os
 from dotenv import load_dotenv
@@ -20,19 +21,28 @@ class Subscriber:
 
     """
     def __init__(self):
-        self.topic = "test"
+        self.AUTH_FR_TOPIC = "AUTH/FR"
+        self.AUTH_UP_TOPIC = "AUTH/UP"
         self.BROKER_IP = str(os.getenv("MASTER_IP"))
         self.BROKER_PORT = int(os.getenv("BROKER_PORT"))
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print("connection established, returned code=", rc)
-            client.subscribe(self.topic)
+            client.subscribe(self.AUTH_FR_TOPIC)
+            client.subscribe(self.AUTH_UP_TOPIC)
+
         else:
             print("connection error, returned code=", rc)
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        if msg.topic == 'AUTH/FR':
+            pub = Publisher()
+            pub.file_publish('alex', 1)
+        elif msg.topic == 'AUTH/UP':
+            pub = Publisher()
+
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
@@ -40,7 +50,7 @@ class Subscriber:
     def subscribe(self):
         broker_address = self.BROKER_IP
         broker_port = self.BROKER_PORT
-        print(broker_address)
+        
         # initialise MQTT Client
         client = mqtt.Client("toagentpi")
 
