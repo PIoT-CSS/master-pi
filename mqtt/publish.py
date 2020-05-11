@@ -98,11 +98,15 @@ class Publisher:
     def file_publish(self, file_name, qos):
         
         client = mqtt.Client("toagentpi")
+        client.on_publish = self.on_publish
+        client.on_disconnect = self.on_disconnect
+        client.on_connect = self.on_connect
+        
         payload = 'test'
         res,mid=client.publish(self.topic, payload, qos)
         
         if res==0: 
-            if wait_for(client,"PUBACK", running_loop=True):
+            if self.wait_for(client,"PUBACK", running_loop=True):
                 if mid==client.mid_value:
                     print("match mid ",str(mid))
                     client.puback_flag=False #reset flag
@@ -119,7 +123,7 @@ class Publisher:
         count=0
         qos=1
         filename="{}.pickles".format(file_name)
-        send_header(client, filename, topic, qos)
+        self.send_header(client, filename, topic, qos)
         data_block_size=2000
         fo=open(filename,"rb")
         # fout=open("1out.txt","wb") #use a different filename
@@ -135,7 +139,7 @@ class Publisher:
             else:
                 #send hash
                 out_message=out_hash_md5.hexdigest()
-                send_end(client, filename, topic, qos)
+                self.send_end(client, filename, topic, qos)
                 #print("out Message ",out_message)
                 res,mid=client.publish("data/files",out_message,qos=1)
                 Run_flag=False
