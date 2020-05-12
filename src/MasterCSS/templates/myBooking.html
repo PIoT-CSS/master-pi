@@ -44,7 +44,7 @@
                                 <td>{{booking.DateTimeStart}}</td>
                                 <td>{{booking.DateTimeEnd}}</td>
                                 <td>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}}</td>
-                                <td>{{booking.Cost}}</td>
+                                <td>${{booking.Cost}}</td>
                                 <td>{{booking_get_status(booking.Status)}}</td>
                                 <td>
                                     <button class="button is-danger">Cancel</button>
