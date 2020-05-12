@@ -96,3 +96,16 @@ def cancel():
     booking.Status = Booking.CANCELED
     db.session.commit()
     return redirect(url_for("template_controllers.mybookings"))
+
+@login_required
+@controllers.route(BOOKING_API_URL + '/view', methods=['POST'])
+def view():
+    booking_id = request.form.get('booking_id')
+    booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
+    car = db.session.query(Car).filter_by(ID=int(booking.CarID)).scalar()
+    return render_template(
+        'booking/view.html',
+        booking=booking,
+        car_coordinates=car_coordinates,
+        car=car
+    )

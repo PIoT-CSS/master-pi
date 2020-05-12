@@ -5,11 +5,33 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          You've selected {{car.Make}}.
+          Booking details
         </h1>
-        <h2 class="subtitle">
-          Car ID: {{car.ID}}
-        </h2>
+        <article class="message" styl="over-flow: hidden">
+            <div class="message-header">
+                Booking ID: {{booking.ID}}
+            </div>
+            <div class="message-body">
+                <p><strong>Car ID: </strong> {{booking.CarID}}</p>
+                <p><strong>User ID: </strong> {{booking.UserID}}</p>
+                <p><strong>Booking time: </strong> {{booking.DateTimeBooked}}</p>
+                <p><strong>Pickup time: </strong> {{booking.DateTimeStart}}</p>
+                <p><strong>Return time: </strong> {{booking.DateTimeEnd}}</p>
+                <p><strong>Cost: </strong> ${{booking.Cost}}</p>
+                <p><strong>Status: </strong>{{booking_model.getStatus(booking.Status)}}</p>
+                <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}} </p>
+            </div>
+            <div name="map">
+                <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
+                <div id="pickup_map" style="width:100%;height:200px;"></div>
+            </div>
+            {% if booking.Status == booking_model.CONFIRMED %}
+            <form method="post" action="{{url_for('booking_controllers.cancel')}}">
+                <input type="hidden" name="booking_id" value="{{booking.ID}}">
+                <button type="submit" class="button is-danger is-fullwidth">Cancel</button>
+            </form>
+            {% endif %}
+        <article>
       </div>
     </div>
 </section>
@@ -17,34 +39,9 @@
 <section>
     <div class="container">
         <div class="box">
-            <article class="message {{'is-success' if available != false else 'is-danger'}}">
-                <div class="message-body">
-                    <p> <strong>Available!</strong></p>
-                </div>
-            </article>
-            
-            <p> <strong>Pickup time: </strong> {{pickup_datetime}} </p>
-            
-            <p> <strong>Return time: </strong> {{return_datetime}} </p>
-
-            <p> <strong>Pickup and return location: </strong> {{car_coordinates[tuple(eval(car.HomeCoordinates))]}} </p>
-            <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
-            <div id="pickup_map" style="width:500px;height:200px;"></div>
-            
-            <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
-            <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
-                <input type="hidden" name="car_id" value="{{car.ID}}">
-                <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
-                <input type="hidden" name="return_datetime" value="{{return_datetime}}">
-                <p><input class="button is-info" type="submit" name="book" value="Confirm booking"></p>
-            </form>
-        </div>
-    </div>
-</section>
-
-<section>
-    <div class="container">
-        <div class="box">
+            <h1 class="title">
+                Car details:
+            </h1>
             <div class="table-container">
                 <table class="table w-full text-center">
                     <thead>
@@ -83,6 +80,7 @@
 </section>
 
 <script>
+
 function initMap() {
     let pickup_data = document.querySelector("input[name='pickup']");
     let pickup_lat = pickup_data.getAttribute("data-x");
@@ -99,7 +97,10 @@ function initMap() {
 }
 
 initMap();
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6gYrFF5NEKEa9R2rDNCILa6i2RGvvWw&callback=initMap" type="text/javascript"></script>
+
+</script>
 
 {% endblock %}
