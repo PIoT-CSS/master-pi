@@ -69,6 +69,8 @@ def myinfo():
 @controllers.route("/mybookings")
 def mybookings():
     bookings = db.session.query(Booking).filter_by(UserID=current_user.ID)
+    # reverse sort bookings list to sort by latest
+    bookings = list(reversed(bookings.all()))
     return render_template('myBooking.html', bookings=bookings, car_coordinates=car_coordinates)
 
 # custom 404 page

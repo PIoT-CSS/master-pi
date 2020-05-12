@@ -51,7 +51,7 @@ app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 
 # enable function calls from jinja
-app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str, booking_get_status=Booking.getStatus)
+app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
 @login_manager.user_loader
 def load_user(id):
