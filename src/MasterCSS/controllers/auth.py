@@ -126,14 +126,11 @@ def register():
                     if i != len(takens) - 1:
                         error_message = error_message + ", "
                 raise ErrorValueException(error_message, payload=defaultValues)
-
             else:
-
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
-                return redirect(url_for("template_controllers.oauth"))
-
+                return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
             return render_template("register.html", err=str(e.message), defaultValues=e.payload)
 

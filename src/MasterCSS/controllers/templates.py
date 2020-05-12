@@ -45,9 +45,9 @@ def index():
 
 
 @login_required
-@controllers.route("/oauth")
-def oauth():
-    return render_template('oauth.html')
+@controllers.route("/calendartest")
+def calendartest():
+    return render_template('calendartest.html')
 
 
 @controllers.route("/login")
