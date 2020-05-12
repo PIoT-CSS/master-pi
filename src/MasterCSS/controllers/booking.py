@@ -83,3 +83,29 @@ def book():
         car_coordinates=car_coordinates,
         car=car
     )
+
+@login_required
+@controllers.route(BOOKING_API_URL + '/cancel', methods=['POST'])
+def cancel():
+    booking_id = request.form.get('booking_id')
+    booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
+    if booking == None:
+        return redirect(url_for('template_controllers.unauthorised'))
+    if booking.Status != Booking.CONFIRMED:
+        return redirect(url_for('template_controllers.unauthorised'))
+    booking.Status = Booking.CANCELED
+    db.session.commit()
+    return redirect(url_for("template_controllers.mybookings"))
+
+@login_required
+@controllers.route(BOOKING_API_URL + '/view', methods=['POST'])
+def view():
+    booking_id = request.form.get('booking_id')
+    booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
+    car = db.session.query(Car).filter_by(ID=int(booking.CarID)).scalar()
+    return render_template(
+        'booking/view.html',
+        booking=booking,
+        car_coordinates=car_coordinates,
+        car=car
+    )

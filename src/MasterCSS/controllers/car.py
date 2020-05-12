@@ -122,7 +122,7 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
         car_bookings = booking_query.all()
         if len(car_bookings) != 0:
             for booking in car_bookings:
-                if booking.Status != Booking.INACTIVE:
+                if booking.Status == Booking.CONFIRMED or booking.Status == Booking.ACTIVE:
                     available = max(booking.DateTimeStart, booking.DateTimeEnd) < min(pickup_datetime, return_datetime)
                     if available == False:
                         break

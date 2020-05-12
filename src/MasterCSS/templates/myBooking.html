@@ -8,10 +8,10 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          My booking!
+          My bookings!
         </h1>
         <h2 class="subtitle">
-           These are your booking
+           These are your bookings
         </h2>
       </div>
     </div>
@@ -26,10 +26,10 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Car ID</th>
                             <th>Booked Date</th>
                             <th>Pickup Date</th>
                             <th>Return Date</th>
+                            <th>Car ID</th>
                             <th>Location</th>
                             <th>Cost</th>
                             <th>Status</th>
@@ -39,15 +39,26 @@
                         {% for booking in bookings %}
                             <tr>
                                 <td>{{booking.ID}}</td>
-                                <td>{{booking.CarID}}</td>
                                 <td>{{booking.DateTimeBooked}}</td>
                                 <td>{{booking.DateTimeStart}}</td>
                                 <td>{{booking.DateTimeEnd}}</td>
+                                <td>{{booking.CarID}}</td>
                                 <td>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}}</td>
-                                <td>{{booking.Cost}}</td>
-                                <td>{{booking.Status}}</td>
+                                <td>${{booking.Cost}}</td>
+                                <td>{{booking_model.getStatus(booking.Status)}}</td>
                                 <td>
-                                    <button class="button is-danger">Cancel</button>
+                                    <form method="post" action="{{url_for('booking_controllers.view')}}">
+                                        <input type="hidden" name="booking_id" value="{{booking.ID}}">
+                                        <button type="submit" class="button is-info">View</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    {% if booking.Status == booking_model.CONFIRMED %}
+                                    <form method="post" action="{{url_for('booking_controllers.cancel')}}">
+                                        <input type="hidden" name="booking_id" value="{{booking.ID}}">
+                                        <button type="submit" class="button is-danger">Cancel</button>
+                                    </form>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
