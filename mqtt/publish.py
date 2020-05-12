@@ -51,34 +51,15 @@ class Publisher:
         header=bytearray(header,"utf-8")
         header.extend(b','*(200-len(header)))
         print(header)
-        publish(client,topic,header,qos)
+        client.publish(topic,header,qos)
 
     def send_end(self, client, filename, topic, qos):
         end="end"+",,"+filename+",,"+out_hash_md5.hexdigest()
         end=bytearray(end,"utf-8")
         end.extend(b','*(200-len(end)))
         print(end)
-        publish(client,topic,end,qos)
-
-    def wait_for(self, client, msgType,period=0.25,wait_time=40,running_loop=False):
-        client.running_loop=running_loop #if using external loop
-        wcount=0  
-        while True:
-            #print("waiting"+ msgType)
-            if msgType=="PUBACK":
-                if client.on_publish:        
-                    if client.puback_flag:
-                        return True
-        
-            if not client.running_loop:
-                client.loop(.01)  #check for messages manually
-            time.sleep(period)
-            #print("loop flag ",client.running_loop)
-            wcount+=1
-            if wcount>wait_time:
-                print("return from wait loop taken too long")
-                return False
-        return True     
+        client.publish(topic,end,qos)
+ 
 
     def publish(self, payload, qos):
         # Create new instance
@@ -102,47 +83,36 @@ class Publisher:
         client.on_disconnect = self.on_disconnect
         client.on_connect = self.on_connect
         
-        payload = 'test'
-        res,mid=client.publish(self.topic, payload, qos)
+        client.connect(self.broker_address, self.port)
         
-        if res==0: 
-            if self.wait_for(client,"PUBACK", running_loop=True):
-                if mid==client.mid_value:
-                    print("match mid ",str(mid))
-                    client.puback_flag=False #reset flag
-                else:
-                    raise SystemExit("not got correct puback mid so quitting")
-                
-            else:
-                raise SystemExit("not got puback so quitting")
+        payload = 'test'
 
-        # Setting up processing for publishing encoding
-        topic = "test"
-        start=time.time()
+        # Setting up processing for publishing encodin
         Run_flag=True
         count=0
         qos=1
-        filename="{}.pickles".format(file_name)
-        self.send_header(client, filename, topic, qos)
+        filename="{}.pickle".format(file_name)
+        self.send_header(client, filename, self.topic, qos)
         data_block_size=2000
         fo=open(filename,"rb")
         # fout=open("1out.txt","wb") #use a different filename
-
         while Run_flag:
             chunk=fo.read(data_block_size)
             if chunk:
                 out_hash_md5.update(chunk)
                 out_message=chunk
-                #print(" length =",type(out_message))
-                publish(client,topic,out_message,qos)
+                print(" length =",type(out_message))
+                client.publish(self.topic,out_message,qos)
                     
             else:
                 #send hash
                 out_message=out_hash_md5.hexdigest()
-                self.send_end(client, filename, topic, qos)
-                #print("out Message ",out_message)
-                res,mid=client.publish("data/files",out_message,qos=1)
+                self.send_end(client, filename, self.topic, qos)
+                print("out Message ",out_message)
+                res,mid=client.publish("test",out_message,qos)
                 Run_flag=False
+                client.disconnect()
+                client.loop_stop()
     
         fo.close()
             

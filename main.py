@@ -6,7 +6,7 @@ Main
 
 def main():
     pub = Publisher()
-    pub.publish('test')
+    pub.publish('test', 1)
 
 
 if __name__ == '__main__':

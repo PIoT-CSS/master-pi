@@ -31,7 +31,6 @@ class Subscriber:
             print("connection established, returned code=", rc)
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
-
         else:
             print("connection error, returned code=", rc)
 
