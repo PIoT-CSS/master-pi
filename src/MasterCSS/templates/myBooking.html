@@ -48,7 +48,11 @@
                                 <td>{{booking_model.getStatus(booking.Status)}}</td>
                                 <td>
                                     {% if booking.Status == booking_model.CONFIRMED %}
-                                    <button class="button is-danger">Cancel</button>
+                                    <form method="post" action="{{url_for('booking_controllers.cancel')}}">
+                                        <input type="hidden" name="booking_id" value="{{booking.ID}}">
+                                        <button type="submit" class="button is-danger">Cancel</button>
+                                    </form>
+
                                     {% endif %}
                                 </td>
                             </tr>
