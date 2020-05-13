@@ -2,16 +2,15 @@
 
 {% block container %}
 
-<body>
   <h1 class="title">TEST GOOGLE CALENDAR API</h1>
 
   <!--Add buttons to initiate auth sequence and sign out-->
-  <button id="authorize_button" class="button is-info" style="display: none;">Sign in to Google Calendar</button>
+  <button id="authorize_button" class="button is-info">Sign in to Google Calendar</button>
   <!-- <button id="signout_button" class="button is-danger" style="display: none;">Sign Out (doesn't work, not quite needed)</button> -->
 
-  <button id="add_event_button" class="button is-info" style="display: none;" onClick='addEvent()'>Add Test Event (check console for details)</button>
+  <button id="add_event_button" class="button is-info" onClick='addEvent()'>Add Test Event (check console for details)</button>
   <p id="event_id" style="display: none;"></p>
-  <button id="delete_event_button" class="button is-danger" style="display: none;" onClick='deleteEvent()'>Delete Test Event</button>
+  <button id="delete_event_button" class="button is-danger" onClick='deleteEvent()'>Delete Test Event</button>
 
   <script type="text/javascript">
     // Client ID and API key from the Developer Console
@@ -167,10 +166,7 @@
 
   </script>
 
-  <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
-    onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-</body>
-
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
 
 {% endblock %}

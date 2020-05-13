@@ -5,7 +5,8 @@ from flask import (
     Blueprint,
     request,
     redirect,
-    url_for
+    url_for,
+    session
 )
 from MasterCSS.cli import db
 from MasterCSS.models.car import Car
@@ -17,6 +18,7 @@ from flask_login import (
 )
 
 from MasterCSS.constant import Constant
+from oauth2client import client
 
 car_colours = Constant.CAR_COLOURS
 car_body_types = Constant.CAR_BODY_TYPES
@@ -27,9 +29,15 @@ car_coordinates = Constant.CAR_COORDINATES
 # notify flask about external controllers
 controllers = Blueprint("template_controllers", __name__)
 
+#Begin oauth callback route
 
 @controllers.route("/")
 def index():
+    if 'credentials' not in session:
+      return redirect(url_for('template_controllers.oauth2callback'))
+    credentials = client.OAuth2Credentials.from_json(session['credentials'])
+    if credentials.access_token_expired:
+        return redirect(url_for('template_controllers.oauth2callback'))
     if current_user.is_authenticated:
         return render_template(
             'dashboard.html',
@@ -44,10 +52,27 @@ def index():
         return render_template('index.html')
 
 
+@controllers.route('/oauth2callback')
+def oauth2callback():
+  flow = client.flow_from_clientsecrets(
+      'client-secret.json',
+      scope='https://www.googleapis.com/auth/calendar',
+      redirect_uri= url_for('template_controllers.oauth2callback', _external=True))
+  if 'code' not in request.args:
+    auth_uri = flow.step1_get_authorize_url()
+    return redirect(auth_uri)
+  else:
+    auth_code = request.args.get('code')
+    print("auth_Code", auth_code)
+    credentials = flow.step2_exchange(auth_code)
+    session['credentials'] = credentials.to_json()
+    return redirect(url_for('template_controllers.index'))
+
+
 @login_required
 @controllers.route("/calendartest")
 def calendartest():
-    return render_template('calendartest.html')
+    return render_template('calendarTest.html')
 
 
 @controllers.route("/login")
