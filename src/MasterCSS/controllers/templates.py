@@ -33,7 +33,6 @@ controllers = Blueprint("template_controllers", __name__)
 
 @controllers.route("/")
 def index():
-
     if current_user.is_authenticated:
         if 'credentials' not in session:
             return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
@@ -55,7 +54,7 @@ def index():
 
 
 @controllers.route('/oauth2callback')
-def oauth2callback(callback):
+def oauth2callback(callback=None):
   flow = client.flow_from_clientsecrets(
       'client-secret.json',
       scope='https://www.googleapis.com/auth/calendar',
@@ -67,8 +66,9 @@ def oauth2callback(callback):
     auth_code = request.args.get('code')
     credentials = flow.step2_exchange(auth_code)
     session['credentials'] = credentials.to_json()
-    # return redirect(url_for('template_controllers.index'))
-    return callback
+    if callback:
+        return callback
+    return redirect(url_for('template_controllers.index'))
 
 
 @login_required
