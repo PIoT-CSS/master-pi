@@ -13,7 +13,7 @@ class BookingSchema(ma.Schema):
     class Meta:
         fields = ("ID", "UserID", "CarID", "DateTimeBooked", "DateTimeStart",
                   "DateTimeEnd", "Cost", "HomeCoordinates",
-                  "Distance", "Status")
+                  "Distance", "Status", "CalRef")
 
 
 class Booking(db.Model):
@@ -28,6 +28,7 @@ class Booking(db.Model):
     HomeCoordinates = db.Column(db.Text, nullable=False)
     Distance = db.Column(db.Float, nullable=False)
     Status = db.Column(db.Integer, nullable=False)
+    CalRef = db.Column(db.Text)
     CANCELED = 3
     INACTIVE = 2
     ACTIVE = 1
@@ -35,7 +36,7 @@ class Booking(db.Model):
 
     def __init__(self, UserID, CarID, DateTimeBooked, DateTimeStart,
                  DateTimeEnd, Cost, HomeCoordinates,
-                 Distance, Status, ID=None):
+                 Distance, Status, CalRef=None, ID=None):
         self.ID = ID
         self.UserID = UserID
         self.CarID = CarID
@@ -46,6 +47,7 @@ class Booking(db.Model):
         self.HomeCoordinates = HomeCoordinates
         self.Distance = Distance
         self.Status = Status
+        self.CalRef = CalRef
 
     @staticmethod
     def getStatus(id):

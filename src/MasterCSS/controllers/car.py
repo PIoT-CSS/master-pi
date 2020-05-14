@@ -46,6 +46,8 @@ def filter_car():
         times_str[0], HTML_DATETIME_FORMAT)
     if pickup_datetime >= return_datetime:
         return render_template("dashboard.html", err="Invalid date range! Please try again.", cars=cars)
+    elif pickup_datetime < datetime.now():
+        return render_template("dashboard.html", err="Time must be in the future! Please try again.", cars=cars)
 
     available_cars = get_available_cars(pickup_datetime, return_datetime, cars)
 

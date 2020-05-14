@@ -33,12 +33,14 @@ controllers = Blueprint("template_controllers", __name__)
 
 @controllers.route("/")
 def index():
-    if 'credentials' not in session:
-      return redirect(url_for('template_controllers.oauth2callback'))
-    credentials = client.OAuth2Credentials.from_json(session['credentials'])
-    if credentials.access_token_expired:
-        return redirect(url_for('template_controllers.oauth2callback'))
+
     if current_user.is_authenticated:
+        if 'credentials' not in session:
+            return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+        credentials = client.OAuth2Credentials.from_json(session['credentials'])
+        if credentials.access_token_expired:
+            return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+
         return render_template(
             'dashboard.html',
             cars=db.session.query(Car).all(),
@@ -53,7 +55,7 @@ def index():
 
 
 @controllers.route('/oauth2callback')
-def oauth2callback():
+def oauth2callback(callback):
   flow = client.flow_from_clientsecrets(
       'client-secret.json',
       scope='https://www.googleapis.com/auth/calendar',
@@ -63,16 +65,16 @@ def oauth2callback():
     return redirect(auth_uri)
   else:
     auth_code = request.args.get('code')
-    print("auth_Code", auth_code)
     credentials = flow.step2_exchange(auth_code)
     session['credentials'] = credentials.to_json()
-    return redirect(url_for('template_controllers.index'))
+    # return redirect(url_for('template_controllers.index'))
+    return callback
 
 
 @login_required
 @controllers.route("/calendartest")
 def calendartest():
-    return render_template('calendarTest.html')
+    return render_template('calendartest.html')
 
 
 @controllers.route("/login")
@@ -98,7 +100,7 @@ def myinfo():
 
 @login_required
 @controllers.route("/mybookings")
-def mybookings():
+def mybookings(err=None):
     bookings = db.session.query(Booking).filter_by(UserID=current_user.ID)
     # reverse sort bookings list to sort by latest
     bookings = list(reversed(bookings.all()))

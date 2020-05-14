@@ -17,6 +17,14 @@
 <section>
     <div class="container">
         <div class="box">
+            {% if err %}
+            <article class="message is-info">
+                <div class"message-body">
+                    {{err}}
+                </div>
+            </article>
+            {% endif %}
+
             <article class="message {{'is-success' if available != false else 'is-danger'}}">
                 <div class="message-body">
                     <p> <strong>Available!</strong></p>
@@ -29,18 +37,19 @@
 
             <p> <strong>Pickup and return location: </strong> {{car_coordinates[tuple(eval(car.HomeCoordinates))]}} </p>
             <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
-            <div id="pickup_map" style="width:500px;height:200px;"></div>
+            
+            <div id="pickup_map" class="mt-6" style="width:100%;height:500px;"></div>
             
             <p class="subtitle is-4 mt-5 border-t border--black-600 border-b pt-2 pb-2"> <strong>Cost:</strong> ${{ cost }} </p>
-            <div class="buttons">
-                <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
-                    <input type="hidden" name="car_id" value="{{car.ID}}">
-                    <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
-                    <input type="hidden" name="return_datetime" value="{{return_datetime}}">
-                    <p><input class="button is-info" type="submit" name="book" value="Confirm booking"></p>
-                </form>
-                <button onclick="goBack()" class="button is-danger">Go back</button>
-        </div>
+            <form name="bookform" method="post" action={{url_for("booking_controllers.book")}}>
+                <input type="hidden" name="car_id" value="{{car.ID}}">
+                <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}">
+                <input type="hidden" name="return_datetime" value="{{return_datetime}}">
+                <div class="buttons justify-between">
+                    <button onclick="goBack()" class="button is-danger">Go back</button>
+                    <input class="button is-info" type="submit" name="book" value="Confirm booking">
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -48,6 +57,7 @@
 <section>
     <div class="container">
         <div class="box">
+           
             <div class="table-container">
                 <table class="table w-full text-center">
                     <thead>
@@ -70,14 +80,14 @@
                                 <td>{{car.BodyType}}</td>
                                 <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
                                 <td>{{car.Colour}}</td>
-                                <td>{{car.CostPerHour}}</td>
+                                <td>${{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
                             </tr>
                     </tbody>
                 </table>
                 <div class="card-image ">
-                    <figure class="image is-4by3">
-                      <img src="{{car.Image}}" alt="Placeholder image">
+                    <figure class="image is-square">
+                      <center><img src="{{car.Image}}" alt="Placeholder image" width="200"></center>
                     </figure>
                 </div>
             </div>
@@ -92,12 +102,31 @@ function initMap() {
     let pickup_lng = pickup_data.getAttribute("data-y");
 
     let google = window.google;
-    
+        
     if(google) {
         var pickup_loc = { lat: parseFloat(pickup_lat), lng: parseFloat(pickup_lng) };
         var pickup_map = new google.maps.Map(
         document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
         var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
+
+        var contentString = '<div id="content">'+
+
+            '<h1 class="title is-5">{{car.Make}}</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Seats:</b> {{car.Seats}}</p>'+
+            '<p><b>Location:</b> {{car_coordinates[tuple(eval(car.HomeCoordinates))]   }} </p> '+
+            '<p><b>Fuel Type:</b> {{car.FuelType}} </p> '+
+            '<p><b>Colour:</b> {{car.Colour}} </p> '+
+            '</div>'+
+            '</div>';
+        
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(pickup_map, marker);
+        });
     }
 }
 

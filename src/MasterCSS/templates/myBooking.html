@@ -21,6 +21,13 @@
     <div class="container">
 
         <div class="box">
+            {% if err %}
+            <article class="message is-info">
+                <div class"message-body">
+                    {{err}}
+                </div>
+            </article>
+            {% endif %}
             <div class="table-container">
                 <table class="table w-full text-center">
                     <thead>

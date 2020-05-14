@@ -1,9 +1,10 @@
 """
 booking.py contains booking controllers.
 """
-import os
-import json
+import os, httplib2, json
 from datetime import datetime
+from oauth2client import client
+from googleapiclient.discovery import build
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
 from MasterCSS.cli import db
@@ -12,7 +13,8 @@ from flask import (
     url_for,
     Blueprint,
     redirect,
-    render_template
+    render_template,
+    session,
 )
 from flask_login import (
     current_user,
@@ -34,7 +36,7 @@ car_coordinates = Constant.CAR_COORDINATES
 @controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
 def confirm_booking():
     pickup_datetime = datetime.strptime(
-        request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
+    request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(
         request.form.get('return_datetime'), DEFAULT_DATETIME_FORMAT)
     car = db.session.query(Car).filter_by(ID=int(request.form.get('car_id'))).scalar()
@@ -44,7 +46,7 @@ def confirm_booking():
 
     cost = car.CostPerHour * dateTimeDifferenceInHours
 
-    return render_template(
+    temp = render_template(
         'booking/confirmation.html',
         car=car,
         pickup_datetime=pickup_datetime,
@@ -52,6 +54,8 @@ def confirm_booking():
         car_coordinates=car_coordinates,
         cost = cost
     )
+    
+    return temp
 
 
 @login_required
@@ -69,20 +73,65 @@ def book():
 
     cost = round(car.CostPerHour * dateTimeDifferenceInHours, 2)
 
+    try_again_oauth = render_template(
+        'booking/confirmation.html',
+        car=car,
+        pickup_datetime=pickup_datetime,
+        return_datetime=return_datetime,
+        car_coordinates=car_coordinates,
+        cost = cost,
+        err = "OAuth-ed, please try again."
+    )
+
+    if 'credentials' not in session:
+        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+    credentials = client.OAuth2Credentials.from_json(session['credentials'])
+    if credentials.access_token_expired:
+        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+    
+
     booking = Booking(current_user.get_id(), car.ID, datetime.now(), 
                       pickup_datetime, return_datetime, cost, car.HomeCoordinates, 0, 
                       Booking.CONFIRMED)
+
     bookingStatus = Booking.getStatus(booking.Status)
+    
     db.session.add(booking)
     db.session.commit()
 
-    return render_template(
+    http_auth = credentials.authorize(httplib2.Http())
+    service = build('calendar', 'v3', http_auth)
+    
+    event = {
+        'summary': "Carshare Booking #{}".format(booking.ID),
+        'start': {
+            'dateTime': pickup_datetime.isoformat(),
+            'timeZone': 'Australia/Melbourne'
+        },
+        'location': car_coordinates[tuple(eval(booking.HomeCoordinates))],
+        'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: {}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\nCar Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
+                        .format(booking.ID, booking.DateTimeBooked, pickup_datetime, 
+                                return_datetime, booking.Cost, booking.CarID, car.Make, car.Colour, car.Seats, car.FuelType),
+        'end': {
+            'dateTime': return_datetime.isoformat(),
+            'timeZone': 'Australia/Melbourne'
+        }
+    }
+    event = service.events().insert(calendarId='primary', body=event).execute()
+
+    booking.CalRef = event['id']
+
+    db.session.commit()
+
+    temp = render_template(
         'booking/success.html',
         booking=booking,
         bookingStatus = bookingStatus,
         car_coordinates=car_coordinates,
         car=car
     )
+
+    return temp
 
 @login_required
 @controllers.route(BOOKING_API_URL + '/cancel', methods=['POST'])
@@ -94,6 +143,23 @@ def cancel():
     if booking.Status != Booking.CONFIRMED:
         return redirect(url_for('template_controllers.unauthorised'))
     booking.Status = Booking.CANCELED
+
+    try_again_oauth = redirect(url_for('template_controllers.mybookings', err = "OAuth-ed, please try again."))
+
+    # obtaining credentials from oauth earlier
+    print("-------------------------------------------------")
+    print(session)
+    if 'credentials' not in session:
+        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+    credentials = client.OAuth2Credentials.from_json(session['credentials'])
+    if credentials.access_token_expired:
+        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+
+    http_auth = credentials.authorize(httplib2.Http())
+    service = build('calendar', 'v3', http_auth)
+    
+    event = service.events().delete(calendarId='primary', eventId=booking.CalRef).execute()
+
     db.session.commit()
     return redirect(url_for("template_controllers.mybookings"))
 
