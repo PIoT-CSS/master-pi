@@ -31,6 +31,7 @@ from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.controllers.management.car import controllers as CarManagementControllers
 from MasterCSS.controllers.templates import controllers as TemplateControllers
 from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.booking import controllers as BookingControllers
 from MasterCSS.models.user import User
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
@@ -47,7 +48,10 @@ app.register_blueprint(TemplateControllers)
 app.register_blueprint(AuthControllers)
 app.register_blueprint(CarManagementControllers)
 app.register_blueprint(CarControllers)
+app.register_blueprint(BookingControllers)
 
+# enable function calls from jinja
+app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
 @login_manager.user_loader
 def load_user(id):
@@ -55,4 +59,4 @@ def load_user(id):
 
 
 def main():
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port="80")

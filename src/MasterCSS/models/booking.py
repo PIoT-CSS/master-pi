@@ -12,8 +12,8 @@ class BookingSchema(ma.Schema):
 
     class Meta:
         fields = ("ID", "UserID", "CarID", "DateTimeBooked", "DateTimeStart",
-                  "DateTimeEnd", "Cost", "PickupCoordinates",
-                  "DropCoordinates", "Distance", "Status")
+                  "DateTimeEnd", "Cost", "HomeCoordinates",
+                  "Distance", "Status", "CalRef")
 
 
 class Booking(db.Model):
@@ -25,14 +25,18 @@ class Booking(db.Model):
     DateTimeStart = db.Column(db.DateTime, nullable=False)
     DateTimeEnd = db.Column(db.DateTime, nullable=False)
     Cost = db.Column(db.Float, nullable=False)
-    PickupCoordinates = db.Column(db.Text, nullable=False)
-    DropCoordinates = db.Column(db.Text, nullable=False)
+    HomeCoordinates = db.Column(db.Text, nullable=False)
     Distance = db.Column(db.Float, nullable=False)
-    Status = db.Column(db.Text, nullable=False)
+    Status = db.Column(db.Integer, nullable=False)
+    CalRef = db.Column(db.Text)
+    CANCELED = 3
+    INACTIVE = 2
+    ACTIVE = 1
+    CONFIRMED = 0
 
     def __init__(self, UserID, CarID, DateTimeBooked, DateTimeStart,
-                 DateTimeEnd, Cost, PickupCoordinates, DropCoordinates,
-                 Distance, Status, ID=None):
+                 DateTimeEnd, Cost, HomeCoordinates,
+                 Distance, Status, CalRef=None, ID=None):
         self.ID = ID
         self.UserID = UserID
         self.CarID = CarID
@@ -40,7 +44,18 @@ class Booking(db.Model):
         self.DateTimeStart = DateTimeStart
         self.DateTimeEnd = DateTimeEnd
         self.Cost = Cost
-        self.PickupCoordinates = PickupCoordinates
-        self.DropCoordinates = DropCoordinates
+        self.HomeCoordinates = HomeCoordinates
         self.Distance = Distance
         self.Status = Status
+        self.CalRef = CalRef
+
+    @staticmethod
+    def getStatus(id):
+        if id == Booking.ACTIVE:
+            return "Active"
+        elif id == Booking.INACTIVE:
+            return "Inactive"
+        elif id == Booking.CONFIRMED:
+            return "Confirmed"
+        elif id == Booking.CANCELED:
+            return "Canceled"

@@ -3,6 +3,7 @@ car.py contains car management controllers.
 """
 import os
 import json
+import base64
 from MasterCSS.models.car import Car
 from MasterCSS.cli import db
 from flask import (
@@ -12,14 +13,15 @@ from flask import (
     redirect,
     render_template
 )
+from MasterCSS.constant import Constant
 
 CAR_MANAGEMENT_API_URL = '/management/cars'
 
-car_colours = json.loads(os.environ['CAR_COLOURS'])
-car_body_types = json.loads(os.environ['CAR_BODY_TYPES'])
-car_seats = json.loads(os.environ['CAR_SEATS'])
-car_fuel_types = json.loads(os.environ['CAR_FUEL_TYPES'])
-car_coordinates = json.loads(os.environ['CAR_COORDINATES'])
+car_colours = Constant.CAR_COLOURS
+car_body_types = Constant.CAR_BODY_TYPES
+car_seats = Constant.CAR_SEATS
+car_fuel_types = Constant.CAR_FUEL_TYPES
+car_coordinates = Constant.CAR_COORDINATES
 
 controllers = Blueprint("car_management_controllers", __name__)
 
@@ -29,17 +31,22 @@ def add_car():
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
+            image = request.files
+            image_encoded = base64.b64encode(image["image"].read())
+            image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
             new_car = Car(
                 request.form.get('make'),
                 int(request.form.get('seats')),
                 request.form.get('bodytype'),
-                request.form.get('coordinates'),
+                request.form.get('home_coordinates'),
+                request.form.get('home_coordinates'),
                 request.form.get('colour'),
                 float(request.form.get('costperhour')),
                 request.form.get('fueltype'),
                 float(request.form.get('totaldistance')),
                 request.form.get('numberplate'),
-                None
+                request.form.get('agent_id'),
+                image_encoded
             )
             db.session.add(new_car)
             db.session.commit()
@@ -59,7 +66,7 @@ def add_car():
 
 @controllers.route(CAR_MANAGEMENT_API_URL, methods=['GET'])
 def view_all_cars():
-    return render_template("management/cars/viewall.html", cars=db.session.query(Car).all())
+    return render_template("management/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
@@ -71,7 +78,6 @@ def modify_car(id):
             car.Make = request.form.get('make')
             car.Seats = int(request.form.get('seats'))
             car.BodyType = request.form.get('bodytype')
-            car.Coordinates = request.form.get('coordinates')
             car.Colour = request.form.get('colour')
             car.CostPerHour = float(request.form.get('costperhour'))
             car.FuelType = request.form.get('fueltype')
@@ -79,6 +85,13 @@ def modify_car(id):
             car.NumberPlate = request.form.get('numberplate')
             currentBookingID = request.form.get('currentbookingid')
             car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
+            car.AgentID = request.form.get('agent_id')
+            print(request.files)
+            if request.files.get('image', None):
+                image = request.files
+                image_encoded = base64.b64encode(image["image"].read())
+                image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
+                car.Image = image_encoded
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=car.ID))
         else:
@@ -98,7 +111,9 @@ def modify_car(id):
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
 def view_car(id):
     # TODO: show bookings for cars
-    return render_template("management/cars/view.html", car=db.session.query(Car).filter_by(ID=id).scalar())
+    # TODO: if car == None?
+    car=db.session.query(Car).filter_by(ID=id).scalar()
+    return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])

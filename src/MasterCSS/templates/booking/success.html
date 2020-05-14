@@ -1,0 +1,123 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+{% block container %} 
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Your booking has been confirmed, thank you!
+        </h1>
+        <article class="message" styl="over-flow: hidden">
+            <div class="message-header">
+                Your booking details
+            </div>
+            <div class="message-body">
+                <p><strong>Booking ID: </strong> {{booking.ID}}</p>
+                <p><strong>Car ID: </strong> {{booking.CarID}}</p>
+                <p><strong>User ID: </strong> {{booking.UserID}}</p>
+                <p><strong>Booking time: </strong> {{booking.DateTimeBooked}}</p>
+                <p><strong>Pickup time: </strong> {{booking.DateTimeStart}}</p>
+                <p><strong>Return time: </strong> {{booking.DateTimeEnd}}</p>
+                <p><strong>Cost: </strong> ${{booking.Cost}}</p>
+                <p><strong>Status: </strong>{{bookingStatus}}</p>
+                <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}} </p>
+            </div>
+            <div name="map">
+                <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
+                <div id="pickup_map" class="mt-6" style="width:100%;height:500px;"></div>
+            </div>
+        <article>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="box">
+            <h1 class="title">
+                Car details
+            </h1>
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Make</th>
+                            <th>Seats</th>
+                            <th>Body type</th>
+                            <th>Location</th>
+                            <th>Colour</th>
+                            <th>Cost per Hour</th>
+                            <th>Fuel type</th>
+                            <th>Plate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{car.ID}}</td>
+                                <td>{{car.Make}}</td>
+                                <td>{{car.Seats}}</td>
+                                <td>{{car.BodyType}}</td>
+                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
+                                <td>{{car.Colour}}</td>
+                                <td>${{car.CostPerHour}}</td>
+                                <td>{{car.FuelType}}</td>
+                                <td>{{car.NumberPlate}}</td>
+
+                            </tr>
+                    </tbody>
+                </table>
+                <div class="card-image ">
+                    <figure class="image is-4by3">
+                      <img src="{{car.Image}}" alt="Placeholder image">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+function initMap() {
+    let pickup_data = document.querySelector("input[name='pickup']");
+    let pickup_lat = pickup_data.getAttribute("data-x");
+    let pickup_lng = pickup_data.getAttribute("data-y");
+
+    let google = window.google;
+    
+    if(google) {
+        var pickup_loc = { lat: parseFloat(pickup_lat), lng: parseFloat(pickup_lng) };
+        var pickup_map = new google.maps.Map(
+        document.getElementById('pickup_map'), {zoom: 15, center: pickup_loc});
+        var marker = new google.maps.Marker({position: pickup_loc, map: pickup_map});
+                var contentString = '<div id="content">'+
+
+            '<h1 class="title is-5">{{car.Make}}</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Seats:</b> {{car.Seats}}</p>'+
+            '<p><b>Location:</b> {{car_coordinates[tuple(eval(car.HomeCoordinates))]   }} </p> '+
+            '<p><b>Fuel Type:</b> {{car.FuelType}} </p> '+
+            '<p><b>Colour:</b> {{car.Colour}} </p> '+
+            '<p><b>Plate:</b> {{car.NumberPlate}} </p> '+
+            '</div>'+
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(pickup_map, marker);
+            });
+        }
+    }
+    initMap();
+
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6gYrFF5NEKEa9R2rDNCILa6i2RGvvWw&callback=initMap" type="text/javascript"></script>
+
+</script>
+
+{% endblock %}

@@ -1,4 +1,10 @@
+<style>
+  .navbar-menu {
+    box-shadow: none;
+  }
+</style>
 <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <h1 class="title is-4">Carshare</h1>
@@ -17,29 +23,101 @@
         <div class="navbar-item">
           <a href="/" class="button is-white"> Home </a>
         </div>
+        <div class="navbar-item">
+          <a href="{{url_for("template_controllers.calendartest")}}" class="button is-white"> Google Calendar Test </a>
+        </div>
+       
+        <div class="navbar-item">
+          <a href="/myinfo" class="button is-white is-hidden-desktop">  My Information </a>
+        </div>
+        <div class="navbar-item">
+          <a href="/mybookings" class="button is-white is-hidden-desktop">  My Bookings </a>
+        </div>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
             <div class="buttons">
-                <div class="navbar-item has-dropdown is-hoverable button is-white">
+                <div class="navbar-item has-dropdown is-hoverable button is-white is-hidden-touch">
                     <a class="navbar-link">
                       {{ username }}
                     </a>
             
                     <div class="navbar-dropdown">
                       <a class="navbar-item" href="/myinfo">
-                        My Information
+                        My Profile
                       </a>
                       <hr class="navbar-divider">
-                      <a class="navbar-item">
-                        My History
+                      <a class="navbar-item" href="/mybookings">
+                        My Bookings
                       </a>
                     </div>
                 </div>
-                <a class="button is-info" href={{url_for("auth_controllers.logout")}}>Logout</a>
+                <div class="flex w-full justify-between is-hidden-desktop">
+                  <a href="/" class="button is-white is-hidden-desktop">  {{ username }} </a>
+                  <a class="button is-info" href={{url_for("auth_controllers.logout")}}>Logout</a>
+                </div>
+                <a class="button is-info is-hidden-touch" href={{url_for("auth_controllers.logout")}}>Logout</a>
+
             </div>
         </div>
       </div>
       {% endif %}
     </div>
+  </div>
 </nav>
+
+<script>
+  jQuery(document).ready(function ($) {
+
+    var $toggle = $('.navbar-burger');
+    var $menu = $('.navbar-menu');
+  
+    $toggle.click(function() {
+      $(this).toggleClass('is-active');
+      $menu.toggleClass('is-active');
+    });
+  
+    $('.modal-button').click(function() {
+      var target = $(this).data('target');
+      $('html').addClass('is-clipped');
+      $(target).addClass('is-active');
+    });
+  
+    $('.modal-background, .modal-close').click(function() {
+      $('html').removeClass('is-clipped');
+      $(this).parent().removeClass('is-active');
+    });
+  
+    $('.modal-card-head .delete, .modal-card-foot .button').click(function() {
+      $('html').removeClass('is-clipped');
+      $('#modal-ter').removeClass('is-active');
+    });
+  
+    var $highlights = $('.highlight');
+  
+    $highlights.each(function() {
+      var $el = $(this);
+      var copy = '<button class="copy">Copy</button>';
+      var expand = '<button class="expand">Expand</button>';
+      $el.append(copy);
+  
+      if ($el.find('pre code').innerHeight() > 600) {
+        $el.append(expand);
+      }
+    });
+  
+    var $highlightButtons = $('.highlight .copy, .highlight .expand');
+  
+    $highlightButtons.hover(function() {
+      $(this).parent().css('box-shadow', '0 0 0 1px #ed6c63');
+    }, function() {
+      $(this).parent().css('box-shadow', 'none');
+    });
+  
+    $('.highlight .expand').click(function() {
+      $(this).parent().children('pre').css('max-height', 'none');
+    });
+  
+  });
+  
+</script>

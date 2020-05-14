@@ -5,7 +5,8 @@
 <form action={{url_for("car_controllers.search_car")}} method="post">
     <div class="panel-block">
       <p class="control has-icons-left">
-        <input class="input" type="text" name="make" placeholder="Make search">
+        <input class="input" type="text" name="make" 
+                placeholder="Make search" value="{{make}}">
         <span class="icon is-left">
           <i class="fas fa-search" aria-hidden="true"></i>
         </span>
@@ -23,7 +24,11 @@
                     <select name="fueltype">
                         <option>Any</option>
                         {% for fuel_type in car_fuel_types %}
-                            <option value="{{fuel_type}}">{{fuel_type}}</option>
+                            {% if fuel_type == fueltype %}
+                                <option value="{{fuel_type}}" selected="selected">{{fuel_type}}</option>
+                            {% else %}
+                                <option value="{{fuel_type}}">{{fuel_type}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -41,8 +46,12 @@
                 <div class="select is-fullwidth is-light">
                     <select name="seats">
                         <option>Any</option>
-                        {% for seats in car_seats %}
-                            <option value="{{seats}}">{{seats}}</option>
+                        {% for car_seat in car_seats %}
+                            {% if str(car_seat) == seats %}
+                                <option value="{{car_seat}}" selected="selected">{{car_seat}}</option>
+                            {% else %}
+                                <option value="{{car_seat}}">{{car_seat}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -61,7 +70,11 @@
                     <select name="bodytype">
                         <option>Any</option>
                         {% for body_type in car_body_types %}
-                            <option value="{{body_type}}">{{body_type}}</option>
+                            {% if body_type == bodytype %}
+                                <option value="{{body_type}}" selected="selected">{{body_type}}</option>
+                            {% else %}
+                                <option value="{{body_type}}">{{body_type}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -79,19 +92,45 @@
                 <div class="select is-fullwidth is-light">
                     <select name="colour">
                         <option>Any</option>
-                        {% for colour in car_colours %}
-                            <option value="{{colour}}">{{colour}}</option>
+                        {% for car_colour in car_colours %}
+                            {% if car_colour == colour %}
+                                <option value="{{car_colour}}" selected="selected">{{car_colour}}</option>
+                            {% else %}
+                                <option value="{{car_colour}}">{{car_colour}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
             </div>
         </div>
     </div>
+    <div class="panel-block">
+        <div class="field has-addons w-full">
+            <div class="control">
+                <a class="button is-light">
+                  <span>Pickup Location</span>
+                </a>
+            </div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth is-light">
+                    <select name="pickup_coordinates">
+                        <option>Any</option>
+                        {% for coordinates, location in car_coordinates.items() %}
+                            {% if str(coordinates) == pickup_coordinates %}
+                                <option value="{{coordinates}}" selected="selected">{{location}}</option>
+                            {% else %}
+                                <option value="{{coordinates}}">{{location}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <input type="hidden" name="pickup_datetime" value="{{pickup_datetime}}"/>
+    <input type="hidden" name="return_datetime" value="{{return_datetime}}"/>
     
-    <label class="panel-block">
-        <input type="checkbox" name="available" value="True">
-        Available only
-    </label>
     <div class="panel-block">
       <input type="submit" value="Search" class="button is-link is-outlined is-fullwidth">
     </div>

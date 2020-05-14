@@ -3,62 +3,182 @@
 
 
 {% block container %} 
-<section class="hero">
+
+<style>
+    .hero {
+        background: #1f9bc4;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero img {
+        object-fit: cover;
+        -o-object-position: left;
+        object-position: left;
+        width: 100%;
+        height: 100%;
+    }
+
+    .bubble-hero__image {
+        width: 50%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+    .bubble-hero__image::after {
+        background-color: #1f9bc4;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        content: "";
+        -webkit-clip-path: circle(240vw at 20% calc(100% + 225vw));
+        clip-path: circle(240vw at 20% calc(100% + 225vw));
+    }
+    @media (min-width: 768px) {
+        .bubble-hero__image:after {
+            -webkit-clip-path: circle(768px at -700px 50%);
+            clip-path: circle(768px at -700px 50%);
+        }
+    }
+    @media (max-width: 600px) {
+        .bubble-hero__image{
+            width: 100%;
+            height: 212px;
+        }
+    }
+</style>
+
+<section class="section hero justify-center items-center flex-row">
+    <div class="bubble-hero__image">
+        <img src="https://www.carnextdoor.com.au/assets/heros/beach-couple-e3091f4b710c8434c46ce252725b39acfd61e76ff963bc79f36e1251b2c8da3e.jpg">
+    </div>
     <div class="hero-body">
+        
       <div class="container">
-        <h1 class="title">
+        <h1 class="title has-text-white	">
           Welcome to Carshare!
         </h1>
-        <h2 class="subtitle">
+        <h2 class="subtitle has-text-white">
           Let's book you a car!
         </h2>
+        <form action={{url_for("car_controllers.filter_car")}} method="post">
+
+            <div class="box">
+                <div class="columns">
+                   
+                    <div class="column is-four-fifths">
+                        <div class="field">
+                            <div class="label">Select your time</div>
+                            <div class="control has-icons-left">
+                                <span class="icon is-small is-left">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                <input type="text" class="input" name="datetimes" placeholder="Select your pickup and return time" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <div class="label">&nbsp;</div>
+                            <div class="control">
+                                <input type="submit" value="Search" class="button is-link is-fullwidth">    
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% if err %}
+                    <div class="message is-danger">
+                        <div class="message-body">
+                            {{ err }}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                
+            </div>
+        </form>
       </div>
     </div>
 </section>
 
-<section>
+<section class="section">
     <div class="container">
-        {% include "components/search.html" %}
-        <div class="box">
-            <div class="table-container">
-                <table class="table w-full text-center">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Make</th>
-                            <th>Seats</th>
-                            <th>Body type</th>
-                            <th>Colour</th>
-                            <th>Cost per Hour</th>
-                            <th>Fuel type</th>
-                            <th>Availablility</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for car in cars %}
-                            <tr>
-                                <td>{{car.ID}}</td>
-                                <td>{{car.Make}}</td>
-                                <td>{{car.Seats}}</td>
-                                <td>{{car.BodyType}}</td>
-                                <td>{{car.Colour}}</td>
-                                <td>{{car.CostPerHour}}</td>
-                                <td>{{car.FuelType}}</td>
-                                <td>
-                                    {% if not car.CurrentBookingID %}
-                                        <button class="button is-success">Book</button>
-                                    {% else %}
-                                        <button class="button is-disabled">Unavailable</button>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                    
-                </table>
-            </div>
-        </div>
+        <h1 class="title">
+            Our cars
+        </h1>
+        <div class="columns is-multiline">
+            {% for car in cars %}
 
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                              <img src="{{car.Image}}" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="level is-mobile">
+                                <div class="level-left">
+                                    <p class="title is-5">{{car.Make}}</p>    
+                                </div>
+                                <div class="level-right">
+                                    <p class="subtitle"># {{car.ID}}</p>  
+                                </div>
+                            </div>
+                            
+                            <div class="level">
+                                <p class="subtitle"><i class="fas fa-user-friends"></i> {{car.Seats}}</p>
+                            </div>
+                            <nav class="level is-mobile">
+                                <div class="level-left has-text-centered">
+                                  <div>
+                                    <p class="heading">per hour</p>
+                                    <p class="title is-5">${{car.CostPerHour}}</p>
+                                    
+                                  </div>
+                                </div>
+                                <div class="level-item has-text-centered">
+                                  <div>
+                                    <p class="heading">fuel</p>
+                                    <p class="title is-5">{{car.FuelType}}</p>
+                                    
+                                  </div>
+                                </div>
+                                <div class="level-right has-text-centered">
+                                  <div>
+                                    <p class="heading">body</p>
+                                    <p class="title is-5">{{car.BodyType}}</p>
+                                    
+                                  </div>
+                                </div>
+                              </nav>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
     </div>
 </section>
+
+<script>
+    $(function() {
+        $('input[name="datetimes"]').daterangepicker({
+          timePicker: true,
+          startDate: moment().startOf('hour'),
+          isInvalidDate: function (date) { return date < moment().subtract(1, 'days') },
+          endDate: moment().startOf('hour').add(32, 'hour'),
+          locale: {
+            format: 'DD/MM/YYYY HH:mm'
+          }
+        });
+    });
+</script>
 {% endblock %}

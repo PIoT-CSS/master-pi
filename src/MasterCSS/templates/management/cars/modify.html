@@ -1,5 +1,5 @@
 <h1>Modify car</h1>
-<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} method="post">
+<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} enctype=multipart/form-data method="post">
     Secret key
     <input name="secretkey" type="text" required>
     Make
@@ -14,12 +14,6 @@
     <select name="bodytype" value='{{car.BodyType}}'' required>
         {% for body_type in car_body_types %}
             <option value="{{body_type}}">{{body_type}}</option>
-        {% endfor %}
-    </select>
-    Coordinates
-    <select name="coordinates" value='{{car.Coordinates}}' required>
-        {% for coordinates in car_coordinates %}
-            <option value="{{coordinates}}">{{coordinates}}</option>
         {% endfor %}
     </select>
     Colour
@@ -42,5 +36,10 @@
     <input name="numberplate" value='{{car.NumberPlate}}' type="text" required>
     Current Booking ID
     <input name="currentbookingid" type="number" value='{{car.CurrentBookingID}}'>
+    Agent ID
+    <input name="agent_id" type="text" value='{{car.AgentID}}'>
+    Modify Image
+    <input type="file" name="image" accept="image/*">
+    <img src="{{car.Image}}">
     <input type="submit" name="modify" value="Modify">
 </form>

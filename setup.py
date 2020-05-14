@@ -20,5 +20,7 @@ setup(
         "marshmallow-sqlalchemy",
         "mysql-connector",
         "pymysql",
+        "oauth2client",
+        "google-api-python-client"
     ],
 )
