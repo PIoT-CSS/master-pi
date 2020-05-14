@@ -54,6 +54,8 @@
                             <th>Colour</th>
                             <th>Cost per Hour</th>
                             <th>Fuel type</th>
+                            <th>Plate</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -66,6 +68,8 @@
                                 <td>{{car.Colour}}</td>
                                 <td>${{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
+                                <td>{{car.NumberPlate}}</td>
+
                             </tr>
                     </tbody>
                 </table>
@@ -101,6 +105,7 @@ function initMap() {
             '<p><b>Location:</b> {{car_coordinates[tuple(eval(car.HomeCoordinates))]   }} </p> '+
             '<p><b>Fuel Type:</b> {{car.FuelType}} </p> '+
             '<p><b>Colour:</b> {{car.Colour}} </p> '+
+            '<p><b>Plate:</b> {{car.NumberPlate}} </p> '+
             '</div>'+
             '</div>';
 
