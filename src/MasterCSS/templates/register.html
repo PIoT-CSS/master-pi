@@ -20,7 +20,7 @@
     </div>
     {% endif %}
     <h1 class="title is-4">Register</h1>
-    <form name="registration_form" action={{url_for("auth_controllers.register")}} method="post">
+    <form name="registration_form" action={{url_for("auth_controllers.register")}} enctype=multipart/form-data method="post">
         <div class="field">
             <label class="label">Username</label>
             <div class="control has-icons-left">
@@ -72,6 +72,14 @@
                 <input class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
+
+         <div class="field">
+            <label class="label">Photo of yourself</label>
+            <div class="control">
+                <input type="file" name="image" accept="image/*;" required>
+            </div>
+        </div>
+
         <div class="level">
             <div class="level-left">
                 <input class="button is-info" type="submit" name="register" value="Sign up">

@@ -21,6 +21,9 @@ setup(
         "mysql-connector",
         "pymysql",
         "oauth2client",
-        "google-api-python-client"
+        "google-api-python-client",
+        "face_recognition",
+        "opencv-python",
+        "imutils"
     ],
 )

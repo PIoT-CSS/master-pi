@@ -1,3 +1,17 @@
+"""
+cli.py sets up and configures Flask application for MasterCSS.
+
+- Initialise app environement, blueprints and database.
+"""
+
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.car import Car
+from MasterCSS.models.user import User
+from MasterCSS.controllers.booking import controllers as BookingControllers
+from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.templates import controllers as TemplateControllers
+from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.auth import controllers as AuthControllers
 from flask import Flask
 from flask_login import (
     LoginManager,
@@ -27,14 +41,6 @@ db = SQLAlchemy(app)
 ma = Marshmallow()
 
 # import other python files which depend on db instance created
-from MasterCSS.controllers.auth import controllers as AuthControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
-from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.car import controllers as CarControllers
-from MasterCSS.controllers.booking import controllers as BookingControllers
-from MasterCSS.models.user import User
-from MasterCSS.models.car import Car
-from MasterCSS.models.booking import Booking
 
 db.create_all()
 db.session.commit()
@@ -51,7 +57,9 @@ app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 
 # enable function calls from jinja
-app.jinja_env.globals.update(eval=eval, tuple=tuple, str=str, booking_model=Booking)
+app.jinja_env.globals.update(
+    eval=eval, tuple=tuple, str=str, booking_model=Booking)
+
 
 @login_manager.user_loader
 def load_user(id):
