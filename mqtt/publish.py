@@ -30,9 +30,11 @@ methods
 class Publisher:
     
     def __init__(self):
-        self.topic = 'test'
-        self.broker_address = str(BROKER_IP)
-        self.port = int(BROKER_PORT)
+        self.AUTH_RESP_FR_TOPIC = 'AUTH/RESP/FR'
+        self.AUTH_RESP_UP_TOPIC = 'AUTH/RESP/UP'
+        self.RETURN_TOPIC = 'RETURN'
+        self.BROKER_ADDRESS = str(BROKER_IP)
+        self.PORT = int(BROKER_PORT)
 
     def on_publish(self, client, userdata, result):
         print("data published {} \n".format(result))
@@ -60,8 +62,7 @@ class Publisher:
         print(end)
         client.publish(topic,end,qos)
  
-
-    def publish(self, payload, qos):
+    def publish(self, topic, payload, qos):
         # Create new instance
         client = mqtt.Client("toagentpi")
         client.on_publish = self.on_publish
@@ -69,47 +70,53 @@ class Publisher:
         client.on_connect = self.on_connect
 
         # Connect to pi
-        client.connect(self.broker_address, self.port)
+        client.connect(self.BROKER_ADDRESS, self.PORT)
 
         # Publish to topic
-        client.publish(self.topic, json.dumps(payload))
-        client.disconnect() #disconnect
-        client.loop_stop() #stop loop
+        if topic == 'UP':
+            client.publish(self.AUTH_RESP_UP_TOPIC, json.dumps(payload))
+            client.disconnect() #disconnect
+            client.loop_stop() #stop loop
+        elif topic == 'FR':
+            client.publish(self.AUTH_RESP_FR_TOPIC, json.dumps(payload))
+            client.disconnect()
+            client.loop_stop()
+        elif topic == 'RET':
+            client.publish(self.RETURN_TOPIC, json.dumps(payload))
+            client.disconnect()
+            client.loop_stop()
 
-    def file_publish(self, file_name, qos):
+    def fr_publish(self, file_name, qos):
         
         client = mqtt.Client("toagentpi")
         client.on_publish = self.on_publish
         client.on_disconnect = self.on_disconnect
         client.on_connect = self.on_connect
         
-        client.connect(self.broker_address, self.port)
-        
-        payload = 'test'
+        client.connect(self.BROKER_ADDRESS, self.PORT)
 
         # Setting up processing for publishing encodin
         Run_flag=True
         count=0
-        qos=1
+
         filename="{}.pickle".format(file_name)
-        self.send_header(client, filename, self.topic, qos)
+        self.send_header(client, filename, self.AUTH_RESP_FR_TOPIC, qos)
         data_block_size=2000
         fo=open(filename,"rb")
-        # fout=open("1out.txt","wb") #use a different filename
         while Run_flag:
             chunk=fo.read(data_block_size)
             if chunk:
                 out_hash_md5.update(chunk)
                 out_message=chunk
                 print(" length =",type(out_message))
-                client.publish(self.topic,out_message,qos)
+                client.publish(self.AUTH_RESP_FR_TOPIC,out_message,qos)
                     
             else:
                 #send hash
                 out_message=out_hash_md5.hexdigest()
-                self.send_end(client, filename, self.topic, qos)
+                self.send_end(client, filename, self.AUTH_RESP_FR_TOPIC, qos)
                 print("out Message ",out_message)
-                res,mid=client.publish("test",out_message,qos)
+                res,mid=client.publish(self.AUTH_RESP_FR_TOPIC,out_message,qos)
                 Run_flag=False
                 client.disconnect()
                 client.loop_stop()

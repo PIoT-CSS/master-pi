@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
+BROKER_IP = os.getenv("MASTER_IP")
+BROKER_PORT = os.getenv("BROKER_PORT")
 
 class Subscriber:
     """
@@ -23,8 +25,8 @@ class Subscriber:
     def __init__(self):
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
-        self.BROKER_IP = str(os.getenv("MASTER_IP"))
-        self.BROKER_PORT = int(os.getenv("BROKER_PORT"))
+        self.BROKER_ADDRESS = str(BROKER_IP)
+        self.BROKER_PORT = int(BROKER_PORT)
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
@@ -37,19 +39,26 @@ class Subscriber:
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         if msg.topic == 'AUTH/FR':
+            #TODO US2.1.5 Authentication update car status
             print("[DEBUG] issues with creating a publisher")
             pub = Publisher()
-            print("[DEBUG] tried to publish")
-            pub.file_publish('alex', 1)
+            print("[DEBUG] tried to publish", msg.payload)
+            payload = json.loads(msg.payload)
+            pub.fr_publish(payload['username'], 1)
         elif msg.topic == 'AUTH/UP':
+            #TODO US2.1.5 Authentication update car status
             pub = Publisher()
-
+            pub.publish('UP', 'Unlocked')
+        elif msg.topic == 'RETURN':
+            #TODO IF STATEMENT update database
+            pub = Publisher()
+            pub.publish('RET','Returned')
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
 
     def subscribe(self):
-        broker_address = self.BROKER_IP
+        broker_address = self.BROKER_ADDRESS
         broker_port = self.BROKER_PORT
         
         # initialise MQTT Client
@@ -60,6 +69,5 @@ class Subscriber:
         client.on_message = self.on_message
         client.on_log = self.on_log
 
-        # client.username_pw_set(user, password)
         client.connect(broker_address, broker_port)
         client.loop_forever()
