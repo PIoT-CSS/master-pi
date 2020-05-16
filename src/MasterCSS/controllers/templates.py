@@ -1,3 +1,6 @@
+"""
+templates.py handle routing for the templates.
+"""
 import os
 import json
 from flask import (
@@ -26,11 +29,10 @@ car_seats = Constant.CAR_SEATS
 car_fuel_types = Constant.CAR_FUEL_TYPES
 car_coordinates = Constant.CAR_COORDINATES
 
-# notify flask about external controllers
+# Notify flask about external controllers
 controllers = Blueprint("template_controllers", __name__)
 
-#Begin oauth callback route
-
+# Begin oauth callback route
 @controllers.route("/")
 def index():
     if current_user.is_authenticated:

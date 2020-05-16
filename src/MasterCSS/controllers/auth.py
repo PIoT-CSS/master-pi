@@ -1,3 +1,11 @@
+"""[summary]
+
+:raises ErrorValueException: If the Username is taken.
+:raises ErrorValueException: If the Phone is taken.
+:raises ErrorValueException: If the Email is taken.
+:return: [description]
+:rtype: [type]
+"""
 from flask import (
     render_template,
     Blueprint,
