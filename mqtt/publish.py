@@ -98,11 +98,12 @@ class Publisher:
         # Setting up processing for publishing encodin
         Run_flag=True
         count=0
-
-        filename="{}.pickle".format(file_name)
-        self.send_header(client, filename, self.AUTH_RESP_FR_TOPIC, qos)
+        
+        folder_name = 'pickle'
+        pickle_directory="./{}/{}.pickle".format(folder_name, file_name)
+        self.send_header(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
         data_block_size=2000
-        fo=open(filename,"rb")
+        fo=open(pickle_directory,"rb")
         while Run_flag:
             chunk=fo.read(data_block_size)
             if chunk:
@@ -114,7 +115,7 @@ class Publisher:
             else:
                 #send hash
                 out_message=out_hash_md5.hexdigest()
-                self.send_end(client, filename, self.AUTH_RESP_FR_TOPIC, qos)
+                self.send_end(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
                 print("out Message ",out_message)
                 res,mid=client.publish(self.AUTH_RESP_FR_TOPIC,out_message,qos)
                 Run_flag=False
