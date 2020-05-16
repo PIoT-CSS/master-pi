@@ -1,5 +1,6 @@
 import pytest
 import os
+from io import BytesIO
 
 from MasterCSS.tests.test_fixture import client
 
@@ -7,8 +8,8 @@ CAR_MANAGEMENT_API_URL = '/management/cars'
 
 # Test adding car to populate data
 def test_add_car(client):
-    with open("src/MasterCSS/tests/testImages/car1.jpg", "rb") as car_image:
-        car_image_read = StringIO(car_image.read())
+    with open("src/MasterCSS/tests/testImages/car1.jpg", "rb") as car1_image:
+        car1_image_read = BytesIO(car1_image.read())
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
@@ -17,27 +18,34 @@ def test_add_car(client):
             seats="2",
             bodytype="Sedan",
             home_coordinates="(-37.812082, 144.983072)",
+            fueltype="Petrol",
             colour="Blue",
             costperhour='12',
             totaldistance='0',
             numberplate="LOL123",
-            image=(car_image_read, 'car1.jpg')
+            image=(car1_image_read, 'car1.jpg'),
+            agent_id="1"
         ),
         content_type='multipart/form-data'
     )
+
+    with open("src/MasterCSS/tests/testImages/car2.jpg", "rb") as car2_image:
+        car2_image_read = BytesIO(car2_image.read())
     client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
             secretkey=os.getenv('SECRET_KEY'), 
             make="Honda Civic", 
             seats="2",
+            fueltype="Diesel",
             bodytype="Sedan",
             home_coordinates="(-37.812082, 144.983072)",
             colour="Blue",
             costperhour='12',
             totaldistance='0',
             numberplate="BAB111",
-            image=(car_image_read, 'car1.jpg')
+            image=(car2_image_read, 'car1.jpg'),
+            agent_id="2"
         ),
         content_type='multipart/form-data'
     )
@@ -68,13 +76,16 @@ def test_change_car_detail(client):
             make="Honda Civic", 
             seats="2",
             bodytype="Sedan",
+            fueltype="Diesel",
             home_coordinates="(-37.812082, 144.983072)",
             colour="Blue",
             costperhour='12',
             totaldistance='0',
             numberplate="AHA456",
+            agent_id="2",
             follow_redirect=True
-        )
+        ),
+        follow_redirects=True
     )    
     
     assert b'AHA456' in response.data

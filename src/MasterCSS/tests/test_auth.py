@@ -1,5 +1,5 @@
 import pytest
-
+from io import BytesIO
 from MasterCSS.tests.test_fixture import client
 
 # Route renders register.html when not logged in
@@ -20,7 +20,7 @@ def test_render_index(client):
 # Test register with invalid values
 def test_register_invalid(client):
     with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
-        user_image_read = StringIO(user_image.read())
+        user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
         data=dict(
@@ -39,7 +39,7 @@ def test_register_invalid(client):
 # Test register with valid values
 def test_register_valid(client):
     with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
-        user_image_read = StringIO(user_image.read())
+        user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
         data=dict(
@@ -67,7 +67,8 @@ def test_login_unregistered(client):
         data=dict(
             username="example1",
             password="password1"
-        )
+        ),
+        follow_redirects=True
     )
     assert b'User not found!' in response.data
 
@@ -78,7 +79,8 @@ def test_login_invalid(client):
         data=dict(
             username="example",
             password="password1"
-        )
+        ),
+        follow_redirects=True
     )
     assert b'Password mismatch!' in response.data
 
@@ -90,7 +92,8 @@ def test_login_valid(client):
             username="example",
             password="password",
             follow_redirect=True
-        )
+        ),
+        follow_redirects=True
     )
     assert b'Let\'s book you a car!' in response.data
 

@@ -15,6 +15,7 @@ def client():
         os.getenv("MYSQL_HOST"),
         TEST_DB_NAME
     )
+    app.config['TESTING'] = True
     
     with app.test_client() as c:
         # initialise database
