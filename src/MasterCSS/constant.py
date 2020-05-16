@@ -1,6 +1,6 @@
 class Constant:
     """
-    This file contains the Constant definition.
+    constant.py contains the Constant definition.
     """
     CAR_COLOURS = ["Black", "Yellow", "Blue", "White", "Green", "Red", "Orange", "Purple"]
     CAR_BODY_TYPES = ["Sedan", "MPV", "Sports", "Hatchback", "Ute"]

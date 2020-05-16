@@ -1,5 +1,5 @@
 """
-This file contains project environment setup, flask
+cli.py contains project environment setup, flask
 configuration as well as database initialisation.
 """
 from MasterCSS.models.booking import Booking
