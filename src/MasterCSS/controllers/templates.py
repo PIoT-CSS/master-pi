@@ -87,13 +87,13 @@ def register():
         return render_template('register.html', defaultValues=None)
 
 
-@login_required
 @controllers.route("/myinfo")
+@login_required
 def myinfo():
     return render_template('myInformation.html')
 
-@login_required
 @controllers.route("/mybookings")
+@login_required
 def mybookings(err=None):
     bookings = db.session.query(Booking).filter_by(UserID=current_user.ID)
     # reverse sort bookings list to sort by latest
