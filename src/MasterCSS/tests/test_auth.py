@@ -1,5 +1,6 @@
 import pytest
 from io import BytesIO
+from http import HTTPStatus
 from MasterCSS.tests.test_fixture import client
 
 # Route renders register.html when not logged in
@@ -16,6 +17,15 @@ def test_render_login(client):
 def test_render_index(client):
     response = client.get('/')
     assert b'Welcome to Car Share System!' in response.data
+
+# Test unauthorised access to auth-secured pages when not logged in
+def test_unauthorised(client):
+    response = client.get('/myinfo')
+    assert b'Unauthorised' in response.data
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    response = client.get('/mybookings')
+    assert b'Unauthorised' in response.data
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
 
 # Test register with invalid values
 def test_register_invalid(client):
