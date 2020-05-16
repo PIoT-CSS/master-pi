@@ -7,6 +7,10 @@ from MasterCSS.cli import db, ma
 
 
 class BookingSchema(ma.Schema):
+    """
+    This BookingSchema stores the meta and schema of a booking.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     def __init__(self, strict=True, **kwargs):
         super().__init__(strict=strict, **kwargs)
 
@@ -17,6 +21,11 @@ class BookingSchema(ma.Schema):
 
 
 class Booking(db.Model):
+    """
+    Booking model class represents a car in the database.
+    A Booking has its Car and User as its foreign keys.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=False)
