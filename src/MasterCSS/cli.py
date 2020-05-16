@@ -3,15 +3,6 @@ cli.py sets up and configures Flask application for MasterCSS.
 
 - Initialise app environement, blueprints and database.
 """
-
-from MasterCSS.models.booking import Booking
-from MasterCSS.models.car import Car
-from MasterCSS.models.user import User
-from MasterCSS.controllers.booking import controllers as BookingControllers
-from MasterCSS.controllers.car import controllers as CarControllers
-from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
-from MasterCSS.controllers.auth import controllers as AuthControllers
 from flask import Flask
 from flask_login import (
     LoginManager,
@@ -41,6 +32,14 @@ db = SQLAlchemy(app)
 ma = Marshmallow()
 
 # import other python files which depend on db instance created
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.car import Car
+from MasterCSS.models.user import User
+from MasterCSS.controllers.booking import controllers as BookingControllers
+from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.templates import controllers as TemplateControllers
+from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.auth import controllers as AuthControllers
 
 db.create_all()
 db.session.commit()
