@@ -2,16 +2,7 @@
 cli.py contains project environment setup, flask
 configuration as well as database initialisation.
 """
-from MasterCSS.models.booking import Booking
-from MasterCSS.models.car import Car
-from MasterCSS.models.user import User
-from MasterCSS.controllers.booking import controllers as BookingControllers
-from MasterCSS.controllers.car import controllers as CarControllers
-from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
-from MasterCSS.controllers.auth import controllers as AuthControllers
 from flask import Flask
-
 from flask_login import (
     LoginManager,
     current_user
@@ -42,6 +33,16 @@ app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 # Database initialisation
 db = SQLAlchemy(app)
 ma = Marshmallow()
+
+# import other python files which depend on db instance created
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.car import Car
+from MasterCSS.models.user import User
+from MasterCSS.controllers.booking import controllers as BookingControllers
+from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.templates import controllers as TemplateControllers
+from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.auth import controllers as AuthControllers
 
 db.create_all()
 db.session.commit()
