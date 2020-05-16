@@ -1,0 +1,25 @@
+import pytest
+import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from MasterCSS.cli import app, db
+
+TEST_DB_NAME = "css_unit_test"
+
+@pytest.fixture(scope='module')
+def client():
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
+        os.getenv("MYSQL_USERNAME"),
+        os.getenv("MYSQL_PASSWORD"),
+        os.getenv("MYSQL_HOST"),
+        TEST_DB_NAME
+    )
+    
+    with app.test_client() as c:
+        # initialise database
+        db.engine.execute("drop database {};".format(TEST_DB_NAME))
+        db.engine.execute("create database {};".format(TEST_DB_NAME))
+        db.engine.execute("use {};".format(TEST_DB_NAME))
+        db.create_all()
+        yield c
