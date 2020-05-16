@@ -71,12 +71,6 @@ def oauth2callback(callback=None):
     return redirect(url_for('template_controllers.index'))
 
 
-@login_required
-@controllers.route("/calendartest")
-def calendartest():
-    return render_template('calendartest.html')
-
-
 @controllers.route("/login")
 def login():
     if current_user.is_authenticated:

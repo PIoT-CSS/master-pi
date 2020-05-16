@@ -1,6 +1,3 @@
-"""
-car.py contains car controllers.
-"""
 import os
 import json
 from datetime import datetime
@@ -45,14 +42,14 @@ def filter_car():
     pickup_datetime = datetime.strptime(
         times_str[0], HTML_DATETIME_FORMAT)
     if pickup_datetime >= return_datetime:
-        return render_template("dashboard.html", err="Invalid date range! Please try again.", cars=cars)
+        return render_template("dashboard.html", err="Invalid date range! Please try again.", cars=cars, return_datetime=return_datetime, pickup_datetime=pickup_datetime)
     elif pickup_datetime < datetime.now():
-        return render_template("dashboard.html", err="Time must be in the future! Please try again.", cars=cars)
+        return render_template("dashboard.html", err="Time must be in the future! Please try again.", cars=cars, return_datetime=return_datetime, pickup_datetime=pickup_datetime)
 
     available_cars = get_available_cars(pickup_datetime, return_datetime, cars)
 
     if(len(available_cars) == 0):
-        return render_template("dashboard.html", err="No cars are available at the moment.", cars=cars)
+        return render_template("dashboard.html", err="No cars are available at the moment.", cars=cars, return_datetime=return_datetime, pickup_datetime=pickup_datetime)
     return render_template(
         "searchResult.html", 
         cars=available_cars,
