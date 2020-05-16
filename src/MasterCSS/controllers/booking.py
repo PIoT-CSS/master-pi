@@ -33,8 +33,8 @@ from ast import literal_eval as make_tuple
 car_coordinates = Constant.CAR_COORDINATES
 
 
-@login_required
 @controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
+@login_required
 def confirm_booking():
     pickup_datetime = datetime.strptime(
     request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
@@ -59,8 +59,8 @@ def confirm_booking():
     return temp
 
 
-@login_required
 @controllers.route(BOOKING_API_URL + '/confirm', methods=['POST'])
+@login_required
 def book():
     pickup_datetime = datetime.strptime(request.form.get(
         'pickup_datetime'), DEFAULT_DATETIME_FORMAT)
@@ -136,8 +136,8 @@ def book():
 
     return temp
 
-@login_required
 @controllers.route(BOOKING_API_URL + '/cancel', methods=['POST'])
+@login_required
 def cancel():
     booking_id = request.form.get('booking_id')
     booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()

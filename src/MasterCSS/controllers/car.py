@@ -30,8 +30,8 @@ car_coordinates = Constant.CAR_COORDINATES
 
 controllers = Blueprint("car_controllers", __name__)
 
-@login_required
 @controllers.route(CAR_API_URL+ '/filter', methods=['POST'])
+@login_required
 def filter_car():
     car_query = db.session.query(Car)
     cars = car_query.all()
@@ -63,8 +63,8 @@ def filter_car():
     )
 
 
-@login_required
 @controllers.route(CAR_API_URL+ '/search', methods=['POST'])
+@login_required
 def search_car():
     car_query = db.session.query(Car)
     make = request.form.get('make')
