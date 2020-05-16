@@ -1,9 +1,7 @@
 """
-cli.py sets up and configures Flask application for MasterCSS.
-
-- Initialise app environement, blueprints and database.
+This file contains project environment setup, flask
+configuration as well as database initialisation.
 """
-
 from MasterCSS.models.booking import Booking
 from MasterCSS.models.car import Car
 from MasterCSS.models.user import User
@@ -13,6 +11,7 @@ from MasterCSS.controllers.templates import controllers as TemplateControllers
 from MasterCSS.controllers.management.car import controllers as CarManagementControllers
 from MasterCSS.controllers.auth import controllers as AuthControllers
 from flask import Flask
+
 from flask_login import (
     LoginManager,
     current_user
@@ -26,7 +25,11 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 load_dotenv()
 
-# configuring flask app
+
+HOST = os.getenv('HOST')
+PORT = int(os.getenv('PORT'))
+
+# Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
     os.getenv("MYSQL_USERNAME"),
     os.getenv("MYSQL_PASSWORD"),
@@ -36,35 +39,44 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 
-# initialise db
+# Database initialisation
 db = SQLAlchemy(app)
 ma = Marshmallow()
-
-# import other python files which depend on db instance created
 
 db.create_all()
 db.session.commit()
 
-# allow initialisation of login_manager with flask_app object
+# Flask app initialisation
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-# adding controllers
+# Controllers
 app.register_blueprint(TemplateControllers)
 app.register_blueprint(AuthControllers)
 app.register_blueprint(CarManagementControllers)
 app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 
-# enable function calls from jinja
+# Enable python function calls for jinja
 app.jinja_env.globals.update(
     eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
 
 @login_manager.user_loader
 def load_user(id):
+    """
+    Load user detail
+
+    :param id: User's identity number
+    :type id: int
+    :return: User information
+    :rtype: User
+    """
     return User.query.get(id)
 
 
 def main():
-    app.run(debug=True, host="0.0.0.0", port="80")
+    """
+    App run on env HOST, PORT
+    """
+    app.run(debug=True, host=HOST, port=PORT)
