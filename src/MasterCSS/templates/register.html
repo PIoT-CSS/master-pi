@@ -1,0 +1,95 @@
+{% extends "layouts/dashboard-layout.html" %}
+{% block title %}Carshare - Register{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<style>
+    body{
+      background-color: lightblue;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+</style>
+<div class="box max-w-sm w-full mx-auto">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
+    <h1 class="title is-4">Register</h1>
+    <form name="registration_form" action={{url_for("auth_controllers.register")}} enctype=multipart/form-data method="post">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
+                <input class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+                <input class="input" name="password" type="password" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <input class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
+                <span class="icon is-small is-left">
+                    <i class="fas  fa-envelope"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">First name</label>
+            <div class="control">
+                <input class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Last name</label>
+            <div class="control">
+                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else '' }} type="text" required>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label class="label">Phone number</label>
+            <div class="control">
+                <input class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
+            </div>
+        </div>
+
+         <div class="field">
+            <label class="label">Photo of yourself</label>
+            <div class="control">
+                <input type="file" name="image" accept="image/*;" required>
+            </div>
+        </div>
+
+        <div class="level">
+            <div class="level-left">
+                <input class="button is-info" type="submit" name="register" value="Sign up">
+            </div>
+            <div class="level-right">
+                <a href={{url_for("template_controllers.login")}}>Already have an account?</a>
+            </div>
+
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

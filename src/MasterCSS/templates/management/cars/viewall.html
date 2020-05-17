@@ -1,0 +1,55 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+{% block container %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Make</th>
+            <th>Seats</th>
+            <th>BodyType</th>
+            <th>Home Location</th>
+            <th>Current Location</th>
+            <th>Colour</th>
+            <th>CostPerHour</th>
+            <th>FuelType</th>
+            <th>TotalDistance</th>
+            <th>NumberPlate</th>
+            <th>CurrentBookingID</th>
+            <th>Agent ID</th>
+            <th>Image</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+            <tr>
+                <td>{{car.ID}}</td>
+                <td>{{car.Make}}</td>
+                <td>{{car.Seats}}</td>
+                <td>{{car.BodyType}}</td>
+                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
+                <td>{{car.Coordinates}}</td>
+                <td>{{car.Colour}}</td>
+                <td>${{car.CostPerHour}}</td>
+                <td>{{car.FuelType}}</td>
+                <td>{{car.TotalDistance}}</td>
+                <td>{{car.NumberPlate}}</td>
+                <td>{{car.CurrentBookingID}}</td>
+                <td>{{car.AgentID}}</td>
+                <td><img src="{{car.Image}}"></td>
+                <td><a href={{url_for('car_management_controllers.view_car', id=car.ID)}} class="button is-link is-outlined">View</a></td>
+                <td><a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-link is-outlined">Modify</a></td>
+                <td><a href={{url_for('car_management_controllers.remove_car', id=car.ID)}} class="button is-link is-outlined">Remove</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+
+<a href={{url_for('car_management_controllers.add_car')}} class="button is-link is-outlined">Add car</a>
+
+{% endblock %}

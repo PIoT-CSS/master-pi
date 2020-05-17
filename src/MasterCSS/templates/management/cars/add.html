@@ -1,0 +1,56 @@
+<!-- {% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %}  -->
+
+<h1>Add a car</h1>
+<form action={{url_for("car_management_controllers.add_car")}} enctype=multipart/form-data method="post">
+    Secret key
+    <input name="secretkey" type="text" required>
+    Make
+    <input name="make" type="text" required>
+    Seats
+    <select name="seats" required>
+        {% for seats in car_seats %}
+            <option value="{{seats}}">{{seats}}</option>
+        {% endfor %}
+    </select>
+    Body type
+    <select name="bodytype" required>
+        {% for body_type in car_body_types %}
+            <option value="{{body_type}}">{{body_type}}</option>
+        {% endfor %}
+    </select>
+    Home Location
+    <select name="home_coordinates" required>
+        {% for coordinates, location in car_coordinates.items() %}
+            <option value="{{coordinates}}">{{location}}</option>
+        {% endfor %}
+    </select>
+    Colour
+    <select name="colour" required>
+        {% for colour in car_colours %}
+            <option value="{{colour}}">{{colour}}</option>
+        {% endfor %}
+    </select>
+    Cost Per Hour
+    <input name="costperhour" type="number" required>
+    Total distance
+    <input name="totaldistance" type="number" required>
+    Fuel type
+    <select name="fueltype" required>
+        {% for fuel_type in car_fuel_types %}
+            <option value="{{fuel_type}}">{{fuel_type}}</option>
+        {% endfor %}
+    </select>
+    Number Plate
+    <input name="numberplate" type="text" required>
+    Agent ID
+    <input name="agent_id" type="text">
+    Image
+    <input type="file" name="image" accept="image/*" required>
+    <input type="submit" name="register" value="Add car">
+</form>
+
+<!-- {% endblock %} -->

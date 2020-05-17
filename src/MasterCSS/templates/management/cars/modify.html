@@ -1,0 +1,45 @@
+<h1>Modify car</h1>
+<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} enctype=multipart/form-data method="post">
+    Secret key
+    <input name="secretkey" type="text" required>
+    Make
+    <input name="make" value='{{car.Make}}' type="text" required>
+    Seats
+    <select name="seats" value='{{car.Seats}}' required>
+        {% for seats in car_seats %}
+            <option value="{{seats}}">{{seats}}</option>
+        {% endfor %}
+    </select>
+    Body type
+    <select name="bodytype" value='{{car.BodyType}}'' required>
+        {% for body_type in car_body_types %}
+            <option value="{{body_type}}">{{body_type}}</option>
+        {% endfor %}
+    </select>
+    Colour
+    <select name="colour" value='{{car.Colour}}' required>
+        {% for colour in car_colours %}
+            <option value="{{colour}}">{{colour}}</option>
+        {% endfor %}
+    </select>
+    Cost Per Hour
+    <input name="costperhour" type="number" value='{{car.CostPerHour}}' required>
+    Total distance
+    <input name="totaldistance" type="number" value='{{car.TotalDistance}}' required>
+    Fuel type
+    <select name="fueltype" value='{{car.FuelType}}' required>
+        {% for fuel_type in car_fuel_types %}
+            <option value="{{fuel_type}}">{{fuel_type}}</option>
+        {% endfor %}
+    </select>
+    Number Plate
+    <input name="numberplate" value='{{car.NumberPlate}}' type="text" required>
+    Current Booking ID
+    <input name="currentbookingid" type="number" value='{{car.CurrentBookingID}}'>
+    Agent ID
+    <input name="agent_id" type="text" value='{{car.AgentID}}'>
+    Modify Image
+    <input type="file" name="image" accept="image/*">
+    <img src="{{car.Image}}">
+    <input type="submit" name="modify" value="Modify">
+</form>
