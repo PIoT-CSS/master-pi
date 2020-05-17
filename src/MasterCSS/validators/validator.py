@@ -27,4 +27,7 @@ class Validator(ABC):
 
     @abstractmethod
     def message(self):
+        """
+        Return the error message
+        """
         pass

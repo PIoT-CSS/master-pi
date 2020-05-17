@@ -13,7 +13,21 @@ class EmailValidator(Validator):
         super().__init__("(?!.*\.\.)(^[^\.][^@\s]+@[^@\s]+\.[^@\s\.]+$)")
 
     def check(self, value):
+        """
+        Check value against regex pattern.
+
+        :param value: A value to be checked
+        :type value: String, int,...
+        :return: Check if it is valid.
+        :rtype: Boolean
+        """
         return super().check(value)
 
     def message(self):
+        """
+        Get the error message.
+
+        :return: Error message
+        :rtype: string
+        """
         return "Invalid email format"

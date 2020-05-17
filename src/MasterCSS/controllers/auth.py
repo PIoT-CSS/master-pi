@@ -45,6 +45,14 @@ controllers = Blueprint("auth_controllers", __name__)
 
 @controllers.route("/login", methods=["POST"])
 def login():
+    """
+    Authenticate an user with the given username and password.
+    It will use base64decode with SALT to authenticate the user
+
+    :return: Dashboard if logged in successfully, otherwise redirect to
+    login html with error message.
+    :rtype: render_template
+    """
     if current_user.is_authenticated:
         return redirect(url_for("template_controllers.index"))
     else:
@@ -72,6 +80,17 @@ def login():
 
 @controllers.route("/register", methods=["POST"])
 def register():
+    """
+    Handle register form submission, store password as hashed format.
+    Check if the username, email and phone number are valid and not used.
+
+    :raises ErrorValueException: if username exists or invalid
+    :raises ErrorValueException: if email exists or invalid
+    :raises ErrorValueException: if phone number exists or invalid
+    :return: Dashboard if successfully registered. Otherwise, register page with
+    errors.
+    :rtype: render_template
+    """
     if current_user.is_authenticated:
         return redirect(url_for("template_controllers.index"))
     else:
@@ -165,5 +184,11 @@ def register():
 @login_required
 @controllers.route("/logout", methods=["GET"])
 def logout():
+    """
+    Handle log out request and clear the user session.
+
+    :return: Redirect to homepage
+    :rtype: redirect
+    """
     logout_user()
     return redirect(url_for("template_controllers.index"))

@@ -22,22 +22,16 @@ PICKLE_EXTENSION = ".pickle"
 class EncodeOne:
     """
     A class to encode images of a user.
-
-    Methods
-        get_images_list_from_a_user(self, user)
-            Returns image list from a particular user dataset
-        create_encodings_from_list(self, images_list)
-            Loops through a user images list and returns an encoding array
-            which will be serialized to a .pickle file.
-        turn_encodings_to_pickle(self, encodings, user)
-            Create a .pickle file from encodings
-        run(self, user)
-            Init and runs Encode
     """
     
     def get_images_list_from_a_user(self, user):
         """
-        Returns image list from a particular user dataset
+        Get the images list from a user
+
+        :param user: username
+        :type user: string
+        :return: path to the image list.
+        :rtype: string
         """
         images_path = DATASET_FOLDER + os.path.sep + user
         imagePaths = list(paths.list_images(images_path))
@@ -48,6 +42,9 @@ class EncodeOne:
         """
         Loops through a user images list and returns an encoding array
         which will be serialized to a .pickle file.
+
+        :return: facial encodings
+        :rtype: face_encoding
         """
 
         for(i, imagePath) in enumerate(images_list):
@@ -72,7 +69,13 @@ class EncodeOne:
     def turn_encodings_to_pickle(self, encodings, user):
         """
         Create a .pickle file from encodings
+
+        :param user: username
+        :type user: string
+        :param encodings: encoding data
+        :type encodings: face_encodings
         """
+        
         filename = PICKLE_FOLDER + os.path.sep + user + PICKLE_EXTENSION
         print("Writing to " + filename)
         data = {"encodings": encodings, "names": user}
@@ -82,7 +85,10 @@ class EncodeOne:
 
     def run(self, user):
         """
-        Init and runs Encode
+        Run encoding
+
+        :param user: username
+        :type user: string
         """
         images_list = self.get_images_list_from_a_user(user)
         encodings = self.create_encodings_from_list(images_list)

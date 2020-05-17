@@ -38,6 +38,8 @@ class Booking(db.Model):
     Distance = db.Column(db.Float, nullable=False)
     Status = db.Column(db.Integer, nullable=False)
     CalRef = db.Column(db.Text)
+
+    # Booking status identity number
     CANCELED = 3
     INACTIVE = 2
     ACTIVE = 1
@@ -60,6 +62,14 @@ class Booking(db.Model):
 
     @staticmethod
     def getStatus(id):
+        """
+        GET booking status.
+
+        :param id: Identity number of the status
+        :type id: int
+        :return: Booking status as string.
+        :rtype: string
+        """
         if id == Booking.ACTIVE:
             return "Active"
         elif id == Booking.INACTIVE:

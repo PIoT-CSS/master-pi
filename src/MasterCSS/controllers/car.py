@@ -20,22 +20,36 @@ from flask_login import (
 )
 from MasterCSS.constant import Constant
 
+# REST endpoints routing
 CAR_API_URL = '/cars'
 
+# Date format for parsing
 HTML_DATETIME_FORMAT = '%d/%m/%Y %H:%M'
 DEFAULT_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+# Car constants.
 car_colours = Constant.CAR_COLOURS
 car_body_types = Constant.CAR_BODY_TYPES
 car_seats = Constant.CAR_SEATS
 car_fuel_types = Constant.CAR_FUEL_TYPES
 car_coordinates = Constant.CAR_COORDINATES
 
+# Setup Blueprint
 controllers = Blueprint("car_controllers", __name__)
 
 @controllers.route(CAR_API_URL+ '/filter', methods=['POST'])
 @login_required
 def filter_car():
+    """
+    End point to filter the car based on a given date and time range.
+    Which use the get_available_cars(pickup_datetime, return_datetime, cars)
+    returns.
+
+    :return: Search result page with a list of available cars if there are any.
+    Otherwise, render the dashboard page with an error message.
+
+    :rtype: render_template
+    """
     car_query = db.session.query(Car)
     cars = car_query.all()
     datetimes = request.form.get('datetimes')
@@ -69,6 +83,12 @@ def filter_car():
 @controllers.route(CAR_API_URL+ '/search', methods=['POST'])
 @login_required
 def search_car():
+    """
+    Filter cars based on given criterias.
+
+    :return: Search result page with a list of cars that match the criterias
+    :rtype: render_page
+    """
     car_query = db.session.query(Car)
     make = request.form.get('make')
     if make != "":
@@ -111,6 +131,19 @@ def search_car():
     )
 
 def get_available_cars(pickup_datetime, return_datetime, cars):
+    """
+    Return the available cars given a pickup_datetime and return_datetime.
+    by make sure that there is no booking overlap between the two dates.
+    
+    :param pickup_datetime: time to pick up the car
+    :type pickup_datetime: datetime
+    :param return_datetime: time to return the car
+    :type return_datetime: datetime
+    :param cars: list of cars to filter
+    :type cars: Car[]
+    :return: list of available cars
+    :rtype: Car[]
+    """
     if (isinstance(pickup_datetime, str) and isinstance(return_datetime, str)):
         pickup_datetime = datetime.strptime(
             pickup_datetime, DEFAULT_DATETIME_FORMAT)

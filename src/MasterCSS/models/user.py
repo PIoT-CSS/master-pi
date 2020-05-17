@@ -49,6 +49,11 @@ class User(db.Model, UserMixin):
         self.PhoneNumber = PhoneNumber
         self.UserType = UserType
 
-    # for flask_login
     def get_id(self):
+        """
+        Return the login ID for flask_login.
+
+        :return: login identity number
+        :rtype: int
+        """
         return (self.ID)

@@ -21,20 +21,34 @@ from flask_login import (
     login_required
 )
 
+# REST endpoints routing
 BOOKING_API_URL = '/booking'
+
+# Date format for parsing
 HTML_DATETIME_FORMAT = '%Y-%m-%dT%H:%M'
 DEFAULT_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+# Setup Blueprint
 controllers = Blueprint("booking_controllers", __name__)
+
 from MasterCSS.constant import Constant
 from ast import literal_eval as make_tuple
 
+# Define Car constant
 car_coordinates = Constant.CAR_COORDINATES
 
 
 @controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
 @login_required
 def confirm_booking():
+    """
+    Confirming page with the datetime ranges with pickup time and cost.
+
+    Cost = car.CostPerHour + dateTimeDifferenceInHours
+
+    :return: Confirmation page
+    :rtype: render_template
+    """
     pickup_datetime = datetime.strptime(
     request.form.get('pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(
@@ -61,6 +75,16 @@ def confirm_booking():
 @controllers.route(BOOKING_API_URL + '/confirm', methods=['POST'])
 @login_required
 def book():
+    """
+    Confirm/Book a car with the given car, pick up time, return time and cost.
+    Add event into Google Calendar with the booking details.
+
+    Required user to have Oauth2 access. Else, it will prompt the user to 
+    authorize.
+
+    :return: confirmation booking page with booking information
+    :rtype: render_page
+    """
     pickup_datetime = datetime.strptime(request.form.get(
         'pickup_datetime'), DEFAULT_DATETIME_FORMAT)
     return_datetime = datetime.strptime(request.form.get(
@@ -136,6 +160,14 @@ def book():
 @controllers.route(BOOKING_API_URL + '/cancel', methods=['POST'])
 @login_required
 def cancel():
+    """
+    Cancel a booking and delete the event calendar. Required user to
+    have access Oauth2Crednetials. Otherwise, it will prompt the user to 
+    authorize.
+
+    :return: User booking history page.
+    :rtype: redirect
+    """
     booking_id = request.form.get('booking_id')
     booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
     if booking == None:
@@ -166,6 +198,12 @@ def cancel():
 @login_required
 @controllers.route(BOOKING_API_URL + '/view', methods=['POST'])
 def view():
+    """
+    View a booking details.
+
+    :return: Booking details with booking information, car information.
+    :rtype: 
+    """
     booking_id = request.form.get('booking_id')
     booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
     car = db.session.query(Car).filter_by(ID=int(booking.CarID)).scalar()
