@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import hashlib
 import time
+import base64
 
 load_dotenv()
 env_path = './.env'
@@ -87,44 +88,32 @@ class Publisher:
             client.loop_stop()
 
     def fr_publish(self, file_name, qos):
-        
+        #Attach callback functions, initiate client and connect to it
         client = mqtt.Client("toagentpi")
         client.on_publish = self.on_publish
         client.on_disconnect = self.on_disconnect
         client.on_connect = self.on_connect
-        
         client.connect(self.BROKER_ADDRESS, self.PORT)
 
-        # Setting up processing for publishing encodin
-        Run_flag=True
-        count=0
+        # Sending header, to identify image
+        self.send_header(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
         
+        #Retrieve Image, and encode in Base64
+        byteArr = self.convertImageToByteArray(file_name)
+
+        #PublishEncodedImage 
+        print(" length =",type(byteArr))
+        #client.publish(self.AUTH_RESP_FR_TOPIC, encoded)
+        publish.single(self.AUTH_RESP_FR_TOPIC, byteArr, hostname=self.BROKER_ADDRESS)
+        print("DEBUG")
+
+    def convertImageToByteArray(self, file_name):
         folder_name = 'encoding/dataset'
         user_name = file_name
         dataset_directory="./{}/{}/{}.jpg".format(folder_name, user_name, file_name)
-        self.send_header(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
-        #data_block_size=2000
-        fo=open(dataset_directory,"rb")
-        while Run_flag:
-            chunk=fo.read()
-            if chunk:
-                out_hash_md5.update(chunk)
-                out_message=chunk
-                print(" length =",type(out_message))
-                client.publish(self.AUTH_RESP_FR_TOPIC,out_message,qos)
-                    
-            else:
-                #send hash
-                #out_message= {}
-                #out_message["hash"] = out_hash_md5.hexdigest()
-                #out_message['type'] = 'hash'
-                #self.send_end(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
-                #print("out Message ",out_message)
-                #res,mid=client.publish(self.AUTH_RESP_FR_TOPIC,json.dumps(out_message), qos)
-                Run_flag=False
-                #client.disconnect()
-                #client.loop_stop()
-    
-        fo.close()
-            
+        
+        with open(dataset_directory, "rb") as image_file:
+            img = image_file.read()
+            byteArr = bytearray(img)
 
+        return byteArr
