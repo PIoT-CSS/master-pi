@@ -99,13 +99,14 @@ class Publisher:
         Run_flag=True
         count=0
         
-        folder_name = 'pickle'
-        pickle_directory="./{}/{}.pickle".format(folder_name, file_name)
+        folder_name = 'encoding/dataset'
+        user_name = file_name
+        dataset_directory="./{}/{}/{}.jpg".format(folder_name, user_name, file_name)
         self.send_header(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
-        data_block_size=2000
-        fo=open(pickle_directory,"rb")
+        #data_block_size=2000
+        fo=open(dataset_directory,"rb")
         while Run_flag:
-            chunk=fo.read(data_block_size)
+            chunk=fo.read()
             if chunk:
                 out_hash_md5.update(chunk)
                 out_message=chunk
@@ -114,13 +115,15 @@ class Publisher:
                     
             else:
                 #send hash
-                out_message=out_hash_md5.hexdigest()
-                self.send_end(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
-                print("out Message ",out_message)
-                res,mid=client.publish(self.AUTH_RESP_FR_TOPIC,out_message,qos)
+                #out_message= {}
+                #out_message["hash"] = out_hash_md5.hexdigest()
+                #out_message['type'] = 'hash'
+                #self.send_end(client, file_name, self.AUTH_RESP_FR_TOPIC, qos)
+                #print("out Message ",out_message)
+                #res,mid=client.publish(self.AUTH_RESP_FR_TOPIC,json.dumps(out_message), qos)
                 Run_flag=False
-                client.disconnect()
-                client.loop_stop()
+                #client.disconnect()
+                #client.loop_stop()
     
         fo.close()
             
