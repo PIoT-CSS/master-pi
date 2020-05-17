@@ -2,10 +2,21 @@ import pytest
 import os
 from io import BytesIO
 
+from datetime import datetime
+
 from MasterCSS.tests.test_fixture import client
 
 CAR_MANAGEMENT_API_URL = '/management/cars'
 BOOKING_API_URL = '/booking'
+
+HTML_DATETIME_FORMAT = '%d/%m/%Y %H:%M'
+DEFAULT_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+PICKUP_DATE = datetime(2021, 5, 17)
+RETURN_DATE = datetime(2021, 5, 18)
+
+PICKUP_AND_RETURN = PICKUP_DATE.strftime(HTML_DATETIME_FORMAT) + " - "\
+                    + RETURN_DATE.strftime(HTML_DATETIME_FORMAT)
 
 # Setup booking test by registering user and add cars.
 def test_setup(client):
@@ -73,8 +84,8 @@ def test_view_booking(client):
     response = client.post(
         BOOKING_API_URL + '/book',
         data=dict(
-            pickup_datetime="2020-05-18 17:00:00",
-            return_datetime="2020-05-23 00:00:00",
+            pickup_datetime=PICKUP_DATE,
+            return_datetime=RETURN_DATE,
             car_id=1,
         ),
         content_type='multipart/form-data'
@@ -87,8 +98,8 @@ def test_confirm_booking(client):
     response = client.post(
         BOOKING_API_URL + '/confirm',
         data=dict(
-            pickup_datetime="2020-05-18 17:00:00",
-            return_datetime="2020-05-23 00:00:00",
+            pickup_datetime=PICKUP_DATE,
+            return_datetime=RETURN_DATE,
             car_id=1,
         ),
         content_type='multipart/form-data'
@@ -101,8 +112,8 @@ def test_confirm_booking(client):
 def test_booking_in_mybookings(client):
     response = client.get('/mybookings')
 
-    assert b'2020-05-18 17:00:00' in response.data
-    assert b'2020-05-23 00:00:00' in response.data
+    assert str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
+    assert str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
     assert b'1' in response.data
     assert b'Confirmed' in response.data
 
@@ -132,8 +143,8 @@ def test_view_booking(client):
     )
 
     assert b'Booking ID: 1' in response.data
-    assert b'Car ID: 1' in response.data
-    assert b'User ID: 1' in response.data
-    assert b'Pickup time: 2020-05-18 17:00:00' in response.data
-    assert b'Return time: 2020-05-23 00:00:00' in response.data
-    assert b'Status: Canceled' in response.data
+    assert b'Car ID: </strong> 1' in response.data
+    assert b'User ID: </strong> 1' in response.data
+    assert b'Pickup time: </strong> ' + str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
+    assert b'Return time: </strong> ' + str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
+    assert b'Canceled' in response.data # previous test canceled this booking.

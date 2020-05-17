@@ -36,16 +36,16 @@ def test_add_car(client):
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
             secretkey=os.getenv('SECRET_KEY'), 
-            make="Honda Civic", 
-            seats="2",
+            make="Honda CR-V", 
+            seats="4",
             fueltype="Diesel",
-            bodytype="Sedan",
-            home_coordinates="(-37.812082, 144.983072)",
-            colour="Blue",
-            costperhour='12',
+            bodytype="SUV",
+            home_coordinates="(-37.806708, 144.968947)",
+            colour="Red",
+            costperhour='18',
             totaldistance='0',
             numberplate="BAB111",
-            image=(car2_image_read, 'car1.jpg'),
+            image=(car2_image_read, 'car2.jpg'),
             agent_id="2"
         ),
         content_type='multipart/form-data'
