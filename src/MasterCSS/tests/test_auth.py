@@ -18,6 +18,12 @@ def test_render_index(client):
     response = client.get('/')
     assert b'Welcome to Car Share System!' in response.data
 
+# Route to route that doesn't exist, renders the 404 template.
+def test_404_not_found(client):
+    response = client.get('/asdfadfasdf')
+    assert b'404 Not Found' in response.data
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
 # Test unauthorised access to auth-secured pages when not logged in
 def test_unauthorised(client):
     response = client.get('/myinfo')
@@ -40,8 +46,7 @@ def test_register_invalid(client):
             firstname="a",
             lastname="a",
             phonenumber="a",
-            image=(user_image_read, 'example.jpg'),
-            follow_redirect=True
+            image=(user_image_read, 'example.jpg')
         )
     )
     assert b'Invalid' in response.data
@@ -59,8 +64,7 @@ def test_register_valid(client):
             firstname="alex",
             lastname="witedja",
             phonenumber="04325672682",
-            image=(user_image_read, 'example.jpg'),
-            follow_redirect=True
+            image=(user_image_read, 'example.jpg')
         )
     )
     assert response.status_code == 302
@@ -113,4 +117,4 @@ def test_dashboard_route(client):
         '/'
     )
 
-    assert b'Let\'s book you a car' in response.data
+    assert b'Let\'s book you a car!' in response.data

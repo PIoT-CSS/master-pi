@@ -3,6 +3,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from MasterCSS.cli import app, db
+from MasterCSS.models.user import User
 
 TEST_DB_NAME = "css_unit_test"
 
