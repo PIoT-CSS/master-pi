@@ -135,8 +135,7 @@ def register():
                 directory = "src/MasterCSS/dataset/{}".format(new_user.Username)
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                file.save("{}/{}.{}".format(directory, random, file_ext))
-                EncodeOne().run(new_user.Username)
+                file.save("{}/{}.{}".format(directory, new_user.Username, file_ext))
 
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
