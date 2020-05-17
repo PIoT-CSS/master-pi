@@ -17,6 +17,8 @@ DATASET_FOLDER = "dataset" # Folder name containing user images separated by fol
 
 PICKLE_EXTENSION = ".pickle"
 
+PICKLE_FOLDER = os.path.realpath('..') + "/pickle/"
+
 class EncodeOne:
     """
     A class to encode images of a user.
@@ -59,7 +61,7 @@ class EncodeOne:
         """
         Create a .pickle file from encodings
         """
-        filename = user + PICKLE_EXTENSION
+        filename = PICKLE_FOLDER + user + PICKLE_EXTENSION
         data = {"encodings": encodings, "names": user}
         f = open(filename, "wb")
         f.write(pickle.dumps(data))
