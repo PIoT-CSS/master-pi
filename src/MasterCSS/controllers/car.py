@@ -131,7 +131,7 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
             
     return available_cars
 
-def pickup_car(db, username):
+def pickup_car(username):
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user is not None:
         bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()

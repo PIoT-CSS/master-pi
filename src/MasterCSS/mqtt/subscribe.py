@@ -40,28 +40,26 @@ class Subscriber:
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        payload = json.loads(msg.payload)
         if msg.topic == 'AUTH/FR':
-            payload = json.loads(msg.payload)
             if pickup_car(payload['username']):
                 print("[DEBUG] issues with creating a publisher")
                 pub = Publisher()
                 print("[DEBUG] tried to publish", msg.payload)
                 pub.fr_publish(payload['username'], 1)
         elif msg.topic == 'AUTH/UP':
-            payload = json.loads(msg.payload)
             if verify_login(payload['username'], payload['pass']):
                 if pickup_car(payload['username']):
                     pub = Publisher()
                     pub.publish('UP', 'Unlocked')
         elif msg.topic == 'RETURN':
-            payload = json.loads(msg.payload)
             if return_car(payload['username']):
                 pub = Publisher()
                 pub.publish('RET','Returned')
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
-
+    
     def subscribe(self):
         broker_address = self.BROKER_ADDRESS
         broker_port = self.BROKER_PORT

@@ -8,6 +8,7 @@ from flask_login import (
     LoginManager,
     current_user
 )
+import threading
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -50,9 +51,11 @@ app.jinja_env.globals.update(
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
+
 
 # setup database
 with app.app_context():
@@ -60,10 +63,24 @@ with app.app_context():
     db.create_all()
     db.session.commit()
 
+
+def start_flask():
+    app.run(debug=True, use_reloader=False, host="0.0.0.0", port="80")
+
+
 def start_mqtt():
-    sub = Subscriber()
-    sub.subscribe()
+    with app.app_context():
+        sub = Subscriber()
+        sub.subscribe()
+
 
 def main():
-    start_mqtt()
-    app.run(debug=True, host="0.0.0.0", port="80")
+    try:
+        # start flask on another thread
+        flask_thread = threading.Thread(target=start_flask)
+        flask_thread.daemon = True
+        flask_thread.start()
+        # start mqtt subscriber in background
+        start_mqtt()
+    except (KeyboardInterrupt, SystemExit):
+        print('Shutting down MasterCSS.')
