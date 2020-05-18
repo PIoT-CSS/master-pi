@@ -86,7 +86,6 @@ def modify_car(id):
             currentBookingID = request.form.get('currentbookingid')
             car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
             car.AgentID = request.form.get('agent_id')
-            print(request.files)
             if request.files.get('image', None):
                 image = request.files
                 image_encoded = base64.b64encode(image["image"].read())

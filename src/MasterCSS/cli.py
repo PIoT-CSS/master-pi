@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from MasterCSS.mqtt.subscribe import Subscriber
 
 app = Flask(__name__)
 load_dotenv()
@@ -60,10 +61,16 @@ app.jinja_env.globals.update(
     eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
 
+def run_mqtt():
+    sub = Subscriber()
+    sub.subscribe()
+
+
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
 
 def main():
+    run_mqtt()
     app.run(debug=True, host="0.0.0.0", port="80")

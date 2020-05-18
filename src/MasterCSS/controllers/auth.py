@@ -126,16 +126,13 @@ def register():
             # if user does not select file, browser also
             # submit a empty part without filename
             if file.filename == '':
-                print('No selected file')
                 return redirect(request.url)
             if file:
-                random = str(randint(0, 50000))
                 filename = secure_filename(file.filename)
-                file_ext = file.filename.split(".")[-1]
-                directory = "src/MasterCSS/dataset/{}".format(new_user.Username)
+                directory = "src/MasterCSS/encoding/dataset/{}".format(new_user.Username)
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                file.save("{}/{}.{}".format(directory, new_user.Username, file_ext))
+                file.save("{}/{}.jpg".format(directory, new_user.Username))
 
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
