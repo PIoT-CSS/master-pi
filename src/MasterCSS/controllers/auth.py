@@ -23,8 +23,7 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
-from MasterCSS.controllers.encode import EncodeOne
-from random import randint
+
 # define hashing configs
 SALT_LENGTH = int(os.getenv('SALT_LENGTH'))
 HASH_TYPE = os.getenv('HASH_TYPE')

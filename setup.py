@@ -22,8 +22,6 @@ setup(
         "pymysql",
         "oauth2client",
         "google-api-python-client",
-        "face_recognition",
-        "opencv-python",
         "imutils",
         "paho-mqtt"
     ],
