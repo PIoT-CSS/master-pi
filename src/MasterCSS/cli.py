@@ -60,10 +60,10 @@ with app.app_context():
     db.create_all()
     db.session.commit()
 
-def run_mqtt():
+def start_mqtt():
     sub = Subscriber()
     sub.subscribe()
 
 def main():
-    run_mqtt()
+    start_mqtt()
     app.run(debug=True, host="0.0.0.0", port="80")
