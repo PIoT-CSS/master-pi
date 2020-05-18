@@ -27,6 +27,7 @@ class Subscriber:
     def __init__(self):
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
+        self.RETURN_TOPIC = "RETURN"
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.BROKER_PORT = int(BROKER_PORT)
 
@@ -35,6 +36,7 @@ class Subscriber:
             print("connection established, returned code=", rc)
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
+            client.subscribe(self.RETURN_TOPIC)
         else:
             print("connection error, returned code=", rc)
 
@@ -51,11 +53,11 @@ class Subscriber:
             if verify_login(payload['username'], payload['pass']):
                 if pickup_car(payload['username']):
                     pub = Publisher()
-                    pub.publish('UP', 'Unlocked')
+                    pub.publish('UP', 'Unlocked', 1)
         elif msg.topic == 'RETURN':
             if return_car(payload['username']):
                 pub = Publisher()
-                pub.publish('RET','Returned')
+                pub.publish('RET','Returned', 1)
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
