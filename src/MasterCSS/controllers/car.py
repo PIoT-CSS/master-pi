@@ -138,7 +138,7 @@ def pickup_car(username):
         if bookings is not None:
             for booking in bookings:
                 # filter out past bookings
-                if datetime.now() >= booking.DateTimeStart and datetime.now() < booking.DateTimeEnd and booking.Status is Booking.CONFIRMED:
+                if datetime.now() >= booking.DateTimeStart and booking.Status is Booking.CONFIRMED:
                     car = db.session.query(Car).filter_by(ID=booking.CarID).scalar()
                     car.CurrentBookingID = booking.ID
                     booking.Status = Booking.ACTIVE
