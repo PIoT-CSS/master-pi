@@ -14,11 +14,18 @@ from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from MasterCSS.mqtt.subscribe import Subscriber
-
-app = Flask(__name__)
-load_dotenv()
+from MasterCSS.database import db
+from MasterCSS.controllers.booking import controllers as BookingControllers
+from MasterCSS.controllers.car import controllers as CarControllers
+from MasterCSS.controllers.templates import controllers as TemplateControllers
+from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.auth import controllers as AuthControllers
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.user import User
 
 # configuring flask app
+load_dotenv()
+app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
     os.getenv("MYSQL_USERNAME"),
     os.getenv("MYSQL_PASSWORD"),
@@ -27,27 +34,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
-
-# initialise db
-db = SQLAlchemy(app)
-ma = Marshmallow()
-
-# import other python files which depend on db instance created
-from MasterCSS.models.booking import Booking
-from MasterCSS.models.car import Car
-from MasterCSS.models.user import User
-from MasterCSS.controllers.booking import controllers as BookingControllers
-from MasterCSS.controllers.car import controllers as CarControllers
-from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
-from MasterCSS.controllers.auth import controllers as AuthControllers
-
-db.create_all()
-db.session.commit()
-
-# allow initialisation of login_manager with flask_app object
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 # adding controllers
 app.register_blueprint(TemplateControllers)
@@ -60,16 +46,23 @@ app.register_blueprint(BookingControllers)
 app.jinja_env.globals.update(
     eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
-
-def run_mqtt():
-    sub = Subscriber()
-    sub.subscribe()
-
+# allow initialisation of login_manager with flask_app object
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
+# setup database
+with app.app_context():
+    db.init_app(app)
+    db.create_all()
+    db.session.commit()
+
+def run_mqtt():
+    sub = Subscriber()
+    sub.subscribe()
 
 def main():
     run_mqtt()

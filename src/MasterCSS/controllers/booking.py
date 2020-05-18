@@ -7,7 +7,7 @@ from oauth2client import client
 from googleapiclient.discovery import build
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from flask import (
     request,
     url_for,

@@ -1,5 +1,7 @@
 import paho.mqtt.client as mqtt
 from MasterCSS.mqtt.publish import *
+from MasterCSS.controllers.car import pickup_car, return_car
+from MasterCSS.controllers.auth import verify_login
 import json
 import os
 from dotenv import load_dotenv
@@ -39,20 +41,21 @@ class Subscriber:
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         if msg.topic == 'AUTH/FR':
-            #TODO US2.1.5 Authentication update car status
-            print("[DEBUG] issues with creating a publisher")
-            pub = Publisher()
-            print("[DEBUG] tried to publish", msg.payload)
-            payload = json.loads(msg.payload)
-            pub.fr_publish(payload['username'], 1)
+            if pickup_car(msg.payload['username']):
+                print("[DEBUG] issues with creating a publisher")
+                pub = Publisher()
+                print("[DEBUG] tried to publish", msg.payload)
+                payload = json.loads(msg.payload)
+                pub.fr_publish(payload['username'], 1)
         elif msg.topic == 'AUTH/UP':
-            #TODO US2.1.5 Authentication update car status
-            pub = Publisher()
-            pub.publish('UP', 'Unlocked')
+            if verify_login(msg.payload['username'], msg.payload['pass']):
+                if pickup_car(msg.payload['username']):
+                    pub = Publisher()
+                    pub.publish('UP', 'Unlocked')
         elif msg.topic == 'RETURN':
-            #TODO IF STATEMENT update database
-            pub = Publisher()
-            pub.publish('RET','Returned')
+            if return_car(msg.payload['username']):
+                pub = Publisher()
+                pub.publish('RET','Returned')
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)

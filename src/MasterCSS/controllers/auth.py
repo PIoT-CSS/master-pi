@@ -17,7 +17,7 @@ import hashlib
 import uuid
 from base64 import b64encode, b64decode
 from werkzeug.utils import secure_filename
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from MasterCSS.models.user import User
 from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
@@ -155,3 +155,19 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("template_controllers.index"))
+
+
+def verify_login(username, password):
+    user = db.session.query(User).filter_by(Username=username).scalar()
+    if user:
+        # match hashed password
+        salt = b64decode(user.Password)[:SALT_LENGTH]
+        key = hashlib.pbkdf2_hmac(
+            HASH_TYPE,
+            password.encode(ENCODING_FORMAT),
+            salt,
+            ITERATIONS
+        )
+        if key == (b64decode(user.Password)[SALT_LENGTH:]):
+            return True
+    return False

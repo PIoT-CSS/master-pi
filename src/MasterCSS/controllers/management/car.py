@@ -5,7 +5,7 @@ import os
 import json
 import base64
 from MasterCSS.models.car import Car
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from flask import (
     request,
     url_for,
