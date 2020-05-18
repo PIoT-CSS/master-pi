@@ -8,7 +8,6 @@ from flask_login import (
     LoginManager,
     current_user
 )
-import thread
 import os
 from dotenv import load_dotenv
 from pathlib import Path

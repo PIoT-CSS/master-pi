@@ -72,6 +72,5 @@ class Subscriber:
         client.on_message = self.on_message
         client.on_log = self.on_log
 
-        # client.connect("broker_address", broker_port)
-        client.connect("203.221.166.146", broker_port)
-        client.loop_start()
+        client.connect("broker_address", broker_port)
+        client.loop_forever()
