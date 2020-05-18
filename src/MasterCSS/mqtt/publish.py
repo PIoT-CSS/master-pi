@@ -108,7 +108,7 @@ class Publisher:
         print("DEBUG")
 
     def convertImageToByteArray(self, file_name):
-        folder_name = 'encoding/dataset'
+        folder_name = 'src/MasterCSS/encoding/dataset'
         user_name = file_name
         dataset_directory="./{}/{}/{}.jpg".format(folder_name, user_name, file_name)
         

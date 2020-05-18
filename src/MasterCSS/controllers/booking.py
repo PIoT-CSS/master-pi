@@ -7,7 +7,7 @@ from oauth2client import client
 from googleapiclient.discovery import build
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from flask import (
     request,
     url_for,
@@ -147,8 +147,6 @@ def cancel():
     try_again_oauth = redirect(url_for('template_controllers.mybookings', err = "OAuth-ed, please try again."))
 
     # obtaining credentials from oauth earlier
-    print("-------------------------------------------------")
-    print(session)
     if 'credentials' not in session:
         return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
     credentials = client.OAuth2Credentials.from_json(session['credentials'])

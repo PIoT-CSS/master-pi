@@ -1,8 +1,6 @@
 # MasterCSS
-src/MasterCSS/dataset/*
-!src/MasterCSS/dataset/.gitkeep
-src/MasterCSS/pickle/*
-!src/MasterCSS/pickle/.gitkeep
+src/MasterCSS/encoding/dataset/*
+!src/MasterCSS/encoding/dataset/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

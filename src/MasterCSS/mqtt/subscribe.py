@@ -1,5 +1,7 @@
 import paho.mqtt.client as mqtt
-from mqtt.publish import *
+from MasterCSS.mqtt.publish import *
+from MasterCSS.controllers.car import pickup_car, return_car
+from MasterCSS.controllers.auth import verify_login
 import json
 import os
 from dotenv import load_dotenv
@@ -25,6 +27,7 @@ class Subscriber:
     def __init__(self):
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
+        self.RETURN_TOPIC = "RETURN"
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.BROKER_PORT = int(BROKER_PORT)
 
@@ -33,30 +36,32 @@ class Subscriber:
             print("connection established, returned code=", rc)
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
+            client.subscribe(self.RETURN_TOPIC)
         else:
             print("connection error, returned code=", rc)
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        payload = json.loads(msg.payload)
         if msg.topic == 'AUTH/FR':
-            #TODO US2.1.5 Authentication update car status
-            print("[DEBUG] issues with creating a publisher")
-            pub = Publisher()
-            print("[DEBUG] tried to publish", msg.payload)
-            payload = json.loads(msg.payload)
-            pub.fr_publish(payload['username'], 1)
+            if pickup_car(payload['username']):
+                print("[DEBUG] issues with creating a publisher")
+                pub = Publisher()
+                print("[DEBUG] tried to publish", msg.payload)
+                pub.fr_publish(payload['username'], 1)
         elif msg.topic == 'AUTH/UP':
-            #TODO US2.1.5 Authentication update car status
-            pub = Publisher()
-            pub.publish('UP', 'Unlocked')
+            if verify_login(payload['username'], payload['pass']):
+                if pickup_car(payload['username']):
+                    pub = Publisher()
+                    pub.publish('UP', 'Unlocked', 1)
         elif msg.topic == 'RETURN':
-            #TODO IF STATEMENT update database
-            pub = Publisher()
-            pub.publish('RET','Returned')
+            if return_car(payload['username']):
+                pub = Publisher()
+                pub.publish('RET','Returned', 1)
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
-
+    
     def subscribe(self):
         broker_address = self.BROKER_ADDRESS
         broker_port = self.BROKER_PORT
