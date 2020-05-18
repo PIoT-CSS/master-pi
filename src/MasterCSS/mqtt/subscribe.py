@@ -41,19 +41,21 @@ class Subscriber:
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         if msg.topic == 'AUTH/FR':
-            if pickup_car(msg.payload['username']):
+            payload = json.loads(msg.payload)
+            if pickup_car(payload['username']):
                 print("[DEBUG] issues with creating a publisher")
                 pub = Publisher()
                 print("[DEBUG] tried to publish", msg.payload)
-                payload = json.loads(msg.payload)
                 pub.fr_publish(payload['username'], 1)
         elif msg.topic == 'AUTH/UP':
-            if verify_login(msg.payload['username'], msg.payload['pass']):
-                if pickup_car(msg.payload['username']):
+            payload = json.loads(msg.payload)
+            if verify_login(payload['username'], payload['pass']):
+                if pickup_car(payload['username']):
                     pub = Publisher()
                     pub.publish('UP', 'Unlocked')
         elif msg.topic == 'RETURN':
-            if return_car(msg.payload['username']):
+            payload = json.loads(msg.payload)
+            if return_car(payload['username']):
                 pub = Publisher()
                 pub.publish('RET','Returned')
 
