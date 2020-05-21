@@ -47,8 +47,7 @@ def filter_car():
     Which use the get_available_cars(pickup_datetime, return_datetime, cars)
     returns.
 
-    :return: Search result page with a list of available cars if there are any.
-    Otherwise, render the dashboard page with an error message.
+    :return: Search result page with a list of available cars if there are any. Otherwise, render the dashboard page with an error message.
 
     :rtype: render_template
     """
