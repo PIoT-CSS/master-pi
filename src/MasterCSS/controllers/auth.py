@@ -33,11 +33,11 @@ from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
 
-# define hashing configs
-SALT_LENGTH = int(os.getenv('SALT_LENGTH'))
-HASH_TYPE = os.getenv('HASH_TYPE')
-ENCODING_FORMAT = os.getenv('ENCODING_FORMAT')
-ITERATIONS = int(os.getenv('ITERATIONS'))
+# define password hashing configs
+SALT_LENGTH=32
+HASH_TYPE='sha256'
+ENCODING_FORMAT='utf-8'
+ITERATIONS=100000
 
 # notify flask about external controllers
 controllers = Blueprint("auth_controllers", __name__)
