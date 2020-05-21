@@ -1,27 +1,27 @@
-MasterCSS\.models package
-=========================
+MasterCSS.models package
+========================
 
 Submodules
 ----------
 
-MasterCSS\.models\.booking module
----------------------------------
+MasterCSS.models.booking module
+-------------------------------
 
 .. automodule:: MasterCSS.models.booking
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.models\.car module
------------------------------
+MasterCSS.models.car module
+---------------------------
 
 .. automodule:: MasterCSS.models.car
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.models\.user module
-------------------------------
+MasterCSS.models.user module
+----------------------------
 
 .. automodule:: MasterCSS.models.user
     :members:

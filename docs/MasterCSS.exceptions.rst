@@ -1,11 +1,11 @@
-MasterCSS\.exceptions package
-=============================
+MasterCSS.exceptions package
+============================
 
 Submodules
 ----------
 
-MasterCSS\.exceptions\.error\_value\_exception module
------------------------------------------------------
+MasterCSS.exceptions.error\_value\_exception module
+---------------------------------------------------
 
 .. automodule:: MasterCSS.exceptions.error_value_exception
     :members:

@@ -1,43 +1,43 @@
-MasterCSS\.controllers package
-==============================
+MasterCSS.controllers package
+=============================
 
 Submodules
 ----------
 
-MasterCSS\.controllers\.auth module
------------------------------------
+MasterCSS.controllers.auth module
+---------------------------------
 
 .. automodule:: MasterCSS.controllers.auth
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.controllers\.booking module
---------------------------------------
+MasterCSS.controllers.booking module
+------------------------------------
 
 .. automodule:: MasterCSS.controllers.booking
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.controllers\.car module
-----------------------------------
+MasterCSS.controllers.car module
+--------------------------------
 
 .. automodule:: MasterCSS.controllers.car
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.controllers\.encode module
--------------------------------------
+MasterCSS.controllers.encode module
+-----------------------------------
 
 .. automodule:: MasterCSS.controllers.encode
     :members:
     :undoc-members:
     :show-inheritance:
 
-MasterCSS\.controllers\.templates module
-----------------------------------------
+MasterCSS.controllers.templates module
+--------------------------------------
 
 .. automodule:: MasterCSS.controllers.templates
     :members:
