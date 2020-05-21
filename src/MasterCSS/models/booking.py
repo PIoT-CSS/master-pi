@@ -3,7 +3,7 @@ booking.py contains db model for booking.
 """
 import os
 from flask import Flask
-from MasterCSS.cli import db, ma
+from MasterCSS.database import db, ma
 
 
 class BookingSchema(ma.Schema):

@@ -9,9 +9,10 @@ from flask import (
     request,
     redirect,
     url_for,
-    session
+    session,
+    current_app
 )
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
 
@@ -47,11 +48,12 @@ def index():
     :rtype: render_template
     """
     if current_user.is_authenticated:
-        if 'credentials' not in session:
-            return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
-        credentials = client.OAuth2Credentials.from_json(session['credentials'])
-        if credentials.access_token_expired:
-            return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+        if not current_app.config["TESTING"]:
+            if 'credentials' not in session:
+                return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+            credentials = client.OAuth2Credentials.from_json(session['credentials'])
+            if credentials.access_token_expired:
+                return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
 
         return render_template(
             'dashboard.html',

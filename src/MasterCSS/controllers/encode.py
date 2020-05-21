@@ -93,6 +93,3 @@ class EncodeOne:
         images_list = self.get_images_list_from_a_user(user)
         encodings = self.create_encodings_from_list(images_list)
         self.turn_encodings_to_pickle(encodings, user)
-
-# if __name__ == "__main__":
-#     EncodeOne().run("alex")

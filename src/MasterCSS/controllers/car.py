@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from flask import (
     request,
     url_for,
@@ -19,6 +19,7 @@ from flask_login import (
     login_required
 )
 from MasterCSS.constant import Constant
+from MasterCSS.models.user import User
 
 # REST endpoints routing
 CAR_API_URL = '/cars'
@@ -165,3 +166,33 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
             available_cars.append(car)
             
     return available_cars
+
+def pickup_car(username):
+    user = db.session.query(User).filter_by(Username=username).scalar()
+    if user is not None:
+        bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
+        if bookings is not None:
+            for booking in bookings:
+                # filter out past bookings
+                if datetime.now() >= booking.DateTimeStart and booking.Status is Booking.CONFIRMED:
+                    car = db.session.query(Car).filter_by(ID=booking.CarID).scalar()
+                    car.CurrentBookingID = booking.ID
+                    booking.Status = Booking.ACTIVE
+                    db.session.commit()
+                    return True
+    return False
+
+def return_car(username):
+    user = db.session.query(User).filter_by(Username=username).scalar()
+    if user is not None:
+        bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
+        if bookings is not None:
+            for booking in bookings:
+                # filter out past bookings
+                if booking.Status is Booking.ACTIVE:
+                    car = db.session.query(Car).filter_by(ID=booking.CarID).scalar()
+                    car.CurrentBookingID = None
+                    booking.Status = Booking.INACTIVE
+                    db.session.commit()
+                    return True
+    return False
