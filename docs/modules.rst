@@ -1,7 +1,7 @@
-src
-===
+MasterCSS
+=========
 
 .. toctree::
-   :maxdepth: 8
+   :maxdepth: 4
 
    MasterCSS

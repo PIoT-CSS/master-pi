@@ -28,14 +28,6 @@ MasterCSS.controllers.car module
     :undoc-members:
     :show-inheritance:
 
-MasterCSS.controllers.encode module
------------------------------------
-
-.. automodule:: MasterCSS.controllers.encode
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 MasterCSS.controllers.templates module
 --------------------------------------
 

@@ -49,8 +49,7 @@ def login():
     Authenticate an user with the given username and password.
     It will use base64decode with SALT to authenticate the user
 
-    :return: Dashboard if logged in successfully, otherwise redirect to
-    login html with error message.
+    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -87,8 +86,7 @@ def register():
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
     :raises ErrorValueException: if phone number exists or invalid
-    :return: Dashboard if successfully registered. Otherwise, register page with
-    errors.
+    :return: Dashboard if successfully registered. Otherwise, register page with errors.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -192,6 +190,16 @@ def logout():
 
 
 def verify_login(username, password):
+    """
+    Authenticate user's login with username and password
+
+    :param username: user's username
+    :type username: str
+    :param username: user's password
+    :type username: str
+    :return: user's auth has been verified or not
+    :rtype: boolean
+    """
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user:
         # match hashed password
