@@ -17,11 +17,11 @@ def client():
         TEST_DB_NAME
     )
     app.config['TESTING'] = True
-    
-    with app.test_client() as c:
-        # initialise database
-        db.engine.execute("drop database {};".format(TEST_DB_NAME))
-        db.engine.execute("create database {};".format(TEST_DB_NAME))
-        db.engine.execute("use {};".format(TEST_DB_NAME))
-        db.create_all()
-        yield c
+    with app.app_context():
+        with app.test_client() as c:
+            # initialise database
+            db.engine.execute("drop database {};".format(TEST_DB_NAME))
+            db.engine.execute("create database {};".format(TEST_DB_NAME))
+            db.engine.execute("use {};".format(TEST_DB_NAME))
+            db.create_all()
+            yield c
