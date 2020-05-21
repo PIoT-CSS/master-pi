@@ -78,12 +78,15 @@ with app.app_context():
 
 def start_flask():
     """
-    App run on env HOST, PORT
+    Start Flask app on env HOST, PORT
     """
     app.run(debug=True, use_reloader=False, host=HOST, port=PORT)
 
 
 def start_mqtt():
+    """
+    Start MQTT subscriber with Flask app context
+    """
     with app.app_context():
         sub = Subscriber()
         sub.subscribe()

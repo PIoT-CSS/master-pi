@@ -38,7 +38,8 @@ car_coordinates = Constant.CAR_COORDINATES
 # Setup Blueprint
 controllers = Blueprint("car_controllers", __name__)
 
-@controllers.route(CAR_API_URL+ '/filter', methods=['POST'])
+
+@controllers.route(CAR_API_URL + '/filter', methods=['POST'])
 @login_required
 def filter_car():
     """
@@ -69,7 +70,7 @@ def filter_car():
     if(len(available_cars) == 0):
         return render_template("dashboard.html", err="No cars are available at the moment.", cars=cars, return_datetime=return_datetime, pickup_datetime=pickup_datetime)
     return render_template(
-        "searchResult.html", 
+        "searchResult.html",
         cars=available_cars,
         car_colours=car_colours,
         car_body_types=car_body_types,
@@ -81,7 +82,7 @@ def filter_car():
     )
 
 
-@controllers.route(CAR_API_URL+ '/search', methods=['POST'])
+@controllers.route(CAR_API_URL + '/search', methods=['POST'])
 @login_required
 def search_car():
     """
@@ -105,7 +106,8 @@ def search_car():
         car_query = car_query.filter(Car.Colour.like(colour))
     pickup_coordinates = request.form.get('pickup_coordinates')
     if pickup_coordinates != "Any":
-        car_query = car_query.filter(Car.HomeCoordinates.like(pickup_coordinates))
+        car_query = car_query.filter(
+            Car.HomeCoordinates.like(pickup_coordinates))
     body_type = request.form.get('bodytype')
     if body_type != "Any":
         car_query = car_query.filter(Car.BodyType.like(body_type))
@@ -131,11 +133,12 @@ def search_car():
         bodytype=body_type
     )
 
+
 def get_available_cars(pickup_datetime, return_datetime, cars):
     """
     Return the available cars given a pickup_datetime and return_datetime.
     by make sure that there is no booking overlap between the two dates.
-    
+
     :param pickup_datetime: time to pick up the car
     :type pickup_datetime: datetime
     :param return_datetime: time to return the car
@@ -154,43 +157,68 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
     available_cars = []
     for car in cars:
         available = True
-        booking_query = db.session.query(Booking).filter(Booking.CarID.contains(car.ID))
+        booking_query = db.session.query(Booking).filter(
+            Booking.CarID.contains(car.ID))
         car_bookings = booking_query.all()
         if len(car_bookings) != 0:
             for booking in car_bookings:
                 if booking.Status == Booking.CONFIRMED or booking.Status == Booking.ACTIVE:
-                    available = max(booking.DateTimeStart, booking.DateTimeEnd) < min(pickup_datetime, return_datetime)
+                    available = max(booking.DateTimeStart, booking.DateTimeEnd) < min(
+                        pickup_datetime, return_datetime)
                     if available == False:
                         break
         if available == True:
             available_cars.append(car)
-            
+
     return available_cars
 
+
 def pickup_car(username):
+    """
+    Pickup/unlock a car by making user's current booking status ACTIVE.
+
+    :param username: user's username
+    :type username: str
+    :return: car has been picked up or not
+    :rtype: boolean
+    """
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user is not None:
         bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
         if bookings is not None:
+            # browse through users bookings
             for booking in bookings:
-                # filter out past bookings
+                # filter out past bookings and find current confirmed booking
                 if datetime.now() >= booking.DateTimeStart and booking.Status is Booking.CONFIRMED:
-                    car = db.session.query(Car).filter_by(ID=booking.CarID).scalar()
+                    car = db.session.query(Car).filter_by(
+                        ID=booking.CarID).scalar()
                     car.CurrentBookingID = booking.ID
                     booking.Status = Booking.ACTIVE
                     db.session.commit()
                     return True
     return False
 
+
 def return_car(username):
+    """
+    Return/lock a car by making user's current booking status INACTIVE.
+
+    :param username: user's username
+    :type username: str
+    :return: car has been returned or not
+    :rtype: boolean
+    """
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user is not None:
         bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
         if bookings is not None:
+            # browse through users bookings
             for booking in bookings:
                 # filter out past bookings
                 if booking.Status is Booking.ACTIVE:
-                    car = db.session.query(Car).filter_by(ID=booking.CarID).scalar()
+                    # filter out past bookings and find current active booking
+                    car = db.session.query(Car).filter_by(
+                        ID=booking.CarID).scalar()
                     car.CurrentBookingID = None
                     booking.Status = Booking.INACTIVE
                     db.session.commit()
