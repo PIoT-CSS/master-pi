@@ -3,7 +3,8 @@ from flask import (
     Blueprint,
     request,
     redirect,
-    url_for
+    url_for,
+    session
 )
 from flask_login import (
     LoginManager,
@@ -153,6 +154,7 @@ def register():
 @controllers.route("/logout", methods=["GET"])
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for("template_controllers.index"))
 
 

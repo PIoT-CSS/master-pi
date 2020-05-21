@@ -15,6 +15,7 @@ from flask import (
     redirect,
     render_template,
     session,
+    current_app
 )
 from flask_login import (
     current_user,
@@ -83,11 +84,12 @@ def book():
         err = "OAuth-ed, please try again."
     )
 
-    if 'credentials' not in session:
-        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
-    credentials = client.OAuth2Credentials.from_json(session['credentials'])
-    if credentials.access_token_expired:
-        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+    if not current_app.config["TESTING"]:
+        if 'credentials' not in session:
+            return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+        credentials = client.OAuth2Credentials.from_json(session['credentials'])
+        if credentials.access_token_expired:
+            return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
     
 
     booking = Booking(current_user.get_id(), car.ID, datetime.now(), 
@@ -99,29 +101,30 @@ def book():
     db.session.add(booking)
     db.session.commit()
 
-    http_auth = credentials.authorize(httplib2.Http())
-    service = build('calendar', 'v3', http_auth)
-    
-    event = {
-        'summary': "Carshare Booking #{}".format(booking.ID),
-        'start': {
-            'dateTime': pickup_datetime.isoformat(),
-            'timeZone': 'Australia/Melbourne'
-        },
-        'location': car_coordinates[tuple(eval(booking.HomeCoordinates))],
-        'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: {}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\nCar Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
-                        .format(booking.ID, booking.DateTimeBooked, pickup_datetime, 
-                                return_datetime, booking.Cost, booking.CarID, car.Make, car.Colour, car.Seats, car.FuelType),
-        'end': {
-            'dateTime': return_datetime.isoformat(),
-            'timeZone': 'Australia/Melbourne'
+    if not current_app.config["TESTING"]:
+        http_auth = credentials.authorize(httplib2.Http())
+        service = build('calendar', 'v3', http_auth)
+        
+        event = {
+            'summary': "Carshare Booking #{}".format(booking.ID),
+            'start': {
+                'dateTime': pickup_datetime.isoformat(),
+                'timeZone': 'Australia/Melbourne'
+            },
+            'location': car_coordinates[tuple(eval(booking.HomeCoordinates))],
+            'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: {}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\nCar Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
+                            .format(booking.ID, booking.DateTimeBooked, pickup_datetime, 
+                                    return_datetime, booking.Cost, booking.CarID, car.Make, car.Colour, car.Seats, car.FuelType),
+            'end': {
+                'dateTime': return_datetime.isoformat(),
+                'timeZone': 'Australia/Melbourne'
+            }
         }
-    }
-    event = service.events().insert(calendarId='primary', body=event).execute()
+        event = service.events().insert(calendarId='primary', body=event).execute()
 
-    booking.CalRef = event['id']
+        booking.CalRef = event['id']
 
-    db.session.commit()
+        db.session.commit()
 
     temp = render_template(
         'booking/success.html',
@@ -146,17 +149,18 @@ def cancel():
 
     try_again_oauth = redirect(url_for('template_controllers.mybookings', err = "OAuth-ed, please try again."))
 
-    # obtaining credentials from oauth earlier
-    if 'credentials' not in session:
-        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
-    credentials = client.OAuth2Credentials.from_json(session['credentials'])
-    if credentials.access_token_expired:
-        return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+    if not current_app.config["TESTING"]:
+        # obtaining credentials from oauth earlier
+        if 'credentials' not in session:
+            return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
+        credentials = client.OAuth2Credentials.from_json(session['credentials'])
+        if credentials.access_token_expired:
+            return redirect(url_for('template_controllers.oauth2callback'), callback=try_again_oauth)
 
-    http_auth = credentials.authorize(httplib2.Http())
-    service = build('calendar', 'v3', http_auth)
-    
-    event = service.events().delete(calendarId='primary', eventId=booking.CalRef).execute()
+        http_auth = credentials.authorize(httplib2.Http())
+        service = build('calendar', 'v3', http_auth)
+        
+        event = service.events().delete(calendarId='primary', eventId=booking.CalRef).execute()
 
     db.session.commit()
     return redirect(url_for("template_controllers.mybookings"))

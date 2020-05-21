@@ -51,6 +51,6 @@ pip3 uninstall MasterCSS
   - `static/` contains static files such as `.js`, `.css` , `favicon.ico`, etc. Files are categorised into folders.
   - `templates/` contains `.html` template files.
   - `cli.py` contains Flask app initialisation code and configs, **also serves as MasterCSS's entry point**.
+  - `tests/` contains unit tests.
 
-- Unit testing will be done in `tests/`.
 
