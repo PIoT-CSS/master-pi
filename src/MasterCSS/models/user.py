@@ -5,7 +5,7 @@ import os
 from flask_login import (
     UserMixin
 )
-from MasterCSS.cli import db, ma
+from MasterCSS.database import db, ma
 from flask import Flask
 
 

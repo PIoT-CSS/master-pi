@@ -5,7 +5,7 @@ import os
 import json
 import base64
 from MasterCSS.models.car import Car
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from flask import (
     request,
     url_for,
@@ -86,7 +86,6 @@ def modify_car(id):
             currentBookingID = request.form.get('currentbookingid')
             car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
             car.AgentID = request.form.get('agent_id')
-            print(request.files)
             if request.files.get('image', None):
                 image = request.files
                 image_encoded = base64.b64encode(image["image"].read())

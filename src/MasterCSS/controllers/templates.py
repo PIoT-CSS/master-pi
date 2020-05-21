@@ -9,7 +9,7 @@ from flask import (
     session,
     current_app
 )
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from MasterCSS.models.car import Car
 from MasterCSS.models.booking import Booking
 

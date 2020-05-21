@@ -18,14 +18,13 @@ import hashlib
 import uuid
 from base64 import b64encode, b64decode
 from werkzeug.utils import secure_filename
-from MasterCSS.cli import db
+from MasterCSS.database import db
 from MasterCSS.models.user import User
 from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
-from MasterCSS.controllers.encode import EncodeOne
-from random import randint
+
 # define hashing configs
 SALT_LENGTH = int(os.getenv('SALT_LENGTH'))
 HASH_TYPE = os.getenv('HASH_TYPE')
@@ -127,17 +126,13 @@ def register():
             # if user does not select file, browser also
             # submit a empty part without filename
             if file.filename == '':
-                print('No selected file')
                 return redirect(request.url)
             if file:
-                random = str(randint(0, 50000))
                 filename = secure_filename(file.filename)
-                file_ext = file.filename.split(".")[-1]
-                directory = "src/MasterCSS/dataset/{}".format(new_user.Username)
+                directory = "src/MasterCSS/encoding/dataset/{}".format(new_user.Username)
                 if not os.path.exists(directory):
                     os.makedirs(directory)
-                file.save("{}/{}.{}".format(directory, random, file_ext))
-                EncodeOne().run(new_user.Username)
+                file.save("{}/{}.jpg".format(directory, new_user.Username))
 
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
@@ -161,3 +156,19 @@ def logout():
     logout_user()
     session.clear()
     return redirect(url_for("template_controllers.index"))
+
+
+def verify_login(username, password):
+    user = db.session.query(User).filter_by(Username=username).scalar()
+    if user:
+        # match hashed password
+        salt = b64decode(user.Password)[:SALT_LENGTH]
+        key = hashlib.pbkdf2_hmac(
+            HASH_TYPE,
+            password.encode(ENCODING_FORMAT),
+            salt,
+            ITERATIONS
+        )
+        if key == (b64decode(user.Password)[SALT_LENGTH:]):
+            return True
+    return False
