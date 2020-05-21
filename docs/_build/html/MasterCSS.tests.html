@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MasterCSS.tests package &#8212; Carshare 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MasterCSS.validators package" href="MasterCSS.validators.html" />
+    <link rel="prev" title="MasterCSS.mqtt package" href="MasterCSS.mqtt.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mastercss-tests-package">
+<h1>MasterCSS.tests package<a class="headerlink" href="#mastercss-tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-MasterCSS.tests.test_auth">
+<span id="mastercss-tests-test-auth-module"></span><h2>MasterCSS.tests.test_auth module<a class="headerlink" href="#module-MasterCSS.tests.test_auth" title="Permalink to this headline">¶</a></h2>
+<p>test_auth.py contains unit tests for authentication.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_404_not_found">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_404_not_found</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_404_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route to route that doesn’t exist, renders the 404 template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_dashboard_route">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_dashboard_route</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_dashboard_route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dashboard route after logged in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_login_invalid">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_login_invalid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_login_invalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test login with invalid password</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_login_unregistered">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_login_unregistered</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_login_unregistered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test login with unregistered user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_login_valid">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_login_valid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_login_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test login with registered user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_logout">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_logout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test logout feature</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_register_invalid">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_register_invalid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_register_invalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test register with invalid values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_register_valid">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_register_valid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_register_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test register with valid values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_render_index">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_render_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_render_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route renders index.html when not logged in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_render_login">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_render_login</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_render_login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route renders login.html when not logged in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_render_register">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_render_register</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_render_register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route renders register.html when not logged in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_auth.test_unauthorised">
+<code class="sig-prename descclassname">MasterCSS.tests.test_auth.</code><code class="sig-name descname">test_unauthorised</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_auth.test_unauthorised" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test unauthorised access to auth-secured pages when not logged in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_booking">
+<span id="mastercss-tests-test-booking-module"></span><h2>MasterCSS.tests.test_booking module<a class="headerlink" href="#module-MasterCSS.tests.test_booking" title="Permalink to this headline">¶</a></h2>
+<p>test_booking.py contains unit tests for booking.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_booking_in_mybookings">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_booking_in_mybookings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_booking_in_mybookings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test confirmed booking details should appear in mybookings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_cancel_booking">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_cancel_booking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_cancel_booking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test cancel is successful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_confirm_booking">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_confirm_booking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_confirm_booking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test confirm booking should show booking confirmed message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_setup">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup booking test by registering user and add cars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_view_booking">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_view_booking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_view_booking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test view booking is showing correct booking information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_car">
+<span id="mastercss-tests-test-car-module"></span><h2>MasterCSS.tests.test_car module<a class="headerlink" href="#module-MasterCSS.tests.test_car" title="Permalink to this headline">¶</a></h2>
+<p>test_car.py contains unit tests for car controllers.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_filter_after_book">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_filter_after_book</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_filter_after_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter car after book. booked car should not be seen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_filter_cars">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_filter_cars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_filter_cars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter available cars with valid date time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_filter_invalid">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_filter_invalid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_filter_invalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter cars with invalid datetime.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_search">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search car with more than one fields as parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_search_location">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_search_location</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_search_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search cars based on locations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_search_make">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_search_make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_search_make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search cars based on make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_search_not_found">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_search_not_found</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_search_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search car that doesn’t exist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car.test_setup">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car.</code><code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup car test by registering user and add cars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_car_management">
+<span id="mastercss-tests-test-car-management-module"></span><h2>MasterCSS.tests.test_car_management module<a class="headerlink" href="#module-MasterCSS.tests.test_car_management" title="Permalink to this headline">¶</a></h2>
+<p>test_car.py contains unit tests for car management.
+Tests related to controllers under /mangement/cars which is used to manage car entries in db.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_add_car">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_add_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_add_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding 2 cars into system to populate data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_change_car_detail">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_change_car_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_change_car_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test changing details of a car</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_remove_car">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_remove_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_remove_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test removing the first car added</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_view_all_cars">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_view_all_cars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_view_all_cars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test view all cars: should contain the 2 cars added in the previous test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_view_first_car">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_view_first_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_view_first_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test viewing details of the first car.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_fixture">
+<span id="mastercss-tests-test-fixture-module"></span><h2>MasterCSS.tests.test_fixture module<a class="headerlink" href="#module-MasterCSS.tests.test_fixture" title="Permalink to this headline">¶</a></h2>
+<p>test_fixture.py contains unit testing setup.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_fixture.client">
+<code class="sig-prename descclassname">MasterCSS.tests.test_fixture.</code><code class="sig-name descname">client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_fixture.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure pytest, Flask app and database for unit testing.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Carshare</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MasterCSS.html">MasterCSS package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="MasterCSS.html">MasterCSS package</a><ul>
+      <li>Previous: <a href="MasterCSS.mqtt.html" title="previous chapter">MasterCSS.mqtt package</a></li>
+      <li>Next: <a href="MasterCSS.validators.html" title="next chapter">MasterCSS.validators package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/MasterCSS.tests.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

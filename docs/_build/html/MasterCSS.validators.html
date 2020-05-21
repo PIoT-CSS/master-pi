@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MasterCSS.validators package &#8212; Carshare 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MasterCSS.tests package" href="MasterCSS.tests.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mastercss-validators-package">
+<h1>MasterCSS.validators package<a class="headerlink" href="#mastercss-validators-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-MasterCSS.validators.email_validator">
+<span id="mastercss-validators-email-validator-module"></span><h2>MasterCSS.validators.email_validator module<a class="headerlink" href="#module-MasterCSS.validators.email_validator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="MasterCSS.validators.email_validator.EmailValidator">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.validators.email_validator.</code><code class="sig-name descname">EmailValidator</code><a class="headerlink" href="#MasterCSS.validators.email_validator.EmailValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MasterCSS.validators.validator.Validator" title="MasterCSS.validators.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MasterCSS.validators.validator.Validator</span></code></a></p>
+<p>EmailValidator classes.</p>
+<dl class="py method">
+<dt id="MasterCSS.validators.email_validator.EmailValidator.check">
+<code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.email_validator.EmailValidator.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check value against regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>String</em><em>, </em><em>int</em><em>,</em><em>..</em>) – A value to be checked</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Check if it is valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.validators.email_validator.EmailValidator.message">
+<code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.email_validator.EmailValidator.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Error message</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.validators.phone_validator">
+<span id="mastercss-validators-phone-validator-module"></span><h2>MasterCSS.validators.phone_validator module<a class="headerlink" href="#module-MasterCSS.validators.phone_validator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="MasterCSS.validators.phone_validator.PhoneValidator">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.validators.phone_validator.</code><code class="sig-name descname">PhoneValidator</code><a class="headerlink" href="#MasterCSS.validators.phone_validator.PhoneValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MasterCSS.validators.validator.Validator" title="MasterCSS.validators.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MasterCSS.validators.validator.Validator</span></code></a></p>
+<p>PhoneValidator classes.</p>
+<dl class="py method">
+<dt id="MasterCSS.validators.phone_validator.PhoneValidator.check">
+<code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.phone_validator.PhoneValidator.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check value against regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>String</em><em>, </em><em>int</em><em>,</em><em>..</em>) – A value to be checked</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Check if it is valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.validators.phone_validator.PhoneValidator.message">
+<code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.phone_validator.PhoneValidator.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the error message</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.validators.username_validator">
+<span id="mastercss-validators-username-validator-module"></span><h2>MasterCSS.validators.username_validator module<a class="headerlink" href="#module-MasterCSS.validators.username_validator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="MasterCSS.validators.username_validator.UsernameValidator">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.validators.username_validator.</code><code class="sig-name descname">UsernameValidator</code><a class="headerlink" href="#MasterCSS.validators.username_validator.UsernameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MasterCSS.validators.validator.Validator" title="MasterCSS.validators.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MasterCSS.validators.validator.Validator</span></code></a></p>
+<p>UsernameValidator classes.</p>
+<dl class="py method">
+<dt id="MasterCSS.validators.username_validator.UsernameValidator.check">
+<code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.username_validator.UsernameValidator.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check value against regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>any</em>) – value to check against regex.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>result of the check.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.validators.username_validator.UsernameValidator.message">
+<code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.username_validator.UsernameValidator.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Error message</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.validators.validator">
+<span id="mastercss-validators-validator-module"></span><h2>MasterCSS.validators.validator module<a class="headerlink" href="#module-MasterCSS.validators.validator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="MasterCSS.validators.validator.Validator">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.validators.validator.</code><code class="sig-name descname">Validator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.validator.Validator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract validator classes.</p>
+<dl class="py method">
+<dt id="MasterCSS.validators.validator.Validator.check">
+<code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.validator.Validator.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check value against regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>any</em>) – value to check against regex.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>result of the check.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.validators.validator.Validator.message">
+<em class="property">abstract </em><code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.validators.validator.Validator.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the error message</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.validators">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.validators" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Carshare</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MasterCSS.html">MasterCSS package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="MasterCSS.html">MasterCSS package</a><ul>
+      <li>Previous: <a href="MasterCSS.tests.html" title="previous chapter">MasterCSS.tests package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/MasterCSS.validators.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
