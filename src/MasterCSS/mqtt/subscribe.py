@@ -66,7 +66,7 @@ class Subscriber:
                 pub.publish('RET','Returned', 1)
             else:
                 pub = Publisher()
-                pub.publish('AUTH/RESP/RET', 'Return denied', 1)
+                pub.publish('RET', 'Return denied', 1)
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
