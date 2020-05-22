@@ -238,11 +238,11 @@ by make sure that there is no booking overlap between the two dates.</p>
 
 <dl class="py function">
 <dt id="MasterCSS.controllers.car.pickup_car">
-<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">pickup_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.pickup_car" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">pickup_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.pickup_car" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pickup/unlock a car by making user’s current booking status ACTIVE.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – user’s username</p>
+<dd class="field-odd"><p><strong>payload</strong> (<em>dict</em>) – pickup car payload from agent pi</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>car has been picked up or not</p>
@@ -255,11 +255,11 @@ by make sure that there is no booking overlap between the two dates.</p>
 
 <dl class="py function">
 <dt id="MasterCSS.controllers.car.return_car">
-<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">return_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.return_car" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">return_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.return_car" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return/lock a car by making user’s current booking status INACTIVE.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – user’s username</p>
+<dd class="field-odd"><p><strong>payload</strong> (<em>dict</em>) – return car payload from agent pi</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>car has been returned or not</p>
