@@ -49,11 +49,17 @@ class Subscriber:
                 pub = Publisher()
                 print("[DEBUG] tried to publish", msg.payload)
                 pub.fr_publish(payload['username'], 1)
+            else:
+                pub = Publisher()
+                pub.publish('AUTH/RESP/FR', 'FR DENIED')
         elif msg.topic == 'AUTH/UP':
             if verify_login(payload['username'], payload['pass']):
                 if pickup_car(payload['username']):
                     pub = Publisher()
                     pub.publish('UP', 'Unlocked', 1)
+            else:
+                pub = Publisher()
+                pub.publish('AUTH/RESP/UP', 'UP DENIED')
         elif msg.topic == 'RETURN':
             if return_car(payload['username']):
                 pub = Publisher()
