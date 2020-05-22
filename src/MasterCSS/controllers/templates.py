@@ -58,13 +58,9 @@ def index():
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
 
-        get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
-        cars = json.loads(get_cars_response.text)
-
         return render_template(
             'dashboard.html',
-            cars=cars,
-            # cars=db.session.query(Car).all(),
+            cars=db.session.query(Car).all(),
             car_colours=car_colours,
             car_body_types=car_body_types,
             car_seats=car_seats,
