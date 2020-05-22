@@ -8,7 +8,7 @@ from flask_marshmallow import Marshmallow
 from MasterCSS.cli import app, db
 from MasterCSS.models.user import User
 
-TEST_DB_NAME = os.getenv("UNIT_TESTING_DATABASE"),
+TEST_DB_NAME = os.getenv("UNIT_TESTING_DATABASE")
 
 
 @pytest.fixture(scope='module')

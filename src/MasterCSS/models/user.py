@@ -16,7 +16,7 @@ class UserSchema(ma.Schema):
     Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
     """
     def __init__(self, strict=True, **kwargs):
-        super().__init__(strict=strict, **kwargs)
+        super().__init__(**kwargs)
 
     class Meta:
         fields = ("ID", "FirstName", "LastName", "Username", "Email",
