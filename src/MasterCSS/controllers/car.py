@@ -172,16 +172,16 @@ def get_available_cars(pickup_datetime, return_datetime, cars):
     return available_cars
 
 
-def pickup_car(username):
+def pickup_car(payload):
     """
     Pickup/unlock a car by making user's current booking status ACTIVE.
 
-    :param username: user's username
-    :type username: str
+    :param payload: pickup car payload from agent pi
+    :type payload: dict
     :return: car has been picked up or not
     :rtype: boolean
     """
-    user = db.session.query(User).filter_by(Username=username).scalar()
+    user = db.session.query(User).filter_by(Username=payload['username']).scalar()
     if user is not None:
         bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
         if bookings is not None:
@@ -191,23 +191,29 @@ def pickup_car(username):
                 if datetime.now() >= booking.DateTimeStart and booking.Status is Booking.CONFIRMED:
                     car = db.session.query(Car).filter_by(
                         ID=booking.CarID).scalar()
-                    car.CurrentBookingID = booking.ID
-                    booking.Status = Booking.ACTIVE
-                    db.session.commit()
-                    return True
+                    # match car's agent id vs payload's agent id
+                    if car.AgentID == payload['agentid'] and car.CurrentBookingID == None:
+                        # build car's current location
+                        current_location = payload['location']['location']
+                        current_coordinates = "({},{})".format(str(current_location['lat']), str(current_location['lng']))
+                        car.Coordinates = current_coordinates
+                        car.CurrentBookingID = booking.ID
+                        booking.Status = Booking.ACTIVE
+                        db.session.commit()
+                        return True
     return False
 
 
-def return_car(username):
+def return_car(payload):
     """
     Return/lock a car by making user's current booking status INACTIVE.
 
-    :param username: user's username
-    :type username: str
+    :param payload: return car payload from agent pi
+    :type payload: dict
     :return: car has been returned or not
     :rtype: boolean
     """
-    user = db.session.query(User).filter_by(Username=username).scalar()
+    user = db.session.query(User).filter_by(Username=payload['username']).scalar()
     if user is not None:
         bookings = db.session.query(Booking).filter_by(UserID=user.ID).all()
         if bookings is not None:
@@ -218,8 +224,14 @@ def return_car(username):
                     # filter out past bookings and find current active booking
                     car = db.session.query(Car).filter_by(
                         ID=booking.CarID).scalar()
-                    car.CurrentBookingID = None
-                    booking.Status = Booking.INACTIVE
-                    db.session.commit()
-                    return True
+                    # match car's agent id vs payload's agent id
+                    if car.AgentID == payload['agentid'] and car.CurrentBookingID == booking.ID:
+                        # build car's current location
+                        current_location = payload['location']['location']
+                        current_coordinates = "({},{})".format(str(current_location['lat']), str(current_location['lng']))
+                        car.Coordinates = current_coordinates
+                        car.CurrentBookingID = None
+                        booking.Status = Booking.INACTIVE
+                        db.session.commit()
+                        return True
     return False

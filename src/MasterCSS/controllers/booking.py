@@ -59,7 +59,7 @@ def confirm_booking():
     timeDelta = return_datetime - pickup_datetime
     dateTimeDifferenceInHours = timeDelta.total_seconds() / 3600
 
-    cost = car.CostPerHour * dateTimeDifferenceInHours
+    cost = round(car.CostPerHour * dateTimeDifferenceInHours, 2)
 
     temp = render_template(
         'booking/confirmation.html',

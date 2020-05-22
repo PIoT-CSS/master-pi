@@ -83,8 +83,6 @@ def modify_car(id):
             car.FuelType = request.form.get('fueltype')
             car.TotalDistance = float(request.form.get('totaldistance'))
             car.NumberPlate = request.form.get('numberplate')
-            currentBookingID = request.form.get('currentbookingid')
-            car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
             car.AgentID = request.form.get('agent_id')
             if request.files.get('image', None):
                 image = request.files

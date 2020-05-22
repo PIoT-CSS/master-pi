@@ -44,26 +44,29 @@ class Subscriber:
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         payload = json.loads(msg.payload)
         if msg.topic == 'AUTH/FR':
-            if pickup_car(payload['username']):
+            if pickup_car(payload):
                 print("[DEBUG] issues with creating a publisher")
                 pub = Publisher()
                 print("[DEBUG] tried to publish", msg.payload)
                 pub.fr_publish(payload['username'], 1)
             else:
                 pub = Publisher()
-                pub.publish('AUTH/RESP/FR', 'FR DENIED', 1)
+                pub.publish('AUTH/RESP/FR', 'Authentication denied', 1)
         elif msg.topic == 'AUTH/UP':
             if verify_login(payload['username'], payload['pass']):
-                if pickup_car(payload['username']):
+                if pickup_car(payload):
                     pub = Publisher()
                     pub.publish('UP', 'Unlocked', 1)
-            else:
-                pub = Publisher()
-                pub.publish('AUTH/RESP/UP', 'UP DENIED', 1)
+                    return
+            pub = Publisher()
+            pub.publish('AUTH/RESP/UP', 'Authentication denied', 1)
         elif msg.topic == 'RETURN':
-            if return_car(payload['username']):
+            if return_car(payload):
                 pub = Publisher()
                 pub.publish('RET','Returned', 1)
+            else:
+                pub = Publisher()
+                pub.publish('AUTH/RESP/RET', 'Return denied', 1)
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
