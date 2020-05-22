@@ -51,7 +51,7 @@ class Subscriber:
                 pub.fr_publish(payload['username'], 1)
             else:
                 pub = Publisher()
-                pub.publish('AUTH/RESP/FR', 'FR DENIED')
+                pub.publish('AUTH/RESP/FR', 'FR DENIED', 1)
         elif msg.topic == 'AUTH/UP':
             if verify_login(payload['username'], payload['pass']):
                 if pickup_car(payload['username']):
@@ -59,7 +59,7 @@ class Subscriber:
                     pub.publish('UP', 'Unlocked', 1)
             else:
                 pub = Publisher()
-                pub.publish('AUTH/RESP/UP', 'UP DENIED')
+                pub.publish('AUTH/RESP/UP', 'UP DENIED', 1)
         elif msg.topic == 'RETURN':
             if return_car(payload['username']):
                 pub = Publisher()
