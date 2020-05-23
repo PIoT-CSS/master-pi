@@ -28,6 +28,13 @@ controllers = Blueprint("car_management_controllers", __name__)
 
 @controllers.route(CAR_MANAGEMENT_API_URL+'/add', methods=['POST', 'GET'])
 def add_car():
+    """
+    Return the list of car if it's a get request. If it's a POST request,
+    Add the car to database and return the car view page.
+
+    :return: Return a car view page.
+    :rtype: render_template if GET, redirect if POST
+    """
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
@@ -66,11 +73,26 @@ def add_car():
 
 @controllers.route(CAR_MANAGEMENT_API_URL, methods=['GET'])
 def view_all_cars():
+    """
+    Return a view with all the cars.
+
+    :return: View with all the cars
+    :rtype: render_template
+    """
     return render_template("management/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
 def modify_car(id):
+    """
+    If the request is POST, modify the car with according to the form contents.
+    If the request is GET, return a detail view of the car.
+
+    :param id: car id
+    :type id: int
+    :return Modify specific car page.
+    :rtype: redirect
+    """
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
