@@ -129,14 +129,24 @@ def modify_car(id):
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
 def view_car(id):
-    # TODO: show bookings for cars
-    # TODO: if car == None?
+    """
+    Page for viewing a particular car's details.
+
+    :return: car details page
+    :rtype: render_template
+    """
     car=db.session.query(Car).filter_by(ID=id).scalar()
     return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])
 def remove_car(id):
+    """
+    Endpoint to remove a particular car.
+
+    :return: view all cars page
+    :rtype: render_template
+    """
     db.session.query(Car).filter_by(ID=id).delete()
     db.session.commit()
     return redirect(url_for('car_management_controllers.view_all_cars'))
