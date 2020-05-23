@@ -51,19 +51,22 @@ def index():
     :rtype: render_template
     """
     if current_user.is_authenticated:
+        # disable google oauth in unit tests
         if not current_app.config["TESTING"]:
-            # don't use google oauth in unit tests
+            # redirect user for google oauth if google oauth credentials don't exist
             if 'credentials' not in session:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
             credentials = client.OAuth2Credentials.from_json(session['credentials'])
+            # redirect user for google oauth if google oauth credentials expired
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
 
         if not current_app.config["TESTING"]:
+            # obtain cars from RESTFUL API
             get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
             cars = json.loads(get_cars_response.text)
         else:
-            # don't use GET request in unit tests
+            # obtain cars from db in unit tests
             cars=db.session.query(Car).all()
 
         return render_template(
