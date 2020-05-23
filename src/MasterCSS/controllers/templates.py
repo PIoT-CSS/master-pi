@@ -56,12 +56,11 @@ def index():
             # redirect user for google oauth if google oauth credentials don't exist
             if 'credentials' not in session:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+            # obtain credentials from session if exists
             credentials = client.OAuth2Credentials.from_json(session['credentials'])
             # redirect user for google oauth if google oauth credentials expired
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
-
-        if not current_app.config["TESTING"]:
             # obtain cars from RESTFUL API
             get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
             cars = json.loads(get_cars_response.text)
@@ -95,7 +94,8 @@ def oauth2callback(callback=None):
     flow = client.flow_from_clientsecrets(
         'client-secret.json',
         scope='https://www.googleapis.com/auth/calendar',
-        redirect_uri= url_for('template_controllers.oauth2callback', _external=True))
+        redirect_uri= url_for('template_controllers.oauth2callback', _external=True)
+    )
     if 'code' not in request.args:
         auth_uri = flow.step1_get_authorize_url()
         return redirect(auth_uri)
