@@ -13,6 +13,9 @@ setup(
         "requests",
         "oauthlib",
         "pyOpenSSL",
+        "cmake",
+        "cl",
+        "dlib",
         "Flask-Login",
         "Flask-SQLAlchemy",
         "Flask-Marshmallow",
@@ -22,8 +25,7 @@ setup(
         "pymysql",
         "oauth2client",
         "google-api-python-client",
-        "face_recognition",
-        "opencv-python",
-        "imutils"
+        "imutils",
+        "paho-mqtt"
     ],
 )

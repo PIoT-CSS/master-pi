@@ -3,7 +3,7 @@ car.py contains db model for car.
 """
 import os
 from flask import Flask
-from MasterCSS.cli import db, ma
+from MasterCSS.database import db, ma
 
 LONGTEXT_LENGTH = 4294000000
 
