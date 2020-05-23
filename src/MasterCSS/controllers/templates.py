@@ -52,19 +52,23 @@ def index():
     """
     if current_user.is_authenticated:
         if not current_app.config["TESTING"]:
+            # don't use google oauth in unit tests
             if 'credentials' not in session:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
             credentials = client.OAuth2Credentials.from_json(session['credentials'])
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
 
-        get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
-        cars = json.loads(get_cars_response.text)
+        if not current_app.config["TESTING"]:
+            get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
+            cars = json.loads(get_cars_response.text)
+        else:
+            # don't use GET request in unit tests
+            cars=db.session.query(Car).all()
 
         return render_template(
             'dashboard.html',
             cars=cars,
-            # cars=db.session.query(Car).all(),
             car_colours=car_colours,
             car_body_types=car_body_types,
             car_seats=car_seats,

@@ -41,6 +41,12 @@ controllers = Blueprint("car_controllers", __name__)
 
 @controllers.route(CAR_API_URL, methods=['GET'])
 def get_all_cars():
+    """
+    End point to get all cars.
+
+    :return: Returns details of all cars.
+    :rtype: json
+    """
     cars = db.session.query(Car).all()
     carsSchema = CarSchema(many = True)
     result = carsSchema.dump(cars)
