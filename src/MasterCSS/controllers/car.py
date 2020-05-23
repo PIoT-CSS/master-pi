@@ -4,7 +4,7 @@ booking.py contains car controllers.
 import os
 import json
 from datetime import datetime
-from MasterCSS.models.car import Car
+from MasterCSS.models.car import Car, CarSchema
 from MasterCSS.models.booking import Booking
 from MasterCSS.database import db
 from flask import (
@@ -12,7 +12,8 @@ from flask import (
     url_for,
     Blueprint,
     redirect,
-    render_template
+    render_template,
+    jsonify
 )
 from flask_login import (
     current_user,
@@ -37,6 +38,13 @@ car_coordinates = Constant.CAR_COORDINATES
 
 # Setup Blueprint
 controllers = Blueprint("car_controllers", __name__)
+
+@controllers.route(CAR_API_URL, methods=['GET'])
+def get_all_cars():
+    cars = db.session.query(Car).all()
+    carsSchema = CarSchema(many = True)
+    result = carsSchema.dump(cars)
+    return jsonify(result)
 
 
 @controllers.route(CAR_API_URL + '/filter', methods=['POST'])
