@@ -28,6 +28,13 @@ controllers = Blueprint("car_management_controllers", __name__)
 
 @controllers.route(CAR_MANAGEMENT_API_URL+'/add', methods=['POST', 'GET'])
 def add_car():
+    """
+    Return the list of car if it's a get request. If it's a POST request,
+    Add the car to database and return the car view page.
+
+    :return: Return a car view page.
+    :rtype: render_template if GET, redirect if POST
+    """
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
@@ -66,11 +73,26 @@ def add_car():
 
 @controllers.route(CAR_MANAGEMENT_API_URL, methods=['GET'])
 def view_all_cars():
+    """
+    Return a view with all the cars.
+
+    :return: View with all the cars
+    :rtype: render_template
+    """
     return render_template("management/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
 def modify_car(id):
+    """
+    If the request is POST, modify the car with according to the form contents.
+    If the request is GET, return a detail view of the car.
+
+    :param id: car id
+    :type id: int
+    :return Modify specific car page.
+    :rtype: redirect
+    """
     if request.method == 'POST':
         secretkey = request.form.get('secretkey')
         if secretkey == os.getenv('SECRET_KEY'):
@@ -83,8 +105,6 @@ def modify_car(id):
             car.FuelType = request.form.get('fueltype')
             car.TotalDistance = float(request.form.get('totaldistance'))
             car.NumberPlate = request.form.get('numberplate')
-            currentBookingID = request.form.get('currentbookingid')
-            car.CurrentBookingID = currentBookingID if currentBookingID != '' else None
             car.AgentID = request.form.get('agent_id')
             if request.files.get('image', None):
                 image = request.files
@@ -109,14 +129,24 @@ def modify_car(id):
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
 def view_car(id):
-    # TODO: show bookings for cars
-    # TODO: if car == None?
+    """
+    Page for viewing a particular car's details.
+
+    :return: car details page
+    :rtype: render_template
+    """
     car=db.session.query(Car).filter_by(ID=id).scalar()
     return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])
 def remove_car(id):
+    """
+    Endpoint to remove a particular car.
+
+    :return: view all cars page
+    :rtype: render_template
+    """
     db.session.query(Car).filter_by(ID=id).delete()
     db.session.commit()
     return redirect(url_for('car_management_controllers.view_all_cars'))

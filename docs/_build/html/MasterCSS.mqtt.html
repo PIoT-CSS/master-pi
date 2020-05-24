@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MasterCSS.mqtt package &#8212; Carshare 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MasterCSS.tests package" href="MasterCSS.tests.html" />
+    <link rel="prev" title="MasterCSS.models package" href="MasterCSS.models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mastercss-mqtt-package">
+<h1>MasterCSS.mqtt package<a class="headerlink" href="#mastercss-mqtt-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-MasterCSS.mqtt.publish">
+<span id="mastercss-mqtt-publish-module"></span><h2>MasterCSS.mqtt.publish module<a class="headerlink" href="#module-MasterCSS.mqtt.publish" title="Permalink to this headline">¶</a></h2>
+<p>publish.py contains mqtt publish logic for MP.</p>
+<dl class="py class">
+<dt id="MasterCSS.mqtt.publish.Publisher">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.mqtt.publish.</code><code class="sig-name descname">Publisher</code><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that contains publish logic. when given a payload and route
+it will publish to the correct route.</p>
+<dl class="simple">
+<dt>__init__(self):</dt><dd><p>initialises routes that it will publish to, ip address of AP and port.</p>
+</dd>
+<dt>on_publish(self, client, userdata, result):</dt><dd><p>function to run on successful publish</p>
+</dd>
+<dt>on_disconnect(self, client, userdata, rc):</dt><dd><p>function to run on disconnect</p>
+</dd>
+<dt>on_connect(self, client, userdata, rc):</dt><dd><p>function to run on connect</p>
+</dd>
+<dt>publish(self, topic, payload, qos):</dt><dd><p>initialises client and binds functions, publish received payload to AP at a given topic and disconnects.</p>
+</dd>
+<dt>fr_publish(self, file_name, qos):</dt><dd><p>initialises client and binds functions, publish user’s image for facial recognition as payload to AP at a given topic and disconnects.</p>
+</dd>
+<dt>send_end(self, client, filename, topic, qos):</dt><dd><p>sends end of file to identify image sent for facial recognition</p>
+</dd>
+<dt>send_header(self, client, filename, topic, qos):</dt><dd><p>sends header to identify image sent for facial recognition</p>
+</dd>
+<dt>convertImageToByteArray(self, file_name):</dt><dd><p>converts user’s image into byte array to be published</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.convertImageToByteArray">
+<code class="sig-name descname">convertImageToByteArray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.convertImageToByteArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts user’s image into byte array to be published</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.fr_publish">
+<code class="sig-name descname">fr_publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.fr_publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialises client and binds functions, publish user’s image for facial recognition as payload to AP at a given topic and disconnects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.on_connect">
+<code class="sig-name descname">on_connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to run on connect</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.on_disconnect">
+<code class="sig-name descname">on_disconnect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to run on disconnect</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.on_publish">
+<code class="sig-name descname">on_publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">result</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to run on successful publish</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.publish">
+<code class="sig-name descname">publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">payload</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialises client and binds functions, publish received payload to AP at a given topic and disconnects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.send_end">
+<code class="sig-name descname">send_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.send_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends end of file to identify image sent for facial recognition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.publish.Publisher.send_header">
+<code class="sig-name descname">send_header</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.send_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends header to identify image sent for facial recognition</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.mqtt.subscribe">
+<span id="mastercss-mqtt-subscribe-module"></span><h2>MasterCSS.mqtt.subscribe module<a class="headerlink" href="#module-MasterCSS.mqtt.subscribe" title="Permalink to this headline">¶</a></h2>
+<p>subscribe.py contains mqtt subscribe logic for MP.</p>
+<dl class="py class">
+<dt id="MasterCSS.mqtt.subscribe.Subscriber">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.mqtt.subscribe.</code><code class="sig-name descname">Subscriber</code><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to initiate a subscriber via MQTT topic</p>
+<dl class="simple">
+<dt>__init__(self):</dt><dd><p>initialises the topic routes which it will listen to, ip address, port, username.</p>
+</dd>
+<dt>subscribe(self):</dt><dd><p>Initiates a MQTT Client, connects and listens for publishes to a specified topic</p>
+</dd>
+<dt>on_message(self, client, userdata, msg):</dt><dd><p>handles unlock/return car logic when receiving payload at a given topic</p>
+</dd>
+<dt>on_connect(self, client, userdata, flags, rc):</dt><dd><p>A callback function that is called when the client connects to a broker, a specified address</p>
+</dd>
+<dt>on_log(self, client, userdata, level, buf):</dt><dd><p>function to run for logging.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="MasterCSS.mqtt.subscribe.Subscriber.on_connect">
+<code class="sig-name descname">on_connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">flags</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback function that is called when the client connects to a broker, a specified address</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.subscribe.Subscriber.on_log">
+<code class="sig-name descname">on_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">buf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to run for logging.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.subscribe.Subscriber.on_message">
+<code class="sig-name descname">on_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles unlock/return car logic when receiving payload at a given topic</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.mqtt.subscribe.Subscriber.subscribe">
+<code class="sig-name descname">subscribe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a MQTT Client, connects and listens for publishes to a specified topic</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.mqtt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.mqtt" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Carshare</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MasterCSS</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MasterCSS.html">MasterCSS package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">MasterCSS</a><ul>
+  <li><a href="MasterCSS.html">MasterCSS package</a><ul>
+      <li>Previous: <a href="MasterCSS.models.html" title="previous chapter">MasterCSS.models package</a></li>
+      <li>Next: <a href="MasterCSS.tests.html" title="next chapter">MasterCSS.tests package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/MasterCSS.mqtt.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

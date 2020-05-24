@@ -1,6 +1,6 @@
 ## Car Share System (CSS): Master Pi
 
-#### Recommend: making virutal environment
+#### Recommended: making virtual environment
 
 ```bash
 python3 -m venv venv
@@ -9,28 +9,52 @@ python3 -m venv venv
 
 #### Installation
 
-Execute the following in the root folder.
+Execute the following in the root folder.  ***sudo*** is required to host on **port 80**. Ensure `css_test_1` database is created.
 
 ```bash
-pip3 install -e .
+sudo pip3 install -e .
 ```
 
 #### To run
 
 ```bash
-MasterCSS
+sudo MasterCSS
 ```
 
 or
 
 ```bash
-python3 -m MasterCSS.cli
+sudo python3 -m MasterCSS.cli
+```
+
+#### To run unit testing with pytest:
+
+Execute the following in the root folder. Ensure `css_unit_test` database is created.
+
+```bash
+pip3 install -e . && pytest
+```
+
+#### To generate docs in HTML:
+
+Execute the following in the root folder.  ***sudo*** **is not required**.
+
+```bash
+pip3 install -e . && cd docs && make html
+```
+
+HTML docs will be in `docs/_build/html`.
+
+#### To connect to Google Cloud SQL for proxy:
+
+```bash
+gcloud sql connect main-sql --user=root --project a2-css-iot
 ```
 
 #### Uninstallation
 
 ```bash
-pip3 uninstall MasterCSS
+sudo pip3 uninstall MasterCSS
 ```
 
 
@@ -38,7 +62,12 @@ pip3 uninstall MasterCSS
 #### Note
 
 - To add/remove dependency packages, please modify `install_requires` in `setup.py` then reinstall the app.
-- To manage cars, please go to 'host:5000/management/cars'.
+- To manage cars, please go to 'hostname/management/cars'.
+- Prepare 2 mysql databases (as defined in `.env`):
+  - `css_test_1` for MasterCSS app
+  - `css_unit_test` for MasterCSS unit testing
+- Configure Agent Pi's IP address in `.env`
+- Modify your host file and make `carshare.com` redirects to Master Pi's IP.
 
 
 
