@@ -6,7 +6,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    entry_points={"console_scripts": ["MasterCSS = MasterCSS.cli:main",],},
+    entry_points={"console_scripts": ["MasterCSS = MasterCSS.cli:main", ], },
     install_requires=[
         "pytest",
         "flask",

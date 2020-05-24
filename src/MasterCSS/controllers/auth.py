@@ -34,10 +34,10 @@ from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
 
 # define password hashing configs
-SALT_LENGTH=32
-HASH_TYPE='sha256'
-ENCODING_FORMAT='utf-8'
-ITERATIONS=100000
+SALT_LENGTH = 32
+HASH_TYPE = 'sha256'
+ENCODING_FORMAT = 'utf-8'
+ITERATIONS = 100000
 
 # notify flask about external controllers
 controllers = Blueprint("auth_controllers", __name__)
@@ -49,7 +49,8 @@ def login():
     Authenticate an user with the given username and password.
     It will use base64decode with SALT to authenticate the user
 
-    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
+    :return: Dashboard if logged in successfully, otherwise
+    redirect to login html with error message.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -57,6 +58,7 @@ def login():
     else:
         username = request.form.get("username")
         password = request.form.get("password")
+        # query for user by username
         user = db.session.query(User).filter_by(Username=username).scalar()
         if user:
             # match hashed password
@@ -68,6 +70,7 @@ def login():
                 ITERATIONS
             )
             if key == (b64decode(user.Password)[SALT_LENGTH:]):
+                # login user if password is matched
                 login_user(user)
                 return redirect(url_for("template_controllers.index"))
             else:
@@ -86,7 +89,8 @@ def register():
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
     :raises ErrorValueException: if phone number exists or invalid
-    :return: Dashboard if successfully registered. Otherwise, register page with errors.
+    :return: Dashboard if successfully registered. Otherwise,
+    register page with errors.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -101,6 +105,7 @@ def register():
             ITERATIONS
         )
 
+        # create a new temporary user
         new_user = User(
             request.form.get("firstname"),
             request.form.get("lastname"),
@@ -111,6 +116,7 @@ def register():
             "CUSTOMER"
         )
 
+        # default values for html forms
         defaultValues = {
             "firstname": new_user.FirstName,
             "lastname": new_user.LastName,
@@ -120,45 +126,37 @@ def register():
         }
 
         try:
+            # validate users input with validators
             phoneValidator = PhoneValidator()
             emailValidator = EmailValidator()
             usernameValidator = UsernameValidator()
-
             if phoneValidator.check(new_user.PhoneNumber) is None:
                 raise ErrorValueException(
                     phoneValidator.message(), payload=defaultValues)
-
             if emailValidator.check(new_user.Email) is None:
                 raise ErrorValueException(
                     emailValidator.message(), payload=defaultValues)
-
             if usernameValidator.check(new_user.Username) is None:
                 raise ErrorValueException(
                     usernameValidator.message(), payload=defaultValues)
 
+            # check if username, email or phone number have
+            # been taken by other users
             takens = list()
-
-            if db.session.query(User).filter_by(Username=new_user.Username).scalar() is not None:
+            if db.session.query(User). \
+                filter_by(Username=new_user.Username) \
+                    .scalar() is not None:
                 takens.append("username")
-            if db.session.query(User).filter_by(Email=new_user.Email).scalar() is not None:
+            if db.session.query(User). \
+                    filter_by(Email=new_user.Email).scalar() is not None:
                 takens.append("email")
-            if db.session.query(User).filter_by(PhoneNumber=new_user.PhoneNumber).scalar() is not None:
+            if db.session.query(User). \
+                filter_by(PhoneNumber=new_user.PhoneNumber)\
+                    .scalar() is not None:
                 takens.append("phone number")
-            
-            # obtaining user's image
-            file = request.files['image']
-            
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename == '':
-                return redirect(request.url)
-            if file:
-                filename = secure_filename(file.filename)
-                directory = "src/MasterCSS/encoding/dataset/{}".format(new_user.Username)
-                if not os.path.exists(directory):
-                    os.makedirs(directory)
-                file.save("{}/{}.jpg".format(directory, new_user.Username))
 
+            # if user details have been taken,
+            # render error message in register page
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
                 for i in range(len(takens)):
@@ -167,12 +165,32 @@ def register():
                         error_message = error_message + ", "
                 raise ErrorValueException(error_message, payload=defaultValues)
             else:
+                # obtaining user's image
+                user_image = request.files['image']
+
+                # if user does not select file, browser also
+                # submits a empty part without filename
+                if user_image.filename == '':
+                    return redirect(request.url)
+                if user_image:
+                    # generate user image file and save locally
+                    filename = secure_filename(user_image.filename)
+                    directory = "src/MasterCSS/encoding/dataset/{}".format(
+                        new_user.Username)
+                    # create directory if doesn't exist
+                    if not os.path.exists(directory):
+                        os.makedirs(directory)
+                    user_image.save(
+                        "{}/{}.jpg".format(directory, new_user.Username))
+                # save new user into database and login
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
                 return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
-            return render_template("register.html", err=str(e.message), defaultValues=e.payload)
+            # render register page with errors
+            return render_template("register.html", err=str(e.message),
+                                   defaultValues=e.payload)
 
 
 @login_required
@@ -200,6 +218,7 @@ def verify_login(username, password):
     :return: user's auth has been verified or not
     :rtype: boolean
     """
+    # obtain user by username
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user:
         # match hashed password
