@@ -95,8 +95,8 @@ def filter_car():
     elif pickup_datetime < datetime.now():
         # generate error when pickup time is behind than return time
         return render_template("dashboard.html",
-                               err="Time must be in the future! \
-                                Please try again.",
+                               err="Time must be in the future! "\
+                                + "Please try again.",
                                cars=cars,
                                return_datetime=return_datetime,
                                pickup_datetime=pickup_datetime)

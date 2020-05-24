@@ -60,8 +60,12 @@ def index():
             if 'credentials' not in session:
                 return redirect(url_for('template_controllers.oauth2callback',
                                         callback=redirect(
-                                            url_for('template_con\
-                                                trollers.index'))))
+                                            url_for(
+                                                'template_controllers.index'
+                                            )
+                                        )
+                                        )
+                                )
             # obtain credentials from session if exists
             credentials = client.OAuth2Credentials.from_json(
                 session['credentials'])
@@ -70,8 +74,12 @@ def index():
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback',
                                         callback=redirect(
-                                            url_for('template_con\
-                                                trollers.index'))))
+                                            url_for(
+                                                'template_controllers.index'
+                                            )
+                                        )
+                                        )
+                                )
             # obtain cars from RESTFUL API
             get_cars_response = requests.get(
                 'http://localhost' + url_for('car_controllers.get_all_cars'))

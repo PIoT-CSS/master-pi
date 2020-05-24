@@ -164,9 +164,9 @@ def book():
                 'timeZone': 'Australia/Melbourne'
             },
             'location': car_coordinates[tuple(eval(booking.HomeCoordinates))],
-            'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: \
-                {}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\n\
-                    Car Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
+            'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: "\
+                + "{}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\n"\
+                + "Car Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
             .format(booking.ID, booking.DateTimeBooked, pickup_datetime,
                     return_datetime, booking.Cost, booking.CarID, car.Make,
                     car.Colour, car.Seats, car.FuelType),
