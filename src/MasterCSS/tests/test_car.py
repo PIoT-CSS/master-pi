@@ -1,3 +1,6 @@
+"""
+test_car.py contains unit tests for car controllers.
+"""
 import pytest
 import os
 from io import BytesIO
@@ -17,18 +20,25 @@ PICKUP_DATE = datetime(2021, 5, 17)
 RETURN_DATE = datetime(2021, 5, 18)
 
 PICKUP_AND_RETURN = PICKUP_DATE.strftime(HTML_DATETIME_FORMAT) + " - "\
-                    + RETURN_DATE.strftime(HTML_DATETIME_FORMAT)
+    + RETURN_DATE.strftime(HTML_DATETIME_FORMAT)
 
-# Setup car test by registering user and add cars.
+
 def test_setup(client):
+    """
+    Setup car test by registering user and add cars.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     # Register user (includes login)
-    with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
+    with open("src/MasterCSS/tests/" +
+              "testImages/example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
         data=dict(
-            username="example", 
-            password="password", 
+            username="example",
+            password="password",
             email="example@example.com",
             firstname="alex",
             lastname="witedja",
@@ -43,8 +53,8 @@ def test_setup(client):
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'), 
-            make="Honda Civic", 
+            secretkey=os.getenv('SECRET_KEY'),
+            make="Honda Civic",
             seats="2",
             bodytype="Sedan",
             home_coordinates="(-37.812082, 144.983072)",
@@ -64,8 +74,8 @@ def test_setup(client):
     client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'), 
-            make="Honda CR-V", 
+            secretkey=os.getenv('SECRET_KEY'),
+            make="Honda CR-V",
             seats="4",
             fueltype="Diesel",
             bodytype="SUV",
@@ -80,8 +90,14 @@ def test_setup(client):
         content_type='multipart/form-data'
     )
 
-# Filter available cars with valid date time.
+
 def test_filter_cars(client):
+    """
+    Filter available cars with valid date time.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/filter',
         data=dict(
@@ -94,15 +110,26 @@ def test_filter_cars(client):
     assert b'Congrats!' in response.data
 
     # Checks if the date time is captured properly
-    assert b'<code>' + str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) + b'</code> to <code>' \
-    + str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)) + b'</code>' in response.data
+    assert b'<code>' + str.encode(
+        PICKUP_DATE.strftime(
+            DEFAULT_DATETIME_FORMAT
+        )) + b'</code> to <code>' + str.encode(
+            RETURN_DATE.strftime(
+                DEFAULT_DATETIME_FORMAT
+            )) + b'</code>' in response.data
 
     # Test if the previously added cars exists.
     assert b'Honda CR-V' in response.data
-    assert b'Honda Civic'in response.data
+    assert b'Honda Civic' in response.data
 
-# Filter cars with invalid datetime.
+
 def test_filter_invalid(client):
+    """
+    Filter cars with invalid datetime.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/filter',
         data=dict(
@@ -114,8 +141,14 @@ def test_filter_invalid(client):
     # Checks if Err message is rendered.
     assert b'Invalid date range! Please try again.' in response.data
 
-# Search cars based on make
+
 def test_search_make(client):
+    """
+    Search cars based on make
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/search',
         data=dict(
@@ -133,8 +166,14 @@ def test_search_make(client):
     assert b'Honda Civic' in response.data
     assert b'Honda CR-V' not in response.data
 
-# Search cars based on locations
+
 def test_search_location(client):
+    """
+    Search cars based on locations
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/search',
         data=dict(
@@ -152,8 +191,14 @@ def test_search_location(client):
     assert b'Honda Civic' not in response.data
     assert b'Honda CR-V' in response.data
 
-# Search car that doesn't exist
+
 def test_search_not_found(client):
+    """
+    Search car that doesn't exist
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/search',
         data=dict(
@@ -171,8 +216,14 @@ def test_search_not_found(client):
     assert b'Honda Civic' not in response.data
     assert b'Honda CR-V' not in response.data
 
-# Search car with more than one fields as parameter
+
 def test_search(client):
+    """
+    Search car with more than one fields as parameter
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         CAR_API_URL + '/search',
         data=dict(
@@ -190,8 +241,14 @@ def test_search(client):
     assert b'Honda Civic' not in response.data
     assert b'Honda CR-V' in response.data
 
-# Filter car after book. booked car should not be seen.
+
 def test_filter_after_book(client):
+    """
+    Filter car after book. booked car should not be seen.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         BOOKING_API_URL + '/confirm',
         data=dict(

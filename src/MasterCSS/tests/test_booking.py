@@ -1,3 +1,6 @@
+"""
+test_booking.py contains unit tests for booking.
+"""
 import pytest
 import os
 from io import BytesIO
@@ -16,18 +19,27 @@ PICKUP_DATE = datetime(2021, 5, 17)
 RETURN_DATE = datetime(2021, 5, 18)
 
 PICKUP_AND_RETURN = PICKUP_DATE.strftime(HTML_DATETIME_FORMAT) + " - "\
-                    + RETURN_DATE.strftime(HTML_DATETIME_FORMAT)
+    + RETURN_DATE.strftime(HTML_DATETIME_FORMAT)
 
 # Setup booking test by registering user and add cars.
+
+
 def test_setup(client):
+    """
+    Setup booking test by registering user and add cars.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     # Register user (includes login)
-    with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
+    with open("src/MasterCSS/tests/testImages/" + \
+                "example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
         data=dict(
-            username="example", 
-            password="password", 
+            username="example",
+            password="password",
             email="example@example.com",
             firstname="alex",
             lastname="witedja",
@@ -42,8 +54,8 @@ def test_setup(client):
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'), 
-            make="Honda Civic", 
+            secretkey=os.getenv('SECRET_KEY'),
+            make="Honda Civic",
             seats="2",
             bodytype="Sedan",
             home_coordinates="(-37.812082, 144.983072)",
@@ -63,8 +75,8 @@ def test_setup(client):
     client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'), 
-            make="Honda Civic", 
+            secretkey=os.getenv('SECRET_KEY'),
+            make="Honda Civic",
             seats="2",
             fueltype="Diesel",
             bodytype="Sedan",
@@ -79,8 +91,14 @@ def test_setup(client):
         content_type='multipart/form-data'
     )
 
-# Test view booking details when the car is available.
+
 def test_view_booking(client):
+    """
+    Test view booking details when the car is available.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         BOOKING_API_URL + '/book',
         data=dict(
@@ -93,8 +111,14 @@ def test_view_booking(client):
 
     assert b'Available!' in response.data
 
-# Test confirm booking should show booking confirmed message.
+
 def test_confirm_booking(client):
+    """
+    Test confirm booking should show booking confirmed message.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         BOOKING_API_URL + '/confirm',
         data=dict(
@@ -108,17 +132,31 @@ def test_confirm_booking(client):
     assert response.status_code == 200
     assert b'Your booking has been confirmed, thank you!' in response.data
 
-# Test confirmed booking details should appear in mybookings.
+
 def test_booking_in_mybookings(client):
+    """
+    Test confirmed booking details should appear in mybookings.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.get('/mybookings')
 
-    assert str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
-    assert str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
+    assert str.encode(PICKUP_DATE.strftime(
+        DEFAULT_DATETIME_FORMAT)) in response.data
+    assert str.encode(RETURN_DATE.strftime(
+        DEFAULT_DATETIME_FORMAT)) in response.data
     assert b'1' in response.data
     assert b'Confirmed' in response.data
 
-# Test cancel is successful.
+
 def test_cancel_booking(client):
+    """
+    Test cancel is successful.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         BOOKING_API_URL + '/cancel',
         data=dict(
@@ -129,11 +167,18 @@ def test_cancel_booking(client):
     )
 
     assert b'Confirmed' not in response.data
-    assert b'button is-danger' not in response.data # Make sure cancel button is not rendered
+    # Make sure cancel button is not rendered
+    assert b'button is-danger' not in response.data
     assert b'Canceled' in response.data
 
-# Test view booking is showing correct booking information.
+
 def test_view_booking(client):
+    """
+    Test view booking is showing correct booking information.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
     response = client.post(
         BOOKING_API_URL + '/view',
         data=dict(
@@ -145,6 +190,10 @@ def test_view_booking(client):
     assert b'Booking ID: 1' in response.data
     assert b'Car ID: </strong> 1' in response.data
     assert b'User ID: </strong> 1' in response.data
-    assert b'Pickup time: </strong> ' + str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
-    assert b'Return time: </strong> ' + str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)) in response.data
-    assert b'Canceled' in response.data # previous test canceled this booking.
+    assert b'Pickup time: </strong> ' + \
+        str.encode(PICKUP_DATE.strftime(
+            DEFAULT_DATETIME_FORMAT)) in response.data
+    assert b'Return time: </strong> ' + \
+        str.encode(RETURN_DATE.strftime(
+            DEFAULT_DATETIME_FORMAT)) in response.data
+    assert b'Canceled' in response.data  # previous test canceled this booking.

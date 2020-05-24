@@ -1,7 +1,6 @@
 """
-cli.py sets up and configures Flask application for MasterCSS.
-
-- Initialise app environement, blueprints and database.
+cli.py contains project environment setup, flask
+configuration as well as database initialisation.
 """
 from flask import Flask
 from flask_login import (
@@ -19,15 +18,23 @@ from MasterCSS.database import db
 from MasterCSS.controllers.booking import controllers as BookingControllers
 from MasterCSS.controllers.car import controllers as CarControllers
 from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.management.car import (
+    controllers as CarManagementControllers
+)
 from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.models.booking import Booking
 from MasterCSS.models.user import User
 
+
+HOST = os.getenv('HOST')
+PORT = int(os.getenv('PORT'))
+
+# Database configuration
 # configuring flask app
 load_dotenv()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
+app.config["SQLALCHEMY_DATABASE_URI"] = \
+    "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
     os.getenv("MYSQL_USERNAME"),
     os.getenv("MYSQL_PASSWORD"),
     os.getenv("MYSQL_HOST"),
@@ -43,7 +50,7 @@ app.register_blueprint(CarManagementControllers)
 app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 
-# enable function calls from jinja
+# Enable python function calls for jinja
 app.jinja_env.globals.update(
     eval=eval, tuple=tuple, str=str, booking_model=Booking)
 
@@ -54,6 +61,14 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(id):
+    """
+    Load user detail
+
+    :param id: User's identity number
+    :type id: int
+    :return: User information
+    :rtype: User
+    """
     return User.query.get(id)
 
 
@@ -65,16 +80,25 @@ with app.app_context():
 
 
 def start_flask():
-    app.run(debug=True, use_reloader=False, host="0.0.0.0", port="80")
+    """
+    Start Flask app on env HOST, PORT
+    """
+    app.run(debug=True, use_reloader=False, host=HOST, port=PORT)
 
 
 def start_mqtt():
+    """
+    Start MQTT subscriber with Flask app context
+    """
     with app.app_context():
         sub = Subscriber()
         sub.subscribe()
 
 
 def main():
+    """
+    Start Flask app and MQTT Subscriber
+    """
     try:
         # start flask on another thread
         flask_thread = threading.Thread(target=start_flask)
