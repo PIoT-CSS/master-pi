@@ -1,6 +1,6 @@
 ## Car Share System (CSS): Master Pi
 
-#### Recommend: making virutal environment
+#### Recommended: making virtual environment
 
 ```bash
 python3 -m venv venv
@@ -9,7 +9,7 @@ python3 -m venv venv
 
 #### Installation
 
-Execute the following in the root folder.  ***sudo*** is required to host on **port 80**.
+Execute the following in the root folder.  ***sudo*** is required to host on **port 80**. Ensure `css_test_1` database is created.
 
 ```bash
 sudo pip3 install -e .
@@ -27,10 +27,12 @@ or
 sudo python3 -m MasterCSS.cli
 ```
 
-#### Uninstallation
+#### To run unit testing with pytest:
+
+Execute the following in the root folder. Ensure `css_unit_test` database is created.
 
 ```bash
-sudo pip3 uninstall MasterCSS
+pip3 install -e . && pytest
 ```
 
 #### To generate docs in HTML:
@@ -42,6 +44,18 @@ pip3 install -e . && cd docs && make html
 ```
 
 HTML docs will be in `docs/_build/html`.
+
+#### To connect to Google Cloud SQL for proxy:
+
+```bash
+gcloud sql connect main-sql --user=root --project a2-css-iot
+```
+
+#### Uninstallation
+
+```bash
+sudo pip3 uninstall MasterCSS
+```
 
 
 
