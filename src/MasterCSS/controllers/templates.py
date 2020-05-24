@@ -62,7 +62,7 @@ def index():
             if credentials.access_token_expired:
                 return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
             # obtain cars from RESTFUL API
-            get_cars_response = requests.get(url_for('car_controllers.get_all_cars', _external=True))
+            get_cars_response = requests.get('http://localhost' + url_for('car_controllers.get_all_cars'))
             cars = json.loads(get_cars_response.text)
         else:
             # obtain cars from db in unit tests
