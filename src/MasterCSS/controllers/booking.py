@@ -177,8 +177,8 @@ def book():
         }
 
         # add event to user's primary google calendar
-        event = service.events().insert(calendarId='primary', body=event)
-        .execute()
+        event = service.events().insert(calendarId='primary',
+                                        body=event).execute()
 
         # save a reference of the calendar event
         booking.CalRef = event['id']
