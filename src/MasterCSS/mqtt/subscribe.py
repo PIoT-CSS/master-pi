@@ -18,24 +18,12 @@ BROKER_PORT = os.getenv("BROKER_PORT")
 class Subscriber:
     """
     A class to initiate a subscriber via MQTT topic
-
-    Methods
-    -------
-    __init__(self):
-        initialises the topic routes which it will listen to, ip address, port, username.
-    subscribe(self):
-        Initiates a MQTT Client, connects and listens for publishes to a specified topic
-    on_message(self, client, userdata, msg):
-        handles unlock/return car logic when receiving payload at a given topic
-    on_connect(self, client, userdata, flags, rc):
-        A callback function that is called when the client connects to a broker, a specified address
-    on_log(self, client, userdata, level, buf):
-        function to run for logging.
     """
 
     def __init__(self):
         """
-        initialises the topic routes which it will listen to, ip address, port, username.
+        initialises the topic routes which it will listen to, ip address,
+        port, username.
         """
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
@@ -45,7 +33,21 @@ class Subscriber:
 
     def on_connect(self, client, userdata, flags, rc):
         """
-        A callback function that is called when the client connects to a broker, a specified address
+        A callback function that is called when the client
+        connects to a broker, a specified address
+
+        :param client: the client instance for this callback
+        :type client: Client
+
+        :param userdata: the private user data as
+        set in Client() or user_data_set()
+        :type userdata: any
+
+        :param flags: response flags sent by the broker
+        :type flags: dict
+
+        :param rc: result of connection
+        :type rc: integer
         """
         if rc == 0:
             print("connection established, returned code=", rc)
@@ -57,7 +59,19 @@ class Subscriber:
 
     def on_message(self, client, userdata, msg):
         """
-        handles unlock/return car logic when receiving payload at a given topic
+        handles unlock/return car logic when receiving payload at
+        a given topic
+
+        :param client: the client instance for this callback
+        :type client: Client
+
+        :param userdata: the private user data as set in Client()
+        or user_data_set()
+        :type userdata: any
+
+        :param msg: an instance of MQTTMessage. This is a class with members
+        topic, payload, qos, retain.
+        :type msg: MQTTMessage
         """
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         payload = json.loads(msg.payload)
@@ -88,13 +102,28 @@ class Subscriber:
 
     def on_log(self, client, userdata, level, buf):
         """
-        function to run for logging.
+        Support function run for logging
+
+        :param client: the client instance for this callback
+        :type client: Client
+
+        :param userdata: the private user data as set in Client() or
+        user_data_set()
+        :type userdata: any
+
+        :param level: severity of the message
+        :type level: MQTT_LOG_INFO, MQTT_LOG_NOTICE, MQTT_LOG_WARNING,
+        MQTT_LOG_ERR, MQTT_LOG_DEBUG
+
+        :param buf: message buffer
+        :type buf: bytes
         """
         print("log ", buf)
 
     def subscribe(self):
         """
-        Initiates a MQTT Client, connects and listens for publishes to a specified topic
+        Initiates a MQTT Client, connects and listens for publishes to a
+        specified topic
         """
         broker_address = self.BROKER_ADDRESS
         broker_port = self.BROKER_PORT

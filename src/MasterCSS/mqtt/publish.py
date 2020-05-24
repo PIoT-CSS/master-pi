@@ -27,27 +27,6 @@ class Publisher:
     """
     Class that contains publish logic. when given a payload and route
     it will publish to the correct route.
-
-    Methods
-    -------
-    __init__(self):
-        initialises routes that it will publish to, ip address of AP and port.
-    on_publish(self, client, userdata, result):
-        function to run on successful publish
-    on_disconnect(self, client, userdata, rc):
-        function to run on disconnect
-    on_connect(self, client, userdata, rc):
-        function to run on connect
-    publish(self, topic, payload, qos):
-        initialises client and binds functions, publish received payload to AP at a given topic and disconnects.
-    fr_publish(self, file_name, qos):
-        initialises client and binds functions, publish user's image for facial recognition as payload to AP at a given topic and disconnects.
-    send_end(self, client, filename, topic, qos):
-        sends end of file to identify image sent for facial recognition
-    send_header(self, client, filename, topic, qos):
-        sends header to identify image sent for facial recognition
-    convertImageToByteArray(self, file_name):
-        converts user's image into byte array to be published
     """
 
     def __init__(self):
@@ -62,7 +41,17 @@ class Publisher:
 
     def on_publish(self, client, userdata, result):
         """
-        function to run on successful publish
+        callback function to run on successful publish
+
+        :param client: the client instance for this callback
+        :type client: Client
+
+        :param userdata: the private user data as set in Client()
+        or user_data_set()
+        :type userdata: [type]
+
+        :param result: Data being published
+        :type result: String
         """
         print("data published {} \n".format(result))
         pass
@@ -70,6 +59,16 @@ class Publisher:
     def on_disconnect(self, client, userdata, rc):
         """
         function to run on disconnect
+
+        :param client: the mqtt client
+        :type client: Client
+
+        :param userdata: the private user data as set in Client()
+        or user_data_set()
+        :type userdata: [type]
+
+        :param rc: disconnection result
+        :type rc: int
         """
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
@@ -77,13 +76,36 @@ class Publisher:
 
     def on_connect(self, client, userdata, rc):
         """
-        function to run on connect
+        callback function to run on_connect
+
+        :param client: the mqtt client
+        :type client: Client
+
+        :param userdata: the private user data as set in Client()
+        or user_data_set()
+        :type userdata: [type]
+
+        :param rc: connection result
+        :type rc: int
         """
         print("client connected OK", str(rc))
 
     def send_header(self, client, filename, topic, qos):
         """
         sends header to identify image sent for facial recognition
+
+        :param client: sends header to identify image
+        sent for facial recognition
+        :type client: Client
+
+        :param filename: name of the file that's being sent
+        :type filename: string
+
+        :param topic: topic to publish to
+        :type topic: string
+
+        :param qos: quality of service level to use
+        :type qos: integer
         """
         header = "header"+",,"+filename+",,"
         header = bytearray(header, "utf-8")
@@ -94,6 +116,19 @@ class Publisher:
     def send_end(self, client, filename, topic, qos):
         """
         sends end of file to identify image sent for facial recognition
+
+        :param client: sends header to identify image sent
+        for facial recognition
+        :type client: Client
+
+        :param filename: name of the file that's being sent
+        :type filename: string
+
+        :param topic: topic to publish to
+        :type topic: string
+
+        :param qos: quality of service level to use
+        :type qos: integer
         """
         end = "end"+",,"+filename+",,"+out_hash_md5.hexdigest()
         end = bytearray(end, "utf-8")
@@ -103,7 +138,18 @@ class Publisher:
 
     def publish(self, topic, payload, qos):
         """
-        initialises client and binds functions, publish received payload to AP at a given topic and disconnects.
+        initialises client and binds functions, publish received payload to AP
+         at a given topic and disconnects.
+
+        :param topic: topic to publish to
+        :type topic: string
+
+        :param payload: the item that's being sent,
+        will be converted into json.
+        :type payload: any
+
+        :param qos: quality of service level to use
+        :type qos: integer
         """
         # Create new instance
         client = mqtt.Client("toagentpi")
@@ -117,8 +163,8 @@ class Publisher:
         # Publish to topic
         if topic == 'UP':
             client.publish(self.AUTH_RESP_UP_TOPIC, json.dumps(payload))
-            client.disconnect()  # disconnect
-            client.loop_stop()  # stop loop
+            client.disconnect()
+            client.loop_stop()
         elif topic == 'FR':
             client.publish(self.AUTH_RESP_FR_TOPIC, json.dumps(payload))
             client.disconnect()
@@ -130,7 +176,15 @@ class Publisher:
 
     def fr_publish(self, file_name, qos):
         """
-        initialises client and binds functions, publish user's image for facial recognition as payload to AP at a given topic and disconnects.
+        initialises client and binds functions, publish user's image
+         for facial recognition as payload to AP at a given topic
+         and disconnects.
+
+        :param file_name: filename being published
+        :type file_name: string
+
+        :param qos: quality of service level to use
+        :type qos: integer
         """
         # Attach callback functions, initiate client and connect to it
         client = mqtt.Client("toagentpi")
@@ -146,8 +200,7 @@ class Publisher:
         byteArr = self.convertImageToByteArray(file_name)
 
         # PublishEncodedImage
-        print(" length =", type(byteArr))
-        #client.publish(self.AUTH_RESP_FR_TOPIC, encoded)
+        print("length =", type(byteArr))
         publish.single(self.AUTH_RESP_FR_TOPIC, byteArr,
                        hostname=self.BROKER_ADDRESS)
         print("DEBUG")
@@ -155,6 +208,8 @@ class Publisher:
     def convertImageToByteArray(self, file_name):
         """
         converts user's image into byte array to be published
+        :return: bytes of the image
+        :rtype: array of bytes
         """
         folder_name = 'src/MasterCSS/encoding/dataset'
         user_name = file_name

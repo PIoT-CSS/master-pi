@@ -37,6 +37,8 @@ car_coordinates = Constant.CAR_COORDINATES
 controllers = Blueprint("template_controllers", __name__)
 
 # Begin oauth callback route
+
+
 @controllers.route("/")
 def index():
     """
@@ -53,20 +55,30 @@ def index():
     if current_user.is_authenticated:
         # disable google oauth in unit tests
         if not current_app.config["TESTING"]:
-            # redirect user for google oauth if google oauth credentials don't exist
+            # redirect user for google oauth if google oauth
+            # credentials don't exist
             if 'credentials' not in session:
-                return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+                return redirect(url_for('template_controllers.oauth2callback',
+                                        callback=redirect(
+                                            url_for('template_con\
+                                                trollers.index'))))
             # obtain credentials from session if exists
-            credentials = client.OAuth2Credentials.from_json(session['credentials'])
-            # redirect user for google oauth if google oauth credentials expired
+            credentials = client.OAuth2Credentials.from_json(
+                session['credentials'])
+            # redirect user for google oauth if google oauth
+            # credentials expired
             if credentials.access_token_expired:
-                return redirect(url_for('template_controllers.oauth2callback', callback=redirect(url_for('template_controllers.index'))))
+                return redirect(url_for('template_controllers.oauth2callback',
+                                        callback=redirect(
+                                            url_for('template_con\
+                                                trollers.index'))))
             # obtain cars from RESTFUL API
-            get_cars_response = requests.get('http://localhost' + url_for('car_controllers.get_all_cars'))
+            get_cars_response = requests.get(
+                'http://localhost' + url_for('car_controllers.get_all_cars'))
             cars = json.loads(get_cars_response.text)
         else:
             # obtain cars from db in unit tests
-            cars=db.session.query(Car).all()
+            cars = db.session.query(Car).all()
 
         return render_template(
             'dashboard.html',
@@ -94,7 +106,8 @@ def oauth2callback(callback=None):
     flow = client.flow_from_clientsecrets(
         'client-secret.json',
         scope='https://www.googleapis.com/auth/calendar',
-        redirect_uri= url_for('template_controllers.oauth2callback', _external=True)
+        redirect_uri=url_for(
+            'template_controllers.oauth2callback', _external=True)
     )
     if 'code' not in request.args:
         auth_uri = flow.step1_get_authorize_url()
@@ -147,6 +160,7 @@ def myinfo():
     """
     return render_template('myInformation.html')
 
+
 @controllers.route("/mybookings")
 @login_required
 def mybookings(err=None):
@@ -159,9 +173,12 @@ def mybookings(err=None):
     bookings = db.session.query(Booking).filter_by(UserID=current_user.ID)
     # reverse sort bookings list to sort by latest
     bookings = list(reversed(bookings.all()))
-    return render_template('myBooking.html', bookings=bookings, car_coordinates=car_coordinates)
+    return render_template('myBooking.html', bookings=bookings,
+                           car_coordinates=car_coordinates)
 
 # custom 404 page
+
+
 @controllers.app_errorhandler(404)
 def not_found(e):
     """

@@ -49,7 +49,8 @@ def login():
     Authenticate an user with the given username and password.
     It will use base64decode with SALT to authenticate the user
 
-    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
+    :return: Dashboard if logged in successfully, otherwise
+    redirect to login html with error message.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -88,7 +89,8 @@ def register():
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
     :raises ErrorValueException: if phone number exists or invalid
-    :return: Dashboard if successfully registered. Otherwise, register page with errors.
+    :return: Dashboard if successfully registered. Otherwise,
+    register page with errors.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -137,17 +139,24 @@ def register():
             if usernameValidator.check(new_user.Username) is None:
                 raise ErrorValueException(
                     usernameValidator.message(), payload=defaultValues)
-            
-            # check if username, email or phone number have been taken by other users
+
+            # check if username, email or phone number have
+            # been taken by other users
             takens = list()
-            if db.session.query(User).filter_by(Username=new_user.Username).scalar() is not None:
+            if db.session.query(User). \
+                filter_by(Username=new_user.Username) \
+                    .scalar() is not None:
                 takens.append("username")
-            if db.session.query(User).filter_by(Email=new_user.Email).scalar() is not None:
+            if db.session.query(User). \
+                    filter_by(Email=new_user.Email).scalar() is not None:
                 takens.append("email")
-            if db.session.query(User).filter_by(PhoneNumber=new_user.PhoneNumber).scalar() is not None:
+            if db.session.query(User). \
+                filter_by(PhoneNumber=new_user.PhoneNumber)\
+                    .scalar() is not None:
                 takens.append("phone number")
 
-            # if user details have been taken, render error message in register page
+            # if user details have been taken,
+            # render error message in register page
             if len(takens) > 0:
                 error_message = "Sorry, the following information is taken: "
                 for i in range(len(takens)):
@@ -158,7 +167,7 @@ def register():
             else:
                 # obtaining user's image
                 user_image = request.files['image']
-                
+
                 # if user does not select file, browser also
                 # submits a empty part without filename
                 if user_image.filename == '':
@@ -166,11 +175,13 @@ def register():
                 if user_image:
                     # generate user image file and save locally
                     filename = secure_filename(user_image.filename)
-                    directory = "src/MasterCSS/encoding/dataset/{}".format(new_user.Username)
+                    directory = "src/MasterCSS/encoding/dataset/{}".format(
+                        new_user.Username)
                     # create directory if doesn't exist
                     if not os.path.exists(directory):
                         os.makedirs(directory)
-                    user_image.save("{}/{}.jpg".format(directory, new_user.Username))
+                    user_image.save(
+                        "{}/{}.jpg".format(directory, new_user.Username))
                 # save new user into database and login
                 db.session.add(new_user)
                 db.session.commit()
@@ -178,7 +189,8 @@ def register():
                 return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
             # render register page with errors
-            return render_template("register.html", err=str(e.message), defaultValues=e.payload)
+            return render_template("register.html", err=str(e.message),
+                                   defaultValues=e.payload)
 
 
 @login_required

@@ -31,7 +31,8 @@ def test_setup(client):
     :type client: Flask app instance
     """
     # Register user (includes login)
-    with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
+    with open("src/MasterCSS/tests/\
+                testImages/example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
@@ -109,7 +110,9 @@ def test_filter_cars(client):
     assert b'Congrats!' in response.data
 
     # Checks if the date time is captured properly
-    assert b'<code>' + str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT)) + b'</code> to <code>' \
+    assert b'<code>' + \
+        str.encode(PICKUP_DATE.strftime(DEFAULT_DATETIME_FORMAT))
+    + b'</code> to <code>' \
         + str.encode(RETURN_DATE.strftime(DEFAULT_DATETIME_FORMAT)
                      ) + b'</code>' in response.data
 

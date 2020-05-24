@@ -11,6 +11,7 @@ class BookingSchema(ma.Schema):
     This BookingSchema stores the meta and schema of a booking.
     Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
     """
+
     def __init__(self, strict=True, **kwargs):
         super().__init__(**kwargs)
 

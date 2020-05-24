@@ -18,7 +18,9 @@ from MasterCSS.database import db
 from MasterCSS.controllers.booking import controllers as BookingControllers
 from MasterCSS.controllers.car import controllers as CarControllers
 from MasterCSS.controllers.templates import controllers as TemplateControllers
-from MasterCSS.controllers.management.car import controllers as CarManagementControllers
+from MasterCSS.controllers.management.car import (
+    controllers as CarManagementControllers
+)
 from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.models.booking import Booking
 from MasterCSS.models.user import User
@@ -31,7 +33,8 @@ PORT = int(os.getenv('PORT'))
 # configuring flask app
 load_dotenv()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}? \
+    charset=utf8mb4".format(
     os.getenv("MYSQL_USERNAME"),
     os.getenv("MYSQL_PASSWORD"),
     os.getenv("MYSQL_HOST"),

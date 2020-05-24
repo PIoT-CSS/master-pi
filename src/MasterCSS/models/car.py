@@ -7,17 +7,21 @@ from MasterCSS.database import db, ma
 
 LONGTEXT_LENGTH = 4294000000
 
+
 class CarSchema(ma.Schema):
     """
     This CarSchema stores the meta and schema of a car.
     Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
     """
+
     def __init__(self, strict=True, **kwargs):
         super().__init__(**kwargs)
 
     class Meta:
-        fields = ("ID", "Make", "Seats", "BodyType", "HomeCoordinates" ,"Coordinates", 
-        "Colour", "CostPerHour", "FuelType", "TotalDistance", "NumberPlate", "CurrentBookingID", "AgentID", "Image")
+        fields = ("ID", "Make", "Seats", "BodyType", "HomeCoordinates",
+                  "Coordinates", "Colour", "CostPerHour", "FuelType",
+                  "TotalDistance", "NumberPlate", "CurrentBookingID",
+                  "AgentID", "Image")
 
 
 class Car(db.Model):
@@ -41,10 +45,10 @@ class Car(db.Model):
     CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
     AgentID = db.Column(db.Text, nullable=False)
     Image = db.Column(db.Text(LONGTEXT_LENGTH), nullable=False)
-    Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID]) 
+    Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID])
 
     def __init__(self, Make, Seats, BodyType, Coordinates, HomeCoordinates,
-                 Colour, CostPerHour, FuelType, TotalDistance, NumberPlate, 
+                 Colour, CostPerHour, FuelType, TotalDistance, NumberPlate,
                  AgentID, Image, CurrentBookingID=None, ID=None):
         self.ID = ID
         self.Make = Make

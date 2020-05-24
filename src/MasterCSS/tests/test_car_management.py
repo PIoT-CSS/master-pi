@@ -1,6 +1,7 @@
 """
 test_car.py contains unit tests for car management.
-Tests related to controllers under /mangement/cars which is used to manage car entries in db.
+Tests related to controllers under /mangement/cars which is used to manage
+car entries in db.
 """
 import pytest
 import os

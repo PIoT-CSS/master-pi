@@ -74,7 +74,8 @@ def test_register_invalid(client):
     :param client: Flask app client
     :type client: Flask app instance
     """
-    with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
+    with open("src/MasterCSS/tests/testImages/\
+                example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
@@ -100,7 +101,8 @@ def test_register_valid(client):
     :param client: Flask app client
     :type client: Flask app instance
     """
-    with open("src/MasterCSS/tests/testImages/example.jpg", "rb") as user_image:
+    with open("src/MasterCSS/tests/testImages/\
+                example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
     response = client.post(
         '/register',
