@@ -17,8 +17,8 @@ def client():
     Configure pytest, Flask app and database for unit testing.
     """
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}? \
-        charset=utf8mb4".format(
+    app.config["SQLALCHEMY_DATABASE_URI"] = \
+        "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
         os.getenv("MYSQL_USERNAME"),
         os.getenv("MYSQL_PASSWORD"),
         os.getenv("MYSQL_HOST"),

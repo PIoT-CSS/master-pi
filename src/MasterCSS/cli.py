@@ -33,8 +33,8 @@ PORT = int(os.getenv('PORT'))
 # configuring flask app
 load_dotenv()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{}:{}@{}/{}? \
-    charset=utf8mb4".format(
+app.config["SQLALCHEMY_DATABASE_URI"] = \
+    "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
     os.getenv("MYSQL_USERNAME"),
     os.getenv("MYSQL_PASSWORD"),
     os.getenv("MYSQL_HOST"),
