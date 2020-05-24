@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MasterCSS.controllers package &#8212; Carshare 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MasterCSS.exceptions package" href="MasterCSS.exceptions.html" />
+    <link rel="prev" title="MasterCSS package" href="MasterCSS.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mastercss-controllers-package">
+<h1>MasterCSS.controllers package<a class="headerlink" href="#mastercss-controllers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-MasterCSS.controllers.auth">
+<span id="mastercss-controllers-auth-module"></span><h2>MasterCSS.controllers.auth module<a class="headerlink" href="#module-MasterCSS.controllers.auth" title="Permalink to this headline">¶</a></h2>
+<p>[summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">raises ErrorValueException</dt>
+<dd class="field-odd"><p>If the Username is taken.</p>
+</dd>
+<dt class="field-even">raises ErrorValueException</dt>
+<dd class="field-even"><p>If the Phone is taken.</p>
+</dd>
+<dt class="field-odd">raises ErrorValueException</dt>
+<dd class="field-odd"><p>If the Email is taken.</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>[type]</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="MasterCSS.controllers.auth.login">
+<code class="sig-prename descclassname">MasterCSS.controllers.auth.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.auth.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticate an user with the given username and password.
+It will use base64decode with SALT to authenticate the user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dashboard if logged in successfully, otherwise redirect to login html with error message.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.auth.logout">
+<code class="sig-prename descclassname">MasterCSS.controllers.auth.</code><code class="sig-name descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.auth.logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle log out request and clear the user session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Redirect to homepage</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>redirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.auth.register">
+<code class="sig-prename descclassname">MasterCSS.controllers.auth.</code><code class="sig-name descname">register</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.auth.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle register form submission, store password as hashed format.
+Check if the username, email and phone number are valid and not used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="MasterCSS.exceptions.html#MasterCSS.exceptions.error_value_exception.ErrorValueException" title="MasterCSS.exceptions.error_value_exception.ErrorValueException"><strong>ErrorValueException</strong></a> – if username exists or invalid</p></li>
+<li><p><a class="reference internal" href="MasterCSS.exceptions.html#MasterCSS.exceptions.error_value_exception.ErrorValueException" title="MasterCSS.exceptions.error_value_exception.ErrorValueException"><strong>ErrorValueException</strong></a> – if email exists or invalid</p></li>
+<li><p><a class="reference internal" href="MasterCSS.exceptions.html#MasterCSS.exceptions.error_value_exception.ErrorValueException" title="MasterCSS.exceptions.error_value_exception.ErrorValueException"><strong>ErrorValueException</strong></a> – if phone number exists or invalid</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dashboard if successfully registered. Otherwise, register page with errors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.auth.verify_login">
+<code class="sig-prename descclassname">MasterCSS.controllers.auth.</code><code class="sig-name descname">verify_login</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.auth.verify_login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticate user’s login with username and password</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – user’s username</p></li>
+<li><p><strong>username</strong> – user’s password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>user’s auth has been verified or not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.controllers.booking">
+<span id="mastercss-controllers-booking-module"></span><h2>MasterCSS.controllers.booking module<a class="headerlink" href="#module-MasterCSS.controllers.booking" title="Permalink to this headline">¶</a></h2>
+<p>booking.py contains booking controllers.</p>
+<dl class="py function">
+<dt id="MasterCSS.controllers.booking.book">
+<code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">book</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Confirm/Book a car with the given car, pick up time, return time and cost.
+Add event into Google Calendar with the booking details.</p>
+<p>Required user to have Oauth2 access. Else, it will prompt the user to 
+authorize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>confirmation booking page with booking information</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_page</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.booking.cancel">
+<code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel a booking and delete the event calendar. Required user to
+have access Oauth2Crednetials. Otherwise, it will prompt the user to 
+authorize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>User booking history page.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>redirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.booking.confirm_booking">
+<code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">confirm_booking</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.confirm_booking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Confirming page with the datetime ranges with pickup time and cost.</p>
+<p>Cost = car.CostPerHour + dateTimeDifferenceInHours</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Confirmation page</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.booking.view">
+<code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>View a booking details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Booking details with booking information, car information.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.controllers.car">
+<span id="mastercss-controllers-car-module"></span><h2>MasterCSS.controllers.car module<a class="headerlink" href="#module-MasterCSS.controllers.car" title="Permalink to this headline">¶</a></h2>
+<p>booking.py contains car controllers.</p>
+<dl class="py function">
+<dt id="MasterCSS.controllers.car.filter_car">
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">filter_car</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.filter_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>End point to filter the car based on a given date and time range.
+Which use the get_available_cars(pickup_datetime, return_datetime, cars)
+returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Search result page with a list of available cars if there are any. Otherwise, render the dashboard page with an error message.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.car.get_available_cars">
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">get_available_cars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pickup_datetime</span></em>, <em class="sig-param"><span class="n">return_datetime</span></em>, <em class="sig-param"><span class="n">cars</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.get_available_cars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the available cars given a pickup_datetime and return_datetime.
+by make sure that there is no booking overlap between the two dates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pickup_datetime</strong> (<em>datetime</em>) – time to pick up the car</p></li>
+<li><p><strong>return_datetime</strong> (<em>datetime</em>) – time to return the car</p></li>
+<li><p><strong>cars</strong> (<a class="reference internal" href="MasterCSS.models.html#MasterCSS.models.car.Car" title="MasterCSS.models.car.Car"><em>Car</em></a><em>[</em><em>]</em>) – list of cars to filter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of available cars</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="MasterCSS.models.html#MasterCSS.models.car.Car" title="MasterCSS.models.car.Car">Car</a>[]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.car.pickup_car">
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">pickup_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.pickup_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pickup/unlock a car by making user’s current booking status ACTIVE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>payload</strong> (<em>dict</em>) – pickup car payload from agent pi</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>car has been picked up or not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.car.return_car">
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">return_car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.return_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return/lock a car by making user’s current booking status INACTIVE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>payload</strong> (<em>dict</em>) – return car payload from agent pi</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>car has been returned or not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.car.search_car">
+<code class="sig-prename descclassname">MasterCSS.controllers.car.</code><code class="sig-name descname">search_car</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.car.search_car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter cars based on given criterias.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Search result page with a list of cars that match the criterias</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_page</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.controllers.templates">
+<span id="mastercss-controllers-templates-module"></span><h2>MasterCSS.controllers.templates module<a class="headerlink" href="#module-MasterCSS.controllers.templates" title="Permalink to this headline">¶</a></h2>
+<p>templates.py handle routing for the templates.</p>
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.index">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Index routing (“/”)</p>
+<p>If the user has loged in, render the dashboard with
+cars content.</p>
+<p>Otherwise, render the Home page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a render html template</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.login">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Login routing (“/login”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dashboard if logged in, else login.html</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.mybookings">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">mybookings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">err</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.mybookings" title="Permalink to this definition">¶</a></dt>
+<dd><p>User information routing (“/mybookings)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>user booking history</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.myinfo">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">myinfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.myinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>User information routing (“/myinfo”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>user information page if logged in</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.not_found">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">not_found</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">e</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 404 page if the request is not found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>e</strong> (<em>Error</em>) – Error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>404 page</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.oauth2callback">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">oauth2callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.oauth2callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Google Oauth2 authorization callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>render_template</em><em>, </em><em>optional</em>) – a render function, defaults to None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>render a template</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.register">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">register</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register routing (“/register”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dashboard if logged in, else register.html</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.controllers.templates.unauthorised">
+<code class="sig-prename descclassname">MasterCSS.controllers.templates.</code><code class="sig-name descname">unauthorised</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">e</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.templates.unauthorised" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 401 page if the request is not authorised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>e</strong> (<em>Error</em>) – Error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>401 page</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>render_template</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.controllers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.controllers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Carshare</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MasterCSS</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MasterCSS.html">MasterCSS package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">MasterCSS</a><ul>
+  <li><a href="MasterCSS.html">MasterCSS package</a><ul>
+      <li>Previous: <a href="MasterCSS.html" title="previous chapter">MasterCSS package</a></li>
+      <li>Next: <a href="MasterCSS.exceptions.html" title="next chapter">MasterCSS.exceptions package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/MasterCSS.controllers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

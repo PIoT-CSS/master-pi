@@ -1,3 +1,11 @@
+"""[summary]
+
+:raises ErrorValueException: If the Username is taken.
+:raises ErrorValueException: If the Phone is taken.
+:raises ErrorValueException: If the Email is taken.
+:return: [description]
+:rtype: [type]
+"""
 from flask import (
     render_template,
     Blueprint,
@@ -24,12 +32,12 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
-from random import randint
-# define hashing configs
-SALT_LENGTH = int(os.getenv('SALT_LENGTH'))
-HASH_TYPE = os.getenv('HASH_TYPE')
-ENCODING_FORMAT = os.getenv('ENCODING_FORMAT')
-ITERATIONS = int(os.getenv('ITERATIONS'))
+
+# define password hashing configs
+SALT_LENGTH=32
+HASH_TYPE='sha256'
+ENCODING_FORMAT='utf-8'
+ITERATIONS=100000
 
 # notify flask about external controllers
 controllers = Blueprint("auth_controllers", __name__)
@@ -37,6 +45,13 @@ controllers = Blueprint("auth_controllers", __name__)
 
 @controllers.route("/login", methods=["POST"])
 def login():
+    """
+    Authenticate an user with the given username and password.
+    It will use base64decode with SALT to authenticate the user
+
+    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
+    :rtype: render_template
+    """
     if current_user.is_authenticated:
         return redirect(url_for("template_controllers.index"))
     else:
@@ -64,6 +79,16 @@ def login():
 
 @controllers.route("/register", methods=["POST"])
 def register():
+    """
+    Handle register form submission, store password as hashed format.
+    Check if the username, email and phone number are valid and not used.
+
+    :raises ErrorValueException: if username exists or invalid
+    :raises ErrorValueException: if email exists or invalid
+    :raises ErrorValueException: if phone number exists or invalid
+    :return: Dashboard if successfully registered. Otherwise, register page with errors.
+    :rtype: render_template
+    """
     if current_user.is_authenticated:
         return redirect(url_for("template_controllers.index"))
     else:
@@ -153,12 +178,28 @@ def register():
 @login_required
 @controllers.route("/logout", methods=["GET"])
 def logout():
+    """
+    Handle log out request and clear the user session.
+
+    :return: Redirect to homepage
+    :rtype: redirect
+    """
     logout_user()
     session.clear()
     return redirect(url_for("template_controllers.index"))
 
 
 def verify_login(username, password):
+    """
+    Authenticate user's login with username and password
+
+    :param username: user's username
+    :type username: str
+    :param username: user's password
+    :type username: str
+    :return: user's auth has been verified or not
+    :rtype: boolean
+    """
     user = db.session.query(User).filter_by(Username=username).scalar()
     if user:
         # match hashed password

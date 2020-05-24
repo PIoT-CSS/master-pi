@@ -1,6 +1,7 @@
 """
 userModel.py contains model for user and database logic.
 """
+
 import os
 from flask_login import (
     UserMixin
@@ -10,6 +11,10 @@ from flask import Flask
 
 
 class UserSchema(ma.Schema):
+    """
+    This UserSchema stores the meta and schema of user.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     def __init__(self, strict=True, **kwargs):
         super().__init__(strict=strict, **kwargs)
 
@@ -19,6 +24,10 @@ class UserSchema(ma.Schema):
 
 
 class User(db.Model, UserMixin):
+    """
+    User model class represents a user in the database.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     __tablename__ = "User"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     FirstName = db.Column(db.Text, nullable=False)
@@ -40,6 +49,11 @@ class User(db.Model, UserMixin):
         self.PhoneNumber = PhoneNumber
         self.UserType = UserType
 
-    # for flask_login
     def get_id(self):
+        """
+        Return the login ID for flask_login.
+
+        :return: login identity number
+        :rtype: int
+        """
         return (self.ID)

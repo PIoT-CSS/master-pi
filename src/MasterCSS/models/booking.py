@@ -7,6 +7,10 @@ from MasterCSS.database import db, ma
 
 
 class BookingSchema(ma.Schema):
+    """
+    This BookingSchema stores the meta and schema of a booking.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     def __init__(self, strict=True, **kwargs):
         super().__init__(strict=strict, **kwargs)
 
@@ -17,6 +21,11 @@ class BookingSchema(ma.Schema):
 
 
 class Booking(db.Model):
+    """
+    Booking model class represents a car in the database.
+    A Booking has its Car and User as its foreign keys.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=False)
@@ -29,6 +38,8 @@ class Booking(db.Model):
     Distance = db.Column(db.Float, nullable=False)
     Status = db.Column(db.Integer, nullable=False)
     CalRef = db.Column(db.Text)
+
+    # Booking status identity number
     CANCELED = 3
     INACTIVE = 2
     ACTIVE = 1
@@ -51,6 +62,14 @@ class Booking(db.Model):
 
     @staticmethod
     def getStatus(id):
+        """
+        GET booking status.
+
+        :param id: Identity number of the status
+        :type id: int
+        :return: Booking status as string.
+        :rtype: string
+        """
         if id == Booking.ACTIVE:
             return "Active"
         elif id == Booking.INACTIVE:

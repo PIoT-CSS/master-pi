@@ -8,6 +8,10 @@ from MasterCSS.database import db, ma
 LONGTEXT_LENGTH = 4294000000
 
 class CarSchema(ma.Schema):
+    """
+    This CarSchema stores the meta and schema of a car.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     def __init__(self, strict=True, **kwargs):
         super().__init__(strict=strict, **kwargs)
 
@@ -17,6 +21,11 @@ class CarSchema(ma.Schema):
 
 
 class Car(db.Model):
+    """
+    Car model class represents a car in the database.
+    A car has Booking as its foreign key.
+    Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     __tablename__ = "Car"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Make = db.Column(db.Text, nullable=False)

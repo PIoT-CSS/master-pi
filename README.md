@@ -9,36 +9,51 @@ python3 -m venv venv
 
 #### Installation
 
-Execute the following in the root folder.
+Execute the following in the root folder.  ***sudo*** is required to host on **port 80**.
 
 ```bash
-pip3 install -e .
+sudo pip3 install -e .
 ```
 
 #### To run
 
 ```bash
-MasterCSS
+sudo MasterCSS
 ```
 
 or
 
 ```bash
-python3 -m MasterCSS.cli
+sudo python3 -m MasterCSS.cli
 ```
 
 #### Uninstallation
 
 ```bash
-pip3 uninstall MasterCSS
+sudo pip3 uninstall MasterCSS
 ```
+
+#### To generate docs in HTML:
+
+Execute the following in the root folder.  ***sudo*** **is not required**.
+
+```bash
+pip3 install -e . && cd docs && make html
+```
+
+HTML docs will be in `docs/_build/html`.
 
 
 
 #### Note
 
 - To add/remove dependency packages, please modify `install_requires` in `setup.py` then reinstall the app.
-- To manage cars, please go to 'host:5000/management/cars'.
+- To manage cars, please go to 'hostname/management/cars'.
+- Prepare 2 mysql databases (as defined in `.env`):
+  - `css_test_1` for MasterCSS app
+  - `css_unit_test` for MasterCSS unit testing
+- Configure Agent Pi's IP address in `.env`
+- Modify your host file and make `carshare.com` redirects to Master Pi's IP.
 
 
 
