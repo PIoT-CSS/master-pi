@@ -50,12 +50,12 @@ class Subscriber:
         :type rc: integer
         """
         if rc == 0:
-            print("connection established, returned code=", rc)
+            print("[MQTT RES]  connection established, returned code=", rc)
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
             client.subscribe(self.RETURN_TOPIC)
         else:
-            print("connection error, returned code=", rc)
+            print("[MQTT RES]  connection error, returned code=", rc)
 
     def on_message(self, client, userdata, msg):
         """
@@ -73,13 +73,11 @@ class Subscriber:
         topic, payload, qos, retain.
         :type msg: MQTTMessage
         """
-        print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        print("[MQTT RES]  Payload received on topic: {}".format(msg.topic))
         payload = json.loads(msg.payload)
         if msg.topic == 'AUTH/FR':
             if pickup_car(payload):
-                print("[DEBUG] issues with creating a publisher")
                 pub = Publisher()
-                print("[DEBUG] tried to publish", msg.payload)
                 pub.fr_publish(payload['username'], 1)
             else:
                 pub = Publisher()
@@ -118,7 +116,7 @@ class Subscriber:
         :param buf: message buffer
         :type buf: bytes
         """
-        print("log ", buf)
+        print("[MQTT LOG] ", buf)
 
     def subscribe(self):
         """

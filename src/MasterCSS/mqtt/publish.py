@@ -53,7 +53,7 @@ class Publisher:
         :param result: Data being published
         :type result: String
         """
-        print("data published {} \n".format(result))
+        print("[MQTT RES]  data published {} \n".format(result))
         pass
 
     def on_disconnect(self, client, userdata, rc):
@@ -72,7 +72,7 @@ class Publisher:
         """
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
-        print("client disconnected OK")
+        print("[MQTT RES]  client disconnected OK")
 
     def on_connect(self, client, userdata, rc):
         """
@@ -88,7 +88,7 @@ class Publisher:
         :param rc: connection result
         :type rc: int
         """
-        print("client connected OK", str(rc))
+        print("[MQTT RES]  client connected OK", str(rc))
 
     def send_header(self, client, filename, topic, qos):
         """
@@ -110,7 +110,6 @@ class Publisher:
         header = "header"+",,"+filename+",,"
         header = bytearray(header, "utf-8")
         header.extend(b','*(200-len(header)))
-        print(header)
         client.publish(topic, header, qos)
 
     def send_end(self, client, filename, topic, qos):
@@ -133,7 +132,6 @@ class Publisher:
         end = "end"+",,"+filename+",,"+out_hash_md5.hexdigest()
         end = bytearray(end, "utf-8")
         end.extend(b','*(200-len(end)))
-        print(end)
         client.publish(topic, end, qos)
 
     def publish(self, topic, payload, qos):
@@ -158,7 +156,7 @@ class Publisher:
         client.on_connect = self.on_connect
 
         # Connect to pi
-        print(self.BROKER_ADDRESS)
+        print("[MQTT RES]  Publishing to " + self.BROKER_ADDRESS)
         client.connect(self.BROKER_ADDRESS, self.PORT)
 
         # Publish to topic
@@ -201,10 +199,8 @@ class Publisher:
         byteArr = self.convertImageToByteArray(file_name)
 
         # PublishEncodedImage
-        print("length =", type(byteArr))
         publish.single(self.AUTH_RESP_FR_TOPIC, byteArr,
                        hostname=self.BROKER_ADDRESS)
-        print("DEBUG")
 
     def convertImageToByteArray(self, file_name):
         """
