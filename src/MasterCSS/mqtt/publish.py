@@ -8,7 +8,7 @@ import hashlib
 import time
 import base64
 
-load_dotenv()
+#load_dotenv()
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
@@ -71,6 +71,7 @@ class Publisher:
         client.on_connect = self.on_connect
 
         # Connect to pi
+        print(self.BROKER_ADDRESS)
         client.connect(self.BROKER_ADDRESS, self.PORT)
 
         # Publish to topic
