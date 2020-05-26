@@ -75,27 +75,25 @@ class Subscriber:
         """
         print("[MQTT RES]  Payload received on topic: {}".format(msg.topic))
         payload = json.loads(msg.payload)
+        pub = Publisher()
         if msg.topic == 'AUTH/FR':
-            if pickup_car(payload):
-                pub = Publisher()
+            if payload['type'] == 'Encode Face':
                 pub.fr_publish(payload['username'], 1)
-            else:
-                pub = Publisher()
-                pub.publish('FR', 'Authentication denied', 1)
+            elif payload['type'] == 'Unlock':
+                if pickup_car(payload):
+                    pub.publish('FR', 'Unlocked', 1)
+                else:
+                    pub.publish('FR', 'Car unlock failed', 1)
         elif msg.topic == 'AUTH/UP':
             if verify_login(payload['username'], payload['pass']):
                 if pickup_car(payload):
-                    pub = Publisher()
                     pub.publish('UP', 'Unlocked', 1)
                     return
-            pub = Publisher()
             pub.publish('UP', 'Authentication denied', 1)
         elif msg.topic == 'RETURN':
             if return_car(payload):
-                pub = Publisher()
                 pub.publish('RET', 'Returned', 1)
             else:
-                pub = Publisher()
                 pub.publish('RET', 'Return denied', 1)
 
     def on_log(self, client, userdata, level, buf):

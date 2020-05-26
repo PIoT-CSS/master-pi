@@ -59,7 +59,7 @@ def add_car():
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=new_car.ID))
         else:
-            return redirect(url_for("template_controllers.unauthorised"))
+            return render_template("errors/401.html"), 401
     elif request.method == 'GET':
         return render_template(
             "management/cars/add.html",
@@ -114,7 +114,7 @@ def modify_car(id):
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=car.ID))
         else:
-            return redirect(url_for("template_controllers.unauthorised"))
+            return render_template("errors/401.html"), 401
     elif request.method == 'GET':
         return render_template(
             "management/cars/modify.html",

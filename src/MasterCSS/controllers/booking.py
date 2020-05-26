@@ -165,11 +165,12 @@ def book():
             },
             'location': car_coordinates[tuple(eval(booking.HomeCoordinates))],
             'description': "Booking ID: {}\nBooked Date: {}\nPickup Date: "\
+                    .format(booking.ID, booking.DateTimeBooked)
                 + "{}\nReturn Date: {}\nCost: ${}\nCar ID: {}\nCar Make: {}\n"\
+                    .format(pickup_datetime, return_datetime, 
+                    booking.Cost, booking.CarID, car.Make)
                 + "Car Colour: {}\nCar Seats: {}\nCar Fuel Type: {},"
-            .format(booking.ID, booking.DateTimeBooked, pickup_datetime,
-                    return_datetime, booking.Cost, booking.CarID, car.Make,
-                    car.Colour, car.Seats, car.FuelType),
+                    .format(car.Colour, car.Seats, car.FuelType),
             'end': {
                 'dateTime': return_datetime.isoformat(),
                 'timeZone': 'Australia/Melbourne'
