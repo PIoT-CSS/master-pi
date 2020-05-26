@@ -26,12 +26,13 @@ from MasterCSS.models.booking import Booking
 from MasterCSS.models.user import User
 
 
-HOST = os.getenv('HOST')
-PORT = int(os.getenv('PORT'))
-
 # Database configuration
 # configuring flask app
 load_dotenv()
+
+HOST = os.getenv('HOST')
+PORT = int(os.getenv('PORT'))
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = \
     "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format(
