@@ -104,7 +104,6 @@ def register():
             salt,
             ITERATIONS
         )
-
         # create a new temporary user
         new_user = User(
             request.form.get("firstname"),
@@ -113,7 +112,7 @@ def register():
             request.form.get("email"),
             b64encode(salt + key),
             request.form.get("phonenumber"),
-            "CUSTOMER"
+            request.form.get("usertype")
         )
 
         # default values for html forms

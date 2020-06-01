@@ -8,7 +8,6 @@
 <style>
     body{
       background-color: lightblue;
-      height: 100vh;
       display: flex;
       align-items: center;
     }
@@ -61,10 +60,21 @@
         <div class="field">
             <label class="label">Last name</label>
             <div class="control">
-                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else '' }} type="text" required>
+                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
             </div>
         </div>
 
+        <div class="field">
+            <label class="label">User type</label>
+            <div class="control">
+                <select class="select" name="usertype">
+                    <option value="CUSTOMER">customer</option>
+                    <option value="ADMIN">admin</option>
+                    <option value="ENGINEER">engineer</option>
+                    <option value="MANAGER">manager</option>
+                </select>
+            </div>
+        </div>
 
         <div class="field">
             <label class="label">Phone number</label>

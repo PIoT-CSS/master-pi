@@ -85,18 +85,32 @@ def index():
                 'http://localhost' + url_for('car_controllers.get_all_cars'))
             cars = json.loads(get_cars_response.text)
         else:
-            # obtain cars from db in unit tests
+            # obtain cars from db in unit tests, skip google oauth2.
             cars = db.session.query(Car).all()
 
-        return render_template(
-            'dashboard.html',
-            cars=cars,
-            car_colours=car_colours,
-            car_body_types=car_body_types,
-            car_seats=car_seats,
-            car_fuel_types=car_fuel_types,
-            car_coordinates=car_coordinates
-        )
+        # Determine which dashboard to render.
+        if current_user.UserType == 'CUSTOMER':
+            return render_template(
+                'dashboard.html',
+                cars=cars,
+                car_colours=car_colours,
+                car_body_types=car_body_types,
+                car_seats=car_seats,
+                car_fuel_types=car_fuel_types,
+                car_coordinates=car_coordinates
+            )
+        elif current_user.UserType == 'ADMIN':
+            return render_template(
+                'admin/‬dashboard.html'
+            )
+        elif current_user.UserType == 'MANAGER':
+            return render_template(
+                'manager/dashboard.html'
+            )
+        elif current_user.UserType == 'ENGINEER':
+            return render_template(
+                'engineer/dashboard.html'
+            )
     else:
         return render_template('index.html')
 
