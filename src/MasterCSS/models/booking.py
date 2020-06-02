@@ -4,6 +4,7 @@ booking.py contains db model for booking.
 import os
 from flask import Flask
 from MasterCSS.database import db, ma
+from MasterCSS.models.user import User
 
 
 class BookingSchema(ma.Schema):
@@ -60,7 +61,7 @@ class Booking(db.Model):
         self.Distance = Distance
         self.Status = Status
         self.CalRef = CalRef
-
+    
     @staticmethod
     def getStatus(id):
         """
@@ -79,3 +80,13 @@ class Booking(db.Model):
             return "Confirmed"
         elif id == Booking.CANCELED:
             return "Canceled"
+
+    def getUser(self):
+        """
+        Returns the username of user who made the booking
+
+        :return: username of user who made the booking
+        :rtype: string
+        """
+        user = db.session.query(User).get(self.UserID)
+        return user.Username

@@ -40,6 +40,23 @@ controllers = Blueprint("booking_controllers", __name__)
 # Define Car constant
 car_coordinates = Constant.CAR_COORDINATES
 
+@controllers.route(BOOKING_API_URL, methods=['GET'])
+@login_required
+def view_all_bookings():
+    """
+    Gets all booking entries from the database and renders template.
+    if logged in user is not admin redirect to 401.
+
+    :return: render template with all the bookings
+    :rtype: render_template
+    """
+    if current_user.UserType == "ADMIN":
+        # Obtain all the booking entries from the db.
+        bookings = db.session.query(Booking).all()
+        return render_template("myBooking.html", bookings=bookings,
+        car_coordinates=car_coordinates)
+    else:
+        return render_template("errors/401.html"), 401
 
 @controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
 @login_required
