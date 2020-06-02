@@ -32,6 +32,7 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
+from MasterCSS.qr.qr_generator import QRGenerator
 
 # define password hashing configs
 SALT_LENGTH = 32
@@ -191,9 +192,21 @@ def register():
                         os.makedirs(directory)
                     user_image.save(
                         "{}/{}.jpg".format(directory, new_user.Username))
-                # save new user into database and login
                 db.session.add(new_user)
                 db.session.commit()
+                # generate qr code for engineers
+                if user_type == "ENGINEER":
+                    engineer_profile = {
+                        "ID": new_user.ID,
+                        "Username": new_user.Username,
+                        "FirstName": new_user.FirstName,
+                        "LastName": new_user.LastName,
+                        "Email": new_user.Email,
+                        "PhoneNumber": new_user.PhoneNumber,
+                        "UserType": new_user.UserType
+                    }
+                    QRGenerator.generate(engineer_profile)
+                # save new user into database and login
                 login_user(new_user)
                 return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:

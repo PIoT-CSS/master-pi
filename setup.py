@@ -24,6 +24,7 @@ setup(
         "oauth2client",
         "google-api-python-client",
         "imutils",
-        "paho-mqtt"
+        "paho-mqtt",
+        "qrcode[pil]"
     ],
 )
