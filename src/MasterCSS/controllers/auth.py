@@ -104,6 +104,15 @@ def register():
             salt,
             ITERATIONS
         )
+
+        user_type = request.form.get("usertype")
+
+        if user_type == None:
+            user_type = "CUSTOMER"
+            is_staff = False
+        else:
+            is_staff = True
+        
         # create a new temporary user
         new_user = User(
             request.form.get("firstname"),
@@ -112,7 +121,7 @@ def register():
             request.form.get("email"),
             b64encode(salt + key),
             request.form.get("phonenumber"),
-            request.form.get("usertype")
+            user_type
         )
 
         # default values for html forms
@@ -121,7 +130,8 @@ def register():
             "lastname": new_user.LastName,
             "username": new_user.Username,
             "email": new_user.Email,
-            "phonenumber": new_user.PhoneNumber
+            "phonenumber": new_user.PhoneNumber,
+            "usertype": new_user.UserType
         }
 
         try:
@@ -188,8 +198,8 @@ def register():
                 return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
             # render register page with errors
-            return render_template("register.html", err=str(e.message),
-                                   defaultValues=e.payload)
+            return render_template("register.html", staff=is_staff,
+                err=str(e.message), defaultValues=e.payload)
 
 
 @login_required
