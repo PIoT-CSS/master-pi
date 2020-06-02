@@ -1,3 +1,7 @@
+"""
+qr_generator.py contains QRGenerator class for generating QR code.
+"""
+
 import qrcode
 import os
 import json
