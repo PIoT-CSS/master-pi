@@ -104,7 +104,6 @@ def register():
             salt,
             ITERATIONS
         )
-
         # create a new temporary user
         new_user = User(
             request.form.get("firstname"),
@@ -113,7 +112,7 @@ def register():
             request.form.get("email"),
             b64encode(salt + key),
             request.form.get("phonenumber"),
-            "CUSTOMER"
+            request.form.get("usertype")
         )
 
         # default values for html forms
@@ -205,6 +204,20 @@ def logout():
     logout_user()
     session.clear()
     return redirect(url_for("template_controllers.index"))
+
+@controllers.route("/staff", methods=["POST"])
+def staff_auth():
+    """
+    Checks secret key that's only known to staff.
+
+    :return: Redirect to register if secret key is correct
+    :rtype: redirect
+    """
+    secretkey = request.form.get('secretkey')
+    if secretkey == os.getenv('SECRET_KEY'):
+        return render_template('register.html', staff=True, defaultValues=None)
+    else:
+        return render_template('staffAuth.html', err="Key is incorrect")
 
 
 def verify_login(username, password):

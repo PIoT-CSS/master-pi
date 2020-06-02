@@ -34,7 +34,7 @@ car_fuel_types = Constant.CAR_FUEL_TYPES
 car_coordinates = Constant.CAR_COORDINATES
 
 # Notify flask about external controllers
-controllers = Blueprint("template_controllers", __name__)
+controllers = Blueprint("template_controllers", __name__, template_folder="templates")
 
 # Begin oauth callback route
 
@@ -53,53 +53,17 @@ def index():
     :rtype: render_template
     """
     if current_user.is_authenticated:
-        # disable google oauth in unit tests
-        if not current_app.config["TESTING"]:
-            # redirect user for google oauth if google oauth
-            # credentials don't exist
-            if 'credentials' not in session:
-                return redirect(url_for('template_controllers.oauth2callback',
-                                        callback=redirect(
-                                            url_for(
-                                                'template_controllers.index'
-                                            )
-                                        )
-                                        )
-                                )
-            # obtain credentials from session if exists
-            credentials = client.OAuth2Credentials.from_json(
-                session['credentials'])
-            # redirect user for google oauth if google oauth
-            # credentials expired
-            if credentials.access_token_expired:
-                return redirect(url_for('template_controllers.oauth2callback',
-                                        callback=redirect(
-                                            url_for(
-                                                'template_controllers.index'
-                                            )
-                                        )
-                                        )
-                                )
-            # obtain cars from RESTFUL API
-            get_cars_response = requests.get(
-                'http://localhost' + url_for('car_controllers.get_all_cars'))
-            cars = json.loads(get_cars_response.text)
-        else:
-            # obtain cars from db in unit tests
-            cars = db.session.query(Car).all()
-
-        return render_template(
-            'dashboard.html',
-            cars=cars,
-            car_colours=car_colours,
-            car_body_types=car_body_types,
-            car_seats=car_seats,
-            car_fuel_types=car_fuel_types,
-            car_coordinates=car_coordinates
-        )
+        # Determine which dashboard to render.
+        if current_user.UserType == 'CUSTOMER':
+            return customer_dashboard()
+        elif current_user.UserType == 'ADMIN':
+            return admin_dashboard()
+        elif current_user.UserType == 'MANAGER':
+            return manager_dashboard()
+        elif current_user.UserType == 'ENGINEER':
+            return engineer_dashboard()
     else:
         return render_template('index.html')
-
 
 @controllers.route('/oauth2callback')
 def oauth2callback(callback=None):
@@ -184,8 +148,17 @@ def mybookings(err=None):
     return render_template('myBooking.html', bookings=bookings,
                            car_coordinates=car_coordinates)
 
-# custom 404 page
+@controllers.route("/staff")
+def staff_auth():
+    """
+    Return template for staff to enter secret key.
 
+    :return: template to enter staff secret key. if entered render register.
+    :rtype: render_template
+    """
+    return render_template('staffAuth.html')
+
+# custom 404 page
 
 @controllers.app_errorhandler(404)
 def not_found(e):
@@ -212,3 +185,91 @@ def unauthorised(e):
     :rtype: render_template
     """
     return render_template("errors/401.html"), 401
+
+
+# dashboards
+
+def customer_dashboard():
+    """
+    Returns a customer dashboard with all cars.
+
+    :return: customer dashboard
+    :rtype: render_template
+    """
+    # disable google oauth in unit tests
+    if not current_app.config["TESTING"]:
+        # redirect user for google oauth if google oauth
+        # credentials don't exist
+        if 'credentials' not in session:
+            return redirect(url_for('template_controllers.oauth2callback',
+                                    callback=redirect(
+                                        url_for(
+                                            'template_controllers.index'
+                                        )
+                                    )
+                                    )
+                            )
+        # obtain credentials from session if exists
+        credentials = client.OAuth2Credentials.from_json(
+            session['credentials'])
+        # redirect user for google oauth if google oauth
+        # credentials expired
+        if credentials.access_token_expired:
+            return redirect(url_for('template_controllers.oauth2callback',
+                                    callback=redirect(
+                                        url_for(
+                                            'template_controllers.index'
+                                        )
+                                    )
+                                    )
+                            )
+        # obtain cars from RESTFUL API
+        get_cars_response = requests.get(
+            'http://localhost' + url_for('car_controllers.get_all_cars'))
+        cars = json.loads(get_cars_response.text)
+    else:
+        # obtain cars from db in unit tests, skip google oauth2.
+        cars = db.session.query(Car).all()
+
+    return render_template(
+                'dashboard.html',
+                cars=cars,
+                car_colours=car_colours,
+                car_body_types=car_body_types,
+                car_seats=car_seats,
+                car_fuel_types=car_fuel_types,
+                car_coordinates=car_coordinates
+            )
+
+def admin_dashboard():
+    """
+    Returns an admin dashboard with visualisation of business
+
+    :return: admin dashboard
+    :rtype: render_template
+    """
+    return render_template(
+            'admin/dashboard.html'
+            )
+            
+def manager_dashboard():
+    """
+    Returns a manager dashboard with visualisation of business
+
+    :return: manager dashboard
+    :rtype: render_template
+    """
+    return render_template(
+            'manager/dashboard.html'
+            )
+            
+def engineer_dashboard():
+    """
+    Returns an engineer dashboard with issues lista
+
+    :return: engineer dashboard
+    :rtype: render_template
+    """
+    return render_template(
+            'engineer/dashboard.html'
+            )
