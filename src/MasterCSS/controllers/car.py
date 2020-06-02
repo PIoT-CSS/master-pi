@@ -59,6 +59,30 @@ def get_all_cars():
     # jsonify serialised car objects
     return jsonify(result)
 
+@controllers.route(CAR_API_URL + '/search', methods=['GET'])
+@login_required
+def search_car_admin():
+    """
+    Renders searchResult.html for admin
+
+    :return: search result template for admin it contains the search form
+    :rtype: render_template
+    """
+    available_cars = db.session.query(Car).all()
+    if current_user.UserType == 'ADMIN':
+        return render_template(
+            "searchResult.html",
+            cars=available_cars,
+            car_colours=car_colours,
+            car_body_types=car_body_types,
+            car_seats=car_seats,
+            car_fuel_types=car_fuel_types,
+            car_coordinates=car_coordinates,
+        )
+    else:
+        return render_template("errors/401.html"), 401
+
+
 
 @controllers.route(CAR_API_URL + '/filter', methods=['POST'])
 @login_required

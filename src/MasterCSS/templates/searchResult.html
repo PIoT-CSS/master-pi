@@ -7,12 +7,18 @@
 <section class="hero">
     <div class="hero-body">
       <div class="container">
+        {% if current_user.UserType != 'ADMIN' %}
         <h1 class="title">
-          Congrats!
+            Congrats!
         </h1>
         <h2 class="subtitle">
             These are the available cars from <code>{{pickup_datetime}}</code> to <code>{{return_datetime}}</code>
         </h2>
+        {% else %}
+        <h1 class="title">
+            Manage cars
+        </h1>
+        {% endif %}
       </div>
     </div>
 </section>
@@ -48,14 +54,16 @@
                                 <td>{{car.Colour}}</td>
                                 <td>${{car.CostPerHour}}</td>
                                 <td>{{car.FuelType}}</td>
-                                <td>
-                                    <form action={{url_for('booking_controllers.confirm_booking')}} method="post">
-                                        <input type="hidden" name="car_id" value = "{{car.ID}}">
-                                        <input type="hidden" name="pickup_datetime" value = "{{pickup_datetime}}">
-                                        <input type="hidden" name="return_datetime" value = "{{return_datetime}}">
-                                        <input type="submit" class="button is-success" name="book" value="Book">
-                                    </form>
-                                </td>
+                                {% if current_user.UserType != 'ADMIN' %}
+                                    <td>
+                                        <form action={{url_for('booking_controllers.confirm_booking')}} method="post">
+                                            <input type="hidden" name="car_id" value = "{{car.ID}}">
+                                            <input type="hidden" name="pickup_datetime" value = "{{pickup_datetime}}">
+                                            <input type="hidden" name="return_datetime" value = "{{return_datetime}}">
+                                            <input type="submit" class="button is-success" name="book" value="Book">
+                                        </form>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>

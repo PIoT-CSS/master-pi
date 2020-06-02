@@ -7,12 +7,18 @@
 <section class="hero">
     <div class="hero-body">
       <div class="container">
+        {% if current_user.UserType == 'ADMIN'%}
         <h1 class="title">
-          My bookings!
+            Bookings so far
+        </h1>
+        {% else%}
+        <h1 class="title">
+            My bookings!
         </h1>
         <h2 class="subtitle">
-           These are your bookings
+            These are your bookings
         </h2>
+        {% endif %}
       </div>
     </div>
 </section>
@@ -40,6 +46,7 @@
                             <th>Location</th>
                             <th>Cost</th>
                             <th>Status</th>
+                            <th>Booked by</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +60,7 @@
                                 <td>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}}</td>
                                 <td>${{booking.Cost}}</td>
                                 <td>{{booking_model.getStatus(booking.Status)}}</td>
+                                <td>{{booking.getUser()}}</td>
                                 <td>
                                     <form method="post" action="{{url_for('booking_controllers.view')}}">
                                         <input type="hidden" name="booking_id" value="{{booking.ID}}">
