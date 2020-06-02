@@ -12,19 +12,25 @@
                 Booking ID: {{booking.ID}}
             </div>
             <div class="message-body">
-                <p><strong>Car ID: </strong> {{booking.CarID}}</p>
+                {% if booking.CarID %}
+                    <p><strong>Car ID: </strong> {{booking.CarID}}</p>
+                {% endif %}
                 <p><strong>User ID: </strong> {{booking.UserID}}</p>
                 <p><strong>Booking time: </strong> {{booking.DateTimeBooked}}</p>
                 <p><strong>Pickup time: </strong> {{booking.DateTimeStart}}</p>
                 <p><strong>Return time: </strong> {{booking.DateTimeEnd}}</p>
                 <p><strong>Cost: </strong> ${{booking.Cost}}</p>
                 <p><strong>Status: </strong>{{booking_model.getStatus(booking.Status)}}</p>
-                <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}} </p>
+                {% if car %}
+                    <p><strong>Pickup and return location: </strong>{{car_coordinates[tuple(eval(booking.HomeCoordinates))]}} </p>
+                {% endif %}
             </div>
-            <div name="map">
-                <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
-                <div id="pickup_map" class="mt-6" style="width:100%;height:500px;"></div>
-            </div>
+            {% if car %}
+                <div name="map">
+                    <input type="hidden" name="pickup" name="pickup_map" data-x={{tuple(eval(car.HomeCoordinates))[0]}} data-y={{tuple(eval(car.HomeCoordinates))[1]}}/>
+                    <div id="pickup_map" class="mt-6" style="width:100%;height:500px;"></div>
+                </div>
+            {% endif %}
             {% if booking.Status == booking_model.CONFIRMED %}
             <form method="post" action="{{url_for('booking_controllers.cancel')}}">
                 <input type="hidden" name="booking_id" value="{{booking.ID}}">
@@ -35,50 +41,55 @@
       </div>
     </div>
 </section>
-
 <section>
     <div class="container">
         <div class="box">
             <h1 class="title">
                 Car details
             </h1>
-            <div class="table-container">
-                <table class="table w-full text-center">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Make</th>
-                            <th>Seats</th>
-                            <th>Body type</th>
-                            <th>Location</th>
-                            <th>Colour</th>
-                            <th>Cost per Hour</th>
-                            <th>Fuel type</th>
-                            <th>Plate</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
+            {% if car %}
+                <div class="table-container">
+                    <table class="table w-full text-center">
+                        <thead>
                             <tr>
-                                <td>{{car.ID}}</td>
-                                <td>{{car.Make}}</td>
-                                <td>{{car.Seats}}</td>
-                                <td>{{car.BodyType}}</td>
-                                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
-                                <td>{{car.Colour}}</td>
-                                <td>${{car.CostPerHour}}</td>
-                                <td>{{car.FuelType}}</td>
-                                <td>{{car.NumberPlate}}</td>
+                                <th>ID</th>
+                                <th>Make</th>
+                                <th>Seats</th>
+                                <th>Body type</th>
+                                <th>Location</th>
+                                <th>Colour</th>
+                                <th>Cost per Hour</th>
+                                <th>Fuel type</th>
+                                <th>Plate</th>
 
                             </tr>
-                    </tbody>
-                </table>
-                <div class="card-image ">
-                    <figure class="image is-4by3">
-                      <img src="{{car.Image}}" alt="Placeholder image">
-                    </figure>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>{{car.ID}}</td>
+                                    <td>{{car.Make}}</td>
+                                    <td>{{car.Seats}}</td>
+                                    <td>{{car.BodyType}}</td>
+                                    <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
+                                    <td>{{car.Colour}}</td>
+                                    <td>${{car.CostPerHour}}</td>
+                                    <td>{{car.FuelType}}</td>
+                                    <td>{{car.NumberPlate}}</td>
+
+                                </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-image ">
+                        <figure class="image is-4by3">
+                        <img src="{{car.Image}}" alt="Placeholder image">
+                        </figure>
+                    </div>
                 </div>
-            </div>
+            {% else%}
+                <h1 class="title">
+                    Car for this booking is removed.
+                </h1>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -102,7 +113,7 @@ function initMap() {
             '<h1 class="title is-5">{{car.Make}}</h1>'+
             '<div id="bodyContent">'+
             '<p><b>Seats:</b> {{car.Seats}}</p>'+
-            '<p><b>Location:</b> {{car_coordinates[tuple(eval(car.HomeCoordinates))]   }} </p> '+
+            '<p><b>Location:</b>{% if car %} {{car_coordinates[tuple(eval(car.HomeCoordinates))]   }} {% endif %}</p> '+
             '<p><b>Fuel Type:</b> {{car.FuelType}} </p> '+
             '<p><b>Colour:</b> {{car.Colour}} </p> '+
             '<p><b>Plate:</b> {{car.NumberPlate}} </p> '+
@@ -118,8 +129,6 @@ function initMap() {
             });
         }
     }
-    initMap();
-
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6gYrFF5NEKEa9R2rDNCILa6i2RGvvWw&callback=initMap" type="text/javascript"></script>
