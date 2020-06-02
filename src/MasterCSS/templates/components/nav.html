@@ -23,6 +23,24 @@
         <div class="navbar-item">
           <a href="/" class="button is-white"> Home </a>
         </div>
+        
+        {% if usertype == "ADMIN" %}
+          <div class="navbar-item">
+            <a href="#" class="button is-white"> Review bookings </a>
+          </div>
+          <div class="navbar-item">
+            <a href="#" class="button is-white"> Search and view </a>
+          </div>
+          <div class="navbar-item">
+            <a href="#" class="button is-white"> Manage cars </a>
+          </div>
+          <div class="navbar-item">
+            <a href="#" class="button is-white"> Manage users </a>
+          </div>
+          <div class="navbar-item">
+            <a href="#" class="button is-white"> Report issue </a>
+          </div>
+        {% endif %}
        
         <div class="navbar-item">
           <a href="/myinfo" class="button is-white is-hidden-desktop">  My Information </a>
@@ -38,15 +56,16 @@
                     <a class="navbar-link">
                       {{ username }}
                     </a>
-            
                     <div class="navbar-dropdown">
                       <a class="navbar-item" href="/myinfo">
                         My Profile
                       </a>
                       <hr class="navbar-divider">
+                      {% if usertype == "CUSTOMER" %}
                       <a class="navbar-item" href="/mybookings">
                         My Bookings
                       </a>
+                      {% endif %}
                     </div>
                 </div>
                 <div class="flex w-full justify-between is-hidden-desktop">
