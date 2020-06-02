@@ -21,7 +21,7 @@ class UserSchema(ma.Schema):
 
     class Meta:
         fields = ("ID", "FirstName", "LastName", "Username", "Email",
-                  "Password", "PhoneNumber", "UserType")
+                  "Password", "PhoneNumber", "UserType", "MacAddress")
 
 
 class User(db.Model, UserMixin):
@@ -38,9 +38,10 @@ class User(db.Model, UserMixin):
     Password = db.Column(db.Text, nullable=False)
     PhoneNumber = db.Column(db.Text, nullable=False)
     UserType = db.Column(db.Text, nullable=False)
+    MacAddress = db.Column(db.Text, nullable=True)
 
     def __init__(self, FirstName, LastName, Username, Email, Password,
-                 PhoneNumber, UserType, ID=None):
+                 PhoneNumber, UserType, ID=None, MacAddress=None):
         self.ID = ID
         self.FirstName = FirstName
         self.LastName = LastName
@@ -49,6 +50,7 @@ class User(db.Model, UserMixin):
         self.Password = Password
         self.PhoneNumber = PhoneNumber
         self.UserType = UserType
+        self.MacAddress = MacAddress
 
     def get_id(self):
         """
