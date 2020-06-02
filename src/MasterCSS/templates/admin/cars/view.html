@@ -2,6 +2,11 @@
 
 {% block container %}
 <table class="table">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
     <thead>
         <tr>
             <th>ID</th>
@@ -43,5 +48,4 @@
         </tr>
     </tbody>
 </table>
-<h1>can put bookings here</h1>
 {% endblock %}

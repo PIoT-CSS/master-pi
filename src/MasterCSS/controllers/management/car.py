@@ -6,6 +6,7 @@ import json
 import base64
 from MasterCSS.models.car import Car
 from MasterCSS.database import db
+from flask_login import current_user, login_required
 from flask import (
     request,
     url_for,
@@ -27,6 +28,7 @@ controllers = Blueprint("car_management_controllers", __name__)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL+'/add', methods=['POST', 'GET'])
+@login_required
 def add_car():
     """
     Return the list of car if it's a get request. If it's a POST request,
@@ -36,8 +38,7 @@ def add_car():
     :rtype: render_template if GET, redirect if POST
     """
     if request.method == 'POST':
-        secretkey = request.form.get('secretkey')
-        if secretkey == os.getenv('SECRET_KEY'):
+        if current_user.UserType == 'ADMIN':
             image = request.files
             image_encoded = base64.b64encode(image["image"].read())
             image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
@@ -62,7 +63,7 @@ def add_car():
             return render_template("errors/401.html"), 401
     elif request.method == 'GET':
         return render_template(
-            "management/cars/add.html",
+            "admin/cars/add.html",
             car_colours=car_colours,
             car_body_types=car_body_types,
             car_seats=car_seats,
@@ -79,10 +80,11 @@ def view_all_cars():
     :return: View with all the cars
     :rtype: render_template
     """
-    return render_template("management/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
+    return render_template("admin/cars/viewall.html", cars=db.session.query(Car).all(), car_coordinates=car_coordinates)
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/modify', methods=['GET', 'POST'])
+@login_required
 def modify_car(id):
     """
     If the request is POST, modify the car with according to the form contents.
@@ -94,8 +96,7 @@ def modify_car(id):
     :rtype: redirect
     """
     if request.method == 'POST':
-        secretkey = request.form.get('secretkey')
-        if secretkey == os.getenv('SECRET_KEY'):
+        if current_user.UserType == 'ADMIN':
             car = db.session.query(Car).filter_by(ID=id).scalar()
             car.Make = request.form.get('make')
             car.Seats = int(request.form.get('seats'))
@@ -117,7 +118,7 @@ def modify_car(id):
             return render_template("errors/401.html"), 401
     elif request.method == 'GET':
         return render_template(
-            "management/cars/modify.html",
+            "admin/cars/modify.html",
             car=db.session.query(Car).filter_by(ID=id).scalar(),
             car_colours=car_colours,
             car_body_types=car_body_types,
@@ -128,6 +129,7 @@ def modify_car(id):
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>', methods=['GET'])
+@login_required
 def view_car(id):
     """
     Page for viewing a particular car's details.
@@ -135,11 +137,15 @@ def view_car(id):
     :return: car details page
     :rtype: render_template
     """
-    car=db.session.query(Car).filter_by(ID=id).scalar()
-    return render_template("management/cars/view.html", car=car, car_coordinates=car_coordinates)
+    if current_user.UserType == 'ADMIN':
+        car=db.session.query(Car).filter_by(ID=id).scalar()
+        return render_template("admin/cars/view.html", car=car, car_coordinates=car_coordinates)
+    else:
+        return render_template("errors/401.html"), 401
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL + '/<int:id>/remove', methods=['GET'])
+@login_required
 def remove_car(id):
     """
     Endpoint to remove a particular car.
@@ -147,6 +153,14 @@ def remove_car(id):
     :return: view all cars page
     :rtype: render_template
     """
-    db.session.query(Car).filter_by(ID=id).delete()
-    db.session.commit()
-    return redirect(url_for('car_management_controllers.view_all_cars'))
+    if current_user.UserType == 'ADMIN':
+        car = db.session.query(Car).filter_by(ID=id)
+        try:
+            car.delete()
+            db.session.commit()
+            return redirect(url_for('car_controllers.search_car_admin'))
+        except:
+            err="Error there's unresolved booking."
+            return render_template("admin/cars/view.html", car=car.first(), car_coordinates=car_coordinates, err=err)
+    else:
+        return render_template("errors/401.html"), 401

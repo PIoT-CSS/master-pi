@@ -31,7 +31,7 @@ class Booking(db.Model):
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=False)
-    CarID = db.Column(db.Integer, db.ForeignKey('Car.ID'), nullable=False)
+    CarID = db.Column(db.Integer, db.ForeignKey('Car.ID'), nullable=True)
     DateTimeBooked = db.Column(db.DateTime, nullable=False)
     DateTimeStart = db.Column(db.DateTime, nullable=False)
     DateTimeEnd = db.Column(db.DateTime, nullable=False)
@@ -90,3 +90,6 @@ class Booking(db.Model):
         """
         user = db.session.query(User).get(self.UserID)
         return user.Username
+
+    def removeCarID(self):
+        self.CarID = None

@@ -8,16 +8,17 @@
     <div class="hero-body">
       <div class="container">
         {% if current_user.UserType != 'ADMIN' %}
-        <h1 class="title">
-            Congrats!
-        </h1>
-        <h2 class="subtitle">
-            These are the available cars from <code>{{pickup_datetime}}</code> to <code>{{return_datetime}}</code>
+            <h1 class="title">
+                Congrats!
+            </h1>
+            <h2 class="subtitle">
+                These are the available cars from <code>{{pickup_datetime}}</code> to <code>{{return_datetime}}</code>
         </h2>
         {% else %}
-        <h1 class="title">
-            Manage cars
-        </h1>
+            <h1 class="title">
+                Manage cars
+            </h1>
+            <a class="button is-link is-outlined" href={{url_for('car_management_controllers.add_car')}}>Add Car</a>
         {% endif %}
       </div>
     </div>
@@ -61,6 +62,12 @@
                                             <input type="hidden" name="pickup_datetime" value = "{{pickup_datetime}}">
                                             <input type="hidden" name="return_datetime" value = "{{return_datetime}}">
                                             <input type="submit" class="button is-success" name="book" value="Book">
+                                        </form>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <form action={{url_for('car_management_controllers.view_car', id=car.ID)}}>
+                                            <input type="submit" class="button is-success" name="view" value="View">
                                         </form>
                                     </td>
                                 {% endif %}
