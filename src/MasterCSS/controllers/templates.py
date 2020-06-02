@@ -265,7 +265,7 @@ def manager_dashboard():
             
 def engineer_dashboard():
     """
-    Returns an engineer dashboard with issues list
+    Returns an engineer dashboard with issues lista
 
     :return: engineer dashboard
     :rtype: render_template
