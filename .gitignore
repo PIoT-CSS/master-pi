@@ -1,6 +1,8 @@
 # MasterCSS
 src/MasterCSS/encoding/dataset/*
 !src/MasterCSS/encoding/dataset/.gitkeep
+src/MasterCSS/static/qr/*
+!src/MasterCSS/static/qr/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
