@@ -34,7 +34,7 @@ car_fuel_types = Constant.CAR_FUEL_TYPES
 car_coordinates = Constant.CAR_COORDINATES
 
 # Notify flask about external controllers
-controllers = Blueprint("template_controllers", __name__)
+controllers = Blueprint("template_controllers", __name__, template_folder="templates")
 
 # Begin oauth callback route
 
@@ -101,7 +101,7 @@ def index():
             )
         elif current_user.UserType == 'ADMIN':
             return render_template(
-                'admin/‬dashboard.html'
+                'admin/dashboard.html'
             )
         elif current_user.UserType == 'MANAGER':
             return render_template(
@@ -198,8 +198,17 @@ def mybookings(err=None):
     return render_template('myBooking.html', bookings=bookings,
                            car_coordinates=car_coordinates)
 
-# custom 404 page
+@controllers.route("/staff")
+def staff_auth():
+    """
+    Return template for staff to enter secret key.
 
+    :return: template to enter staff secret key. if entered render register.
+    :rtype: render_template
+    """
+    return render_template('staffAuth.html')
+
+# custom 404 page
 
 @controllers.app_errorhandler(404)
 def not_found(e):

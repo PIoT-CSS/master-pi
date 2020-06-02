@@ -205,6 +205,20 @@ def logout():
     session.clear()
     return redirect(url_for("template_controllers.index"))
 
+@controllers.route("/staff", methods=["POST"])
+def staff_auth():
+    """
+    Checks secret key that's only known to staff.
+
+    :return: Redirect to register if secret key is correct
+    :rtype: redirect
+    """
+    secretkey = request.form.get('secretkey')
+    if secretkey == os.getenv('SECRET_KEY'):
+        return render_template('register.html', staff=True, defaultValues=None)
+    else:
+        return render_template('staffAuth.html', err="Key is incorrect")
+
 
 def verify_login(username, password):
     """
