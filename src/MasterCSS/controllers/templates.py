@@ -148,6 +148,7 @@ def mybookings(err=None):
     return render_template('myBooking.html', bookings=bookings,
                            car_coordinates=car_coordinates)
 
+# Employee routes
 @controllers.route("/staff")
 def staff_auth():
     """
