@@ -201,7 +201,7 @@ def mybookings(err=None):
 @controllers.route("/staff")
 def staff_auth():
     """
-    Return template for staff to enter secret key.
+    Return template for staff to enter secret key.a
 
     :return: template to enter staff secret key. if entered render register.
     :rtype: render_template
