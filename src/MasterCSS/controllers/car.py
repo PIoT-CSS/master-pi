@@ -68,11 +68,11 @@ def search_car_admin():
     :return: search result template for admin it contains the search form
     :rtype: render_template
     """
-    available_cars = db.session.query(Car).all()
+    cars = db.session.query(Car).all()
     if current_user.UserType == 'ADMIN':
         return render_template(
             "searchResult.html",
-            cars=available_cars,
+            cars=cars,
             car_colours=car_colours,
             car_body_types=car_body_types,
             car_seats=car_seats,
@@ -185,8 +185,13 @@ def search_car():
     # process pickup and return time from client
     pickup_datetime = request.form.get('pickup_datetime')
     return_datetime = request.form.get('return_datetime')
-    # obtain all available filtered cars with specified pickup and return time
-    available_cars = get_available_cars(pickup_datetime, return_datetime, cars)
+
+    if(pickup_datetime != '' and return_datetime != ''):
+        # obtain all available filtered cars with specified pickup and return time
+        available_cars = get_available_cars(pickup_datetime, return_datetime, cars)
+    else:
+        available_cars = cars
+
     return render_template(
         'searchResult.html',
         cars=available_cars,
