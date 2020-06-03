@@ -45,7 +45,7 @@ def add_user():
     """
     if current_user.UserType == 'ADMIN':
         return render_template('admin/user/add.html', defaultValues=None,
-                            adminAdd=True)
+                            staff=True)
     else: 
         return render_template("errors/401.html"), 401
 
