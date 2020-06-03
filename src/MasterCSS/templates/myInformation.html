@@ -1,23 +1,23 @@
 {% extends "layouts/dashboard-layout.html" %}
 
-{% block container %} 
+{% block container %}
 
 
 <div class="container">
 
     <section class="hero">
         <div class="hero-body">
-          <div class="container">
-            <h1 class="title">
-              My profile
-            </h1>
-            <h2 class="subtitle">
-              Here are your profile details.
-            </h2>
-          </div>
+            <div class="container">
+                <h1 class="title">
+                    My profile
+                </h1>
+                <h2 class="subtitle">
+                    Here are your profile details.
+                </h2>
+            </div>
         </div>
-      </section>
-    
+    </section>
+
     <section>
         <div class="box">
             <div class="flex">
@@ -28,21 +28,29 @@
                             {{current_user.ID}}
                         </div>
                     </div>
-                
-            
+
+
                     <div class="field">
                         <label class="label">Username</label>
                         <div class="control">
                             {{current_user.Username}}
                         </div>
                     </div>
-            
+
                     <div class="field">
                         <label class="label">Phone Number</label>
                         <div class="control">
                             {{current_user.PhoneNumber}}
                         </div>
                     </div>
+                    {% if current_user.UserType != 'CUSTOMER' %}
+                    <div class="field">
+                        <label class="label">Staff type:</label>
+                        <div class="control">
+                            {{current_user.UserType}}
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="w-full">
                     <div class="field">
@@ -51,15 +59,15 @@
                             {{current_user.FirstName}}
                         </div>
                     </div>
-            
-            
+
+
                     <div class="field">
                         <label class="label">Last name</label>
                         <div class="control">
                             {{current_user.LastName}}
                         </div>
                     </div>
-            
+
                     <div class="field">
                         <label class="label">Email</label>
                         <div class="control">
@@ -67,7 +75,22 @@
                         </div>
                     </div>
 
+                    {% if current_user.UserType == 'ENGINEER' %}
+                    <div class="field">
+                        <label class="label">Device's Bluetooth MAC Address:</label>
+                        <div class="control">
+                            {{current_user.MacAddress}}
+                        </div>
+                    </div>
+                    {% endif %}
+
                 </div>
+                {% if current_user.UserType == 'ENGINEER' %}
+                    <div class="field">
+                        <label class="label">QR Code</label>
+                        <img src={{"static/qr/" + current_user.Username + "/" + current_user.Username + ".jpg"}}>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
