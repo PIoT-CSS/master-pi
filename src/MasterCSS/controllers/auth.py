@@ -128,7 +128,8 @@ def register():
             request.form.get("email"),
             b64encode(salt + key),
             request.form.get("phonenumber"),
-            user_type
+            user_type,
+            MacAddress=request.form.get("macaddress")
         )
 
         # default values for html forms
@@ -138,7 +139,8 @@ def register():
             "username": new_user.Username,
             "email": new_user.Email,
             "phonenumber": new_user.PhoneNumber,
-            "usertype": new_user.UserType
+            "usertype": new_user.UserType,
+            "macaddress": new_user.MacAddress
         }
 
         try:
@@ -170,6 +172,11 @@ def register():
                 filter_by(PhoneNumber=new_user.PhoneNumber)\
                     .scalar() is not None:
                 takens.append("phone number")
+            if user_type == "ENGINEER":
+                if db.session.query(User). \
+                    filter_by(MacAddress=new_user.MacAddress)\
+                        .scalar() is not None:
+                    takens.append("MAC Address")
 
             # if user details have been taken,
             # render error message in register page

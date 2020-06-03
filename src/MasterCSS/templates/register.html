@@ -60,7 +60,7 @@
         <div class="field">
             <label class="label">Last name</label>
             <div class="control">
-                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
+                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
 
@@ -74,6 +74,12 @@
                     <option value="ENGINEER">engineer</option>
                     <option value="MANAGER">manager</option>
                 </select>
+            </div>
+        </div>
+        <div class="field" id=>
+            <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
+            <div class="control">
+                <input class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
             </div>
         </div>
         {% endif %}
