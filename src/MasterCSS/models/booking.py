@@ -93,3 +93,4 @@ class Booking(db.Model):
 
     def removeCarID(self):
         self.CarID = None
+        self.UserID = None
