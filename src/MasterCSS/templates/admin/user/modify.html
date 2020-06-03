@@ -61,18 +61,17 @@
                 </select>
             </div>
         </div>
+        <div class="field" id=>
+            <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
+            <div class="control">
+                <input class="input" name="macaddress" value='{{user.MacAddress}}' type="text">
+            </div>
+        </div>
 
         <div class="field">
             <label class="label">Phone number</label>
             <div class="control">
-                <input class="input" name="phonenumber" value={{user.PhoneNumber}} type="text" required>
-            </div>
-        </div>
-
-         <div class="field">
-            <label class="label">Photo of user (JPG)</label>
-            <div class="control">
-                <input type="file" name="image" accept="image/jpg;">
+                <input class="input" name="phonenumber" value='{{user.PhoneNumber}}' type="text" required>
             </div>
         </div>
 

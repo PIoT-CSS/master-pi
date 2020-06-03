@@ -192,22 +192,9 @@ def modify_user(id):
                     user.Email = request.form.get('email')
                     user.PhoneNumber = request.form.get('phonenumber')
                     user.UserType = request.form.get('usertype')
-
-                    if request.files.get('image', None):
-                        user_image = request.files
-                        # generate user image file and save locally
-                        filename = secure_filename(user_image.filename)
-                        directory = "src/MasterCSS/encoding/dataset/{}".format(
-                            user.Username)
-                        # create directory if doesn't exist
-                        if not os.path.exists(directory):
-                            os.makedirs(directory)
-                        user_image.save(
-                            "{}/{}.jpg".format(directory, user.Username))
-                    
-                    db.session.commit()
                     # generate qr code for engineers
                     if user.UserType == "ENGINEER":
+                        user.MacAddress = request.form.get("macaddress")
                         engineer_profile = {
                             "ID": user.ID,
                             "Username": user.Username,
@@ -218,6 +205,7 @@ def modify_user(id):
                             "UserType": user.UserType
                         }
                         QRGenerator.generate(engineer_profile)
+                    db.session.commit()
 
                     return render_template(
                         "admin/user/view.html",
