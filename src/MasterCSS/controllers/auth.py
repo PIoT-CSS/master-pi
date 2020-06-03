@@ -275,3 +275,20 @@ def verify_login(username, password):
         if key == (b64decode(user.Password)[SALT_LENGTH:]):
             return True
     return False
+
+def get_mac_addresses():
+    """
+    Obtain a list of engineers' device's Bluetooth MAC address.
+
+    :return: list of engineers' device's Bluetooth MAC address
+    :rtype: dict
+    """
+    mac_addresses = list()
+    engineers = db.session.query(User).filter(
+            User.UserType.contains("ENGINEER")).all()
+    for engineer in engineers:
+        mac_addresses.append(engineer.MacAddress)
+    mac_payload = {
+        "macAddresses": mac_addresses
+    }
+    return mac_payload
