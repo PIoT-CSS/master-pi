@@ -12,7 +12,7 @@
     </div>
     {% endif %}
     <h1 class="title is-4">Add User</h1>
-    <form name="add_user_form" action={{url_for("user_management_controllers.add_user")}} enctype=multipart/form-data method="post">
+    <form name="add_user_form" action={{url_for("auth_controllers.register")}} enctype=multipart/form-data method="post">
         <div class="field">
             <label class="label">Username</label>
             <div class="control has-icons-left">
