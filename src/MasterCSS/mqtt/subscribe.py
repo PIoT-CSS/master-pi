@@ -28,6 +28,7 @@ class Subscriber:
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
         self.RETURN_TOPIC = "RETURN"
+        self.ENG_TOPIC = "ENG"
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.BROKER_PORT = int(BROKER_PORT)
 
@@ -54,6 +55,7 @@ class Subscriber:
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
             client.subscribe(self.RETURN_TOPIC)
+            client.subscribe(self.ENG_TOPIC)
         else:
             print("[MQTT RES]  connection error, returned code=", rc)
 
@@ -95,6 +97,8 @@ class Subscriber:
                 pub.publish('RET', 'Returned', 1)
             else:
                 pub.publish('RET', 'Return denied', 1)
+        elif msg.topic == 'ENG':
+            print("[MQTT LOG] Topic from recieved", msg.payload)
 
     def on_log(self, client, userdata, level, buf):
         """
