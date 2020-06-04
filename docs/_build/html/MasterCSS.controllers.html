@@ -64,12 +64,11 @@
 It will use base64decode with SALT to authenticate the user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Dashboard if logged in successfully, otherwise redirect to login html with error message.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>render_template</p>
+<dd class="field-odd"><p>Dashboard if logged in successfully, otherwise</p>
 </dd>
 </dl>
+<p>redirect to login html with error message.
+:rtype: render_template</p>
 </dd></dl>
 
 <dl class="py function">
@@ -100,12 +99,11 @@ Check if the username, email and phone number are valid and not used.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dashboard if successfully registered. Otherwise, register page with errors.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>render_template</p>
+<dd class="field-even"><p>Dashboard if successfully registered. Otherwise,</p>
 </dd>
 </dl>
+<p>register page with errors.
+:rtype: render_template</p>
 </dd></dl>
 
 <dl class="py function">
@@ -137,7 +135,7 @@ Check if the username, email and phone number are valid and not used.</p>
 <code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">book</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Confirm/Book a car with the given car, pick up time, return time and cost.
 Add event into Google Calendar with the booking details.</p>
-<p>Required user to have Oauth2 access. Else, it will prompt the user to 
+<p>Required user to have Oauth2 access. Else, it will prompt the user to
 authorize.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -153,7 +151,7 @@ authorize.</p>
 <dt id="MasterCSS.controllers.booking.cancel">
 <code class="sig-prename descclassname">MasterCSS.controllers.booking.</code><code class="sig-name descname">cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.controllers.booking.cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cancel a booking and delete the event calendar. Required user to
-have access Oauth2Crednetials. Otherwise, it will prompt the user to 
+have access Oauth2Crednetials. Otherwise, it will prompt the user to
 authorize.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -189,7 +187,7 @@ authorize.</p>
 <dd class="field-odd"><p>Booking details with booking information, car information.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>render_template</p>
 </dd>
 </dl>
 </dd></dl>
@@ -206,10 +204,13 @@ Which use the get_available_cars(pickup_datetime, return_datetime, cars)
 returns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Search result page with a list of available cars if there are any. Otherwise, render the dashboard page with an error message.</p>
+<dd class="field-odd"><p>Search result page with a list of available cars if there</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>render_template</p>
+</dl>
+<p>are any. Otherwise, render the dashboard page with an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>render_template</p>
 </dd>
 </dl>
 </dd></dl>

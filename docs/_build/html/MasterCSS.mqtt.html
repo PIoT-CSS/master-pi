@@ -46,72 +46,161 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that contains publish logic. when given a payload and route
 it will publish to the correct route.</p>
-<dl class="simple">
-<dt>__init__(self):</dt><dd><p>initialises routes that it will publish to, ip address of AP and port.</p>
-</dd>
-<dt>on_publish(self, client, userdata, result):</dt><dd><p>function to run on successful publish</p>
-</dd>
-<dt>on_disconnect(self, client, userdata, rc):</dt><dd><p>function to run on disconnect</p>
-</dd>
-<dt>on_connect(self, client, userdata, rc):</dt><dd><p>function to run on connect</p>
-</dd>
-<dt>publish(self, topic, payload, qos):</dt><dd><p>initialises client and binds functions, publish received payload to AP at a given topic and disconnects.</p>
-</dd>
-<dt>fr_publish(self, file_name, qos):</dt><dd><p>initialises client and binds functions, publish user’s image for facial recognition as payload to AP at a given topic and disconnects.</p>
-</dd>
-<dt>send_end(self, client, filename, topic, qos):</dt><dd><p>sends end of file to identify image sent for facial recognition</p>
-</dd>
-<dt>send_header(self, client, filename, topic, qos):</dt><dd><p>sends header to identify image sent for facial recognition</p>
-</dd>
-<dt>convertImageToByteArray(self, file_name):</dt><dd><p>converts user’s image into byte array to be published</p>
-</dd>
-</dl>
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.convertImageToByteArray">
 <code class="sig-name descname">convertImageToByteArray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.convertImageToByteArray" title="Permalink to this definition">¶</a></dt>
-<dd><p>converts user’s image into byte array to be published</p>
+<dd><p>converts user’s image into byte array to be published
+:return: bytes of the image
+:rtype: array of bytes</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.fr_publish">
 <code class="sig-name descname">fr_publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.fr_publish" title="Permalink to this definition">¶</a></dt>
-<dd><p>initialises client and binds functions, publish user’s image for facial recognition as payload to AP at a given topic and disconnects.</p>
+<dd><dl class="simple">
+<dt>initialises client and binds functions, publish user’s image</dt><dd><p>for facial recognition as payload to AP at a given topic
+and disconnects.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>string</em>) – filename being published</p></li>
+<li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.on_connect">
 <code class="sig-name descname">on_connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to run on connect</p>
+<dd><p>callback function to run on_connect</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the mqtt client</p></li>
+<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+</ul>
+</dd>
+</dl>
+<p>or user_data_set()
+:type userdata: [type]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rc</strong> (<em>int</em>) – connection result</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.on_disconnect">
 <code class="sig-name descname">on_disconnect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>function to run on disconnect</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the mqtt client</p></li>
+<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+</ul>
+</dd>
+</dl>
+<p>or user_data_set()
+:type userdata: [type]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rc</strong> (<em>int</em>) – disconnection result</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.on_publish">
 <code class="sig-name descname">on_publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">result</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.on_publish" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to run on successful publish</p>
+<dd><p>callback function to run on successful publish</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
+<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+</ul>
+</dd>
+</dl>
+<p>or user_data_set()
+:type userdata: [type]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>result</strong> (<em>String</em>) – Data being published</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.publish">
 <code class="sig-name descname">publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">payload</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.publish" title="Permalink to this definition">¶</a></dt>
-<dd><p>initialises client and binds functions, publish received payload to AP at a given topic and disconnects.</p>
+<dd><dl class="simple">
+<dt>initialises client and binds functions, publish received payload to AP</dt><dd><p>at a given topic and disconnects.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
+<li><p><strong>payload</strong> – the item that’s being sent,</p></li>
+</ul>
+</dd>
+</dl>
+<p>will be converted into json.
+:type payload: any</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.send_end">
 <code class="sig-name descname">send_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.send_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>sends end of file to identify image sent for facial recognition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> – sends header to identify image sent</p>
+</dd>
+</dl>
+<p>for facial recognition
+:type client: Client</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>string</em>) – name of the file that’s being sent</p></li>
+<li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
+<li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.send_header">
 <code class="sig-name descname">send_header</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">topic</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.send_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>sends header to identify image sent for facial recognition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> – sends header to identify image</p>
+</dd>
+</dl>
+<p>sent for facial recognition
+:type client: Client</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>string</em>) – name of the file that’s being sent</p></li>
+<li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
+<li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -125,40 +214,87 @@ it will publish to the correct route.</p>
 <em class="property">class </em><code class="sig-prename descclassname">MasterCSS.mqtt.subscribe.</code><code class="sig-name descname">Subscriber</code><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to initiate a subscriber via MQTT topic</p>
-<dl class="simple">
-<dt>__init__(self):</dt><dd><p>initialises the topic routes which it will listen to, ip address, port, username.</p>
-</dd>
-<dt>subscribe(self):</dt><dd><p>Initiates a MQTT Client, connects and listens for publishes to a specified topic</p>
-</dd>
-<dt>on_message(self, client, userdata, msg):</dt><dd><p>handles unlock/return car logic when receiving payload at a given topic</p>
-</dd>
-<dt>on_connect(self, client, userdata, flags, rc):</dt><dd><p>A callback function that is called when the client connects to a broker, a specified address</p>
-</dd>
-<dt>on_log(self, client, userdata, level, buf):</dt><dd><p>function to run for logging.</p>
-</dd>
-</dl>
 <dl class="py method">
 <dt id="MasterCSS.mqtt.subscribe.Subscriber.on_connect">
 <code class="sig-name descname">on_connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">flags</span></em>, <em class="sig-param"><span class="n">rc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>A callback function that is called when the client connects to a broker, a specified address</p>
+<dd><p>A callback function that is called when the client
+connects to a broker, a specified address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
+<li><p><strong>userdata</strong> – the private user data as</p></li>
+</ul>
+</dd>
+</dl>
+<p>set in Client() or user_data_set()
+:type userdata: any</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flags</strong> (<em>dict</em>) – response flags sent by the broker</p></li>
+<li><p><strong>rc</strong> (<em>integer</em>) – result of connection</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.subscribe.Subscriber.on_log">
 <code class="sig-name descname">on_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">buf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to run for logging.</p>
+<dd><p>Support function run for logging</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
+<li><p><strong>userdata</strong> – the private user data as set in Client() or</p></li>
+</ul>
+</dd>
+</dl>
+<p>user_data_set()
+:type userdata: any</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>MQTT_LOG_INFO</em><em>, </em><em>MQTT_LOG_NOTICE</em><em>, </em><em>MQTT_LOG_WARNING</em><em>,</em>) – severity of the message</p>
+</dd>
+</dl>
+<p>MQTT_LOG_ERR, MQTT_LOG_DEBUG</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>bytes</em>) – message buffer</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.subscribe.Subscriber.on_message">
 <code class="sig-name descname">on_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">userdata</span></em>, <em class="sig-param"><span class="n">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.on_message" title="Permalink to this definition">¶</a></dt>
-<dd><p>handles unlock/return car logic when receiving payload at a given topic</p>
+<dd><p>handles unlock/return car logic when receiving payload at
+a given topic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
+<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+</ul>
+</dd>
+</dl>
+<p>or user_data_set()
+:type userdata: any</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> – an instance of MQTTMessage. This is a class with members</p>
+</dd>
+</dl>
+<p>topic, payload, qos, retain.
+:type msg: MQTTMessage</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.subscribe.Subscriber.subscribe">
 <code class="sig-name descname">subscribe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.subscribe.Subscriber.subscribe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initiates a MQTT Client, connects and listens for publishes to a specified topic</p>
+<dd><p>Initiates a MQTT Client, connects and listens for publishes to a
+specified topic</p>
 </dd></dl>
 
 </dd></dl>
