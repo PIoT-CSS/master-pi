@@ -29,8 +29,8 @@ class Issue(db.Model):
     """
     __tablename__ = "Issue"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    UserID = db.Column(db.Integer, db.ForeignKey('User.ID'))
-    CarID = db.Column(db.Integer, db.ForeignKey('Car.ID'), nullable=True)
+    UserID = db.Column(db.Integer)
+    CarID = db.Column(db.Integer)
     Title = db.Column(db.Text, nullable=False)
     Description = db.Column(db.Text, nullable=False)
     Status = db.Column(db.Integer, nullable=False)
@@ -65,10 +65,22 @@ class Issue(db.Model):
         elif id == Issue.RESOLVED:
             return "Resolved"
 
-    def removeRef(self):
+    def getUser(self):
         """
-        Removes references to car and user when booking is resolved,
-        to prevent errors when admin deletes car/user entries.
+        Returns the username of user who made the booking
+
+        :return: username of user who made the booking
+        :rtype: string
         """
-        self.CarID = None
-        self.UserID = None
+        user = db.session.query(User).get(self.UserID)
+        return user
+    
+    def getCar(self):
+        """
+        Returns the car associated with the issue.
+
+        :return: car associated with issue.
+        :rtype: string
+        """
+        car = db.session.query(Car).get(self.CarID)
+        return car

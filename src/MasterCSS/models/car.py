@@ -42,10 +42,9 @@ class Car(db.Model):
     FuelType = db.Column(db.Text, nullable=False)
     TotalDistance = db.Column(db.Float, nullable=False)
     NumberPlate = db.Column(db.Text, nullable=False)
-    CurrentBookingID = db.Column(db.Integer, db.ForeignKey('Booking.ID'))
+    CurrentBookingID = db.Column(db.Integer)
     AgentID = db.Column(db.Text, nullable=False)
     Image = db.Column(db.Text(LONGTEXT_LENGTH), nullable=False)
-    Bookings = db.relationship('Booking', foreign_keys=[CurrentBookingID])
 
     def __init__(self, Make, Seats, BodyType, Coordinates, HomeCoordinates,
                  Colour, CostPerHour, FuelType, TotalDistance, NumberPlate,

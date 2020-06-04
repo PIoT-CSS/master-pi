@@ -337,7 +337,6 @@ def return_car(payload):
                         car.CurrentBookingID = None
                         # mark booking status as inactive
                         booking.Status = Booking.INACTIVE
-                        booking.removeCarID()
                         # commit changes made to booking
                         db.session.commit()
                         return True

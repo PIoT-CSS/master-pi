@@ -238,7 +238,6 @@ def cancel():
         return render_template("errors/401.html"), 401
     # set booking status to canceled
     booking.Status = Booking.CANCELED
-    booking.removeCarID()
 
     # generate my bookings page to try cancelling again after oauth attempt
     try_again_oauth = redirect(

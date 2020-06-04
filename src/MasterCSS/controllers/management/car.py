@@ -5,6 +5,8 @@ import os
 import json
 import base64
 from MasterCSS.models.car import Car
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.issue import Issue
 from MasterCSS.database import db
 from flask_login import current_user, login_required
 from flask import (
@@ -155,12 +157,20 @@ def remove_car(id):
     """
     if current_user.UserType == 'ADMIN':
         car = db.session.query(Car).filter_by(ID=id)
-        try:
+        bookings_exist = False
+        existing_bookings = db.session.query(Booking).filter_by(CarID=id).all()
+        for existing_booking in existing_bookings:
+            if existing_booking.Status < 2:
+                bookings_exist = True
+                break
+
+        if bookings_exist:
+            err="Error there's unresolved booking"
+            return render_template("admin/cars/view.html", car=car.first(), car_coordinates=car_coordinates, err=err)
+        else:
+            db.session.query(Issue).filter_by(CarID=id).delete()
             car.delete()
             db.session.commit()
             return redirect(url_for('car_controllers.search_car_admin'))
-        except:
-            err="Error there's unresolved booking or issue."
-            return render_template("admin/cars/view.html", car=car.first(), car_coordinates=car_coordinates, err=err)
     else:
         return render_template("errors/401.html"), 401

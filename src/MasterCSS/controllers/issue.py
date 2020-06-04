@@ -109,7 +109,6 @@ def resolve_issue(id):
     usertype = current_user.UserType
     if usertype == "ADMIN" or usertype == "ENGINEER":
             issue.Status = Issue.RESOLVED
-            issue.removeRef()
             db.session.commit()
             if usertype == "ADMIN":
                 return redirect(url_for('issue_controllers.view_all_issues'))
