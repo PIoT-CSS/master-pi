@@ -34,6 +34,8 @@ from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
 from MasterCSS.qr.qr_generator import QRGenerator
 
+from urllib.parse import urlparse
+
 # define password hashing configs
 SALT_LENGTH = 32
 HASH_TYPE = 'sha256'
@@ -94,7 +96,11 @@ def register():
     register page with errors.
     :rtype: render_template
     """
-    if current_user.is_authenticated:
+    
+    referrer = urlparse(request.referrer)
+    isAdminAdd = referrer.path == '/users/add'
+
+    if current_user.is_authenticated and not isAdminAdd:
         return redirect(url_for("template_controllers.index"))
     else:
         # password hashing with salt and sha64, then store in base64
@@ -213,13 +219,20 @@ def register():
                         "UserType": new_user.UserType
                     }
                     QRGenerator.generate(engineer_profile)
-                # save new user into database and login
-                login_user(new_user)
-                return redirect(url_for("template_controllers.index"))
+                if isAdminAdd:
+                    return redirect(url_for("user_management_controllers.add_user"))
+                else:
+                    # save new user into database and login
+                    login_user(new_user)
+                    return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
             # render register page with errors
-            return render_template("register.html", staff=is_staff,
-                err=str(e.message), defaultValues=e.payload)
+            if isAdminAdd:
+                return render_template("admin/user/add.html", adminAdd=True, 
+                    err=str(e.message), defaultValues=e.payload)
+            else:
+                return render_template("register.html", staff=is_staff,
+                    err=str(e.message), defaultValues=e.payload)
 
 
 @login_required

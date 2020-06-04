@@ -22,6 +22,9 @@ from MasterCSS.controllers.management.car import (
     controllers as CarManagementControllers
 )
 from MasterCSS.controllers.auth import controllers as AuthControllers
+from MasterCSS.controllers.management.user import (
+    controllers as UserManagementControllers
+)
 from MasterCSS.models.booking import Booking
 from MasterCSS.models.user import User
 
@@ -48,6 +51,7 @@ app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 app.register_blueprint(TemplateControllers)
 app.register_blueprint(AuthControllers)
 app.register_blueprint(CarManagementControllers)
+app.register_blueprint(UserManagementControllers)
 app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
 

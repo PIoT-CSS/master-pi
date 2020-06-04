@@ -26,7 +26,6 @@ car_coordinates = Constant.CAR_COORDINATES
 
 controllers = Blueprint("car_management_controllers", __name__)
 
-
 @controllers.route(CAR_MANAGEMENT_API_URL+'/add', methods=['POST', 'GET'])
 @login_required
 def add_car():
@@ -37,8 +36,8 @@ def add_car():
     :return: Return a car view page.
     :rtype: render_template if GET, redirect if POST
     """
-    if request.method == 'POST':
-        if current_user.UserType == 'ADMIN':
+    if current_user.UserType == 'ADMIN':
+        if request.method == 'POST':
             image = request.files
             image_encoded = base64.b64encode(image["image"].read())
             image_encoded = "data:image/png;base64, " + str(image_encoded.decode("utf-8"))
@@ -59,17 +58,17 @@ def add_car():
             db.session.add(new_car)
             db.session.commit()
             return redirect(url_for('car_management_controllers.view_car', id=new_car.ID))
-        else:
-            return render_template("errors/401.html"), 401
-    elif request.method == 'GET':
-        return render_template(
-            "admin/cars/add.html",
-            car_colours=car_colours,
-            car_body_types=car_body_types,
-            car_seats=car_seats,
-            car_fuel_types=car_fuel_types,
-            car_coordinates=car_coordinates
-        )
+        elif request.method == 'GET':
+            return render_template(
+                "admin/cars/add.html",
+                car_colours=car_colours,
+                car_body_types=car_body_types,
+                car_seats=car_seats,
+                car_fuel_types=car_fuel_types,
+                car_coordinates=car_coordinates
+            )
+    else:
+        return render_template("errors/401.html"), 401
 
 
 @controllers.route(CAR_MANAGEMENT_API_URL, methods=['GET'])
@@ -95,6 +94,7 @@ def modify_car(id):
     :return Modify specific car page.
     :rtype: redirect
     """
+
     if request.method == 'POST':
         if current_user.UserType == 'ADMIN':
             car = db.session.query(Car).filter_by(ID=id).scalar()

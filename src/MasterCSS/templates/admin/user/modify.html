@@ -1,0 +1,86 @@
+{% extends "layouts/dashboard-layout.html" %}
+{% block title %}Carshare - Modify User{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block container %}
+<div class="box max-w-sm w-full mx-auto">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
+    <h1 class="title is-4">Modify User</h1>
+    <form action={{url_for("user_management_controllers.modify_user", id=user.ID)}} enctype=multipart/form-data method="post">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
+                <input class="input" name="username" type="text" value={{user.Username}} pattern="[A-Za-z0-9]+" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <input class="input" name="email" value={{user.Email}} type="email" required>
+                <span class="icon is-small is-left">
+                    <i class="fas  fa-envelope"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">First name</label>
+            <div class="control">
+                <input class="input" name="firstname" value={{user.FirstName}} type="text" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Last name</label>
+            <div class="control">
+                <input class="input" name="lastname" value={{user.LastName}} type="text" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">User type</label>
+            <div class="control">
+                <select class="select" name="usertype">
+                    {% for usertype in usertypes %}
+                        {% if user.UserType == usertype %}
+                            <option value="{{usertype}}" selected>{{usertype}}</option>
+                        {% else %}
+                            <option value="{{usertype}}">{{usertype}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="field" id=>
+            <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
+            <div class="control">
+                <input class="input" name="macaddress" value='{{user.MacAddress}}' type="text">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Phone number</label>
+            <div class="control">
+                <input class="input" name="phonenumber" value='{{user.PhoneNumber}}' type="text" required>
+            </div>
+        </div>
+
+        <div class="level">
+            <div class="level-left">
+                <input class="button is-info" type="submit" name="register" value="Modify">
+            </div>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
