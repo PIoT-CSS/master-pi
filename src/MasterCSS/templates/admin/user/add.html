@@ -16,7 +16,7 @@
         <div class="field">
             <label class="label">Username</label>
             <div class="control has-icons-left">
-                <input class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
+                <input class="input is-info" class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -26,7 +26,7 @@
         <div class="field">
             <label class="label">Password</label>
             <div class="control has-icons-left">
-                <input class="input" name="password" type="password" required>
+                <input class="input is-info" class="input" name="password" type="password" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-key"></i>
                 </span>
@@ -36,7 +36,7 @@
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left">
-                <input class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
+                <input class="input is-info" class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
                 <span class="icon is-small is-left">
                     <i class="fas  fa-envelope"></i>
                 </span>
@@ -46,18 +46,17 @@
         <div class="field">
             <label class="label">First name</label>
             <div class="control">
-                <input class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
+                <input class="input is-info" class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
 
         <div class="field">
             <label class="label">Last name</label>
             <div class="control">
-                <input class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
+                <input class="input is-info" class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
             </div>
         </div>
 
-        {% if staff %}
         <div class="field">
             <label class="label">User type</label>
             <div class="control">
@@ -72,15 +71,14 @@
         <div class="field" id=>
             <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
             <div class="control">
-                <input class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
+                <input class="input is-info" class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
             </div>
         </div>
-        {% endif %}
 
         <div class="field">
             <label class="label">Phone number</label>
             <div class="control">
-                <input class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
+                <input class="input is-info" class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
             </div>
         </div>
 

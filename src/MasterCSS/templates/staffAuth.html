@@ -17,7 +17,7 @@
         <form name="secretkey_form" action={{url_for("auth_controllers.staff_auth")}} enctype=multipart/form-data method="post">
             <div class="field">
             <label class="label">Secret key</label>
-            <input class="input" name="secretkey" type="password" required>
+            <input class="input is-info" class="input" name="secretkey" type="password" required>
             <input class="button is-info" type="submit" name="staff_auth" value="Submit">
             </div>
         </form>

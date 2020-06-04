@@ -160,7 +160,7 @@ def remove_car(id):
             db.session.commit()
             return redirect(url_for('car_controllers.search_car_admin'))
         except:
-            err="Error there's unresolved booking."
+            err="Error there's unresolved booking or issue."
             return render_template("admin/cars/view.html", car=car.first(), car_coordinates=car_coordinates, err=err)
     else:
         return render_template("errors/401.html"), 401

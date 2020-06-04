@@ -249,7 +249,7 @@ def remove_user(id):
             except e:
                 err="Error there's unresolved booking."
                 if user.UserType == 'ENGINEER':
-                    err="Error there's unresolved issues."
+                    err=err + " or there's unresolved issues."
                 return render_template("admin/user/view.html", user=user.first(), err=err)
     else:
         return render_template("errors/401.html"), 401

@@ -1,13 +1,42 @@
 {% extends "layouts/dashboard-layout.html" %}
 
-{% block container %}
-<div class="container">
-    <table class="table">
-        {% if err %}
-        <div class="notification is-danger is-light">
-            <p>{{err}}</p>
+
+
+{% block container %} 
+<div class="box max-w-sm w-full mx-auto">
+    <h1 class="title">Create Issue</h1>
+{% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+{% endif %}
+    
+    <form action={{url_for("issue_controllers.create_new_issue", id=car.ID)}} method="post">
+
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input class="input is-info" name="title" type="text" required>
+            </div>
         </div>
-        {% endif %}
+        
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <input class="input is-info" name="description" type="text" required>
+            </div>
+        </div>
+
+        <div class="level">
+            <input class="button is-info" type="submit" name="add" value="Create Issue">
+        </div>
+    </form>
+
+</div>
+
+<div class="container">
+    <h1 class="title">Car Details</h1>
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -45,10 +74,5 @@
             </tr>
         </tbody>
     </table>
-    <div class="buttons">
-        <a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-link is-outlined">Modify</a>
-        <a href={{url_for('car_management_controllers.remove_car', id=car.ID)}} class="button is-link is-outlined">Remove</a>
-    </div>
-
 </div>
 {% endblock %}

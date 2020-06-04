@@ -1,0 +1,44 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+<section>
+    <div class="container">
+        <h1 class="title">Hey {{current_user.Username}} you took on these issues.</h1>
+        <div class="box">
+            <div class="table-container">
+                <table class="table w-full text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CarID</th>
+                            <th>EngineerID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issue in issues %}
+                            <tr>
+                                <td>{{issue.ID}}</td>
+                                <td>{{issue.CarID}}</td>
+                                <td>You are working on this</td>
+                                <td>{{issue.Title}}</td>
+                                <td>{{issue.Description}}</td>
+                                <td>{{issue.getStatus(issue.Status)}}</td>
+                                <td>
+                                    <a href={{url_for('issue_controllers.resolve_issue', id=issue.ID)}} class="button is-link is-outlined">Fixed</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

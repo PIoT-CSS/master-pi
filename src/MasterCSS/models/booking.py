@@ -92,5 +92,9 @@ class Booking(db.Model):
         return user.Username
 
     def removeCarID(self):
+        """
+        Removes references to car and user when booking is resolved,
+        to prevent errors when admin deletes car/user entries.
+        """
         self.CarID = None
         self.UserID = None
