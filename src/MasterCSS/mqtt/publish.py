@@ -36,6 +36,7 @@ class Publisher:
         self.AUTH_RESP_FR_TOPIC = 'AUTH/RESP/FR'
         self.AUTH_RESP_UP_TOPIC = 'AUTH/RESP/UP'
         self.RETURN_TOPIC = 'RETURN'
+        self.MAC_ADDR_RESP_TOPIC = 'REQ/RESP/MAC_ADDR'
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.PORT = int(BROKER_PORT)
 
@@ -170,6 +171,10 @@ class Publisher:
             client.loop_stop()
         elif topic == 'RET':
             client.publish(self.RETURN_TOPIC, json.dumps(payload))
+            client.disconnect()
+            client.loop_stop()
+        elif topic == 'MAC':
+            client.publish(self.MAC_ADDR_RESP_TOPIC, json.dumps(payload))
             client.disconnect()
             client.loop_stop()
 
