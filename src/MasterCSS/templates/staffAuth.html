@@ -1,0 +1,27 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Carshare - Homepage{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-screen-sm mx-auto has-text-centered">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
+    <h1 class="title">This for staff only.</h1>
+    <p class="subtitle is-5">Enter the secret key.</p>
+    <div class="flex justify-center buttons">
+        <form name="secretkey_form" action={{url_for("auth_controllers.staff_auth")}} enctype=multipart/form-data method="post">
+            <div class="field">
+            <label class="label">Secret key</label>
+            <input class="input" name="secretkey" type="password" required>
+            <input class="button is-info" type="submit" name="staff_auth" value="Submit">
+            </div>
+        </form>
+     </div>
+</div>
+
+{% endblock %}

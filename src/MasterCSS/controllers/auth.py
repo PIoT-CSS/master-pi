@@ -32,6 +32,9 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
+from MasterCSS.qr.qr_generator import QRGenerator
+
+from urllib.parse import urlparse
 
 # define password hashing configs
 SALT_LENGTH = 32
@@ -93,7 +96,11 @@ def register():
     register page with errors.
     :rtype: render_template
     """
-    if current_user.is_authenticated:
+    
+    referrer = urlparse(request.referrer)
+    isAdminAdd = referrer.path == '/users/add'
+
+    if current_user.is_authenticated and not isAdminAdd:
         return redirect(url_for("template_controllers.index"))
     else:
         # password hashing with salt and sha64, then store in base64
@@ -105,6 +112,14 @@ def register():
             ITERATIONS
         )
 
+        user_type = request.form.get("usertype")
+
+        if user_type == None:
+            user_type = "CUSTOMER"
+            is_staff = False
+        else:
+            is_staff = True
+        
         # create a new temporary user
         new_user = User(
             request.form.get("firstname"),
@@ -113,7 +128,8 @@ def register():
             request.form.get("email"),
             b64encode(salt + key),
             request.form.get("phonenumber"),
-            "CUSTOMER"
+            user_type,
+            MacAddress=request.form.get("macaddress")
         )
 
         # default values for html forms
@@ -122,7 +138,9 @@ def register():
             "lastname": new_user.LastName,
             "username": new_user.Username,
             "email": new_user.Email,
-            "phonenumber": new_user.PhoneNumber
+            "phonenumber": new_user.PhoneNumber,
+            "usertype": new_user.UserType,
+            "macaddress": new_user.MacAddress
         }
 
         try:
@@ -154,6 +172,11 @@ def register():
                 filter_by(PhoneNumber=new_user.PhoneNumber)\
                     .scalar() is not None:
                 takens.append("phone number")
+            if user_type == "ENGINEER":
+                if db.session.query(User). \
+                    filter_by(MacAddress=new_user.MacAddress)\
+                        .scalar() is not None:
+                    takens.append("MAC Address")
 
             # if user details have been taken,
             # render error message in register page
@@ -182,15 +205,34 @@ def register():
                         os.makedirs(directory)
                     user_image.save(
                         "{}/{}.jpg".format(directory, new_user.Username))
-                # save new user into database and login
                 db.session.add(new_user)
                 db.session.commit()
-                login_user(new_user)
-                return redirect(url_for("template_controllers.index"))
+                # generate qr code for engineers
+                if user_type == "ENGINEER":
+                    engineer_profile = {
+                        "ID": new_user.ID,
+                        "Username": new_user.Username,
+                        "FirstName": new_user.FirstName,
+                        "LastName": new_user.LastName,
+                        "Email": new_user.Email,
+                        "PhoneNumber": new_user.PhoneNumber,
+                        "UserType": new_user.UserType
+                    }
+                    QRGenerator.generate(engineer_profile)
+                if isAdminAdd:
+                    return redirect(url_for("user_management_controllers.add_user"))
+                else:
+                    # save new user into database and login
+                    login_user(new_user)
+                    return redirect(url_for("template_controllers.index"))
         except ErrorValueException as e:
             # render register page with errors
-            return render_template("register.html", err=str(e.message),
-                                   defaultValues=e.payload)
+            if isAdminAdd:
+                return render_template("admin/user/add.html", adminAdd=True, 
+                    err=str(e.message), defaultValues=e.payload)
+            else:
+                return render_template("register.html", staff=is_staff,
+                    err=str(e.message), defaultValues=e.payload)
 
 
 @login_required
@@ -205,6 +247,20 @@ def logout():
     logout_user()
     session.clear()
     return redirect(url_for("template_controllers.index"))
+
+@controllers.route("/staff", methods=["POST"])
+def staff_auth():
+    """
+    Checks secret key that's only known to staff.
+
+    :return: Redirect to register if secret key is correct
+    :rtype: redirect
+    """
+    secretkey = request.form.get('secretkey')
+    if secretkey == os.getenv('SECRET_KEY'):
+        return render_template('register.html', staff=True, defaultValues=None)
+    else:
+        return render_template('staffAuth.html', err="Key is incorrect")
 
 
 def verify_login(username, password):
@@ -232,3 +288,20 @@ def verify_login(username, password):
         if key == (b64decode(user.Password)[SALT_LENGTH:]):
             return True
     return False
+
+def get_mac_addresses():
+    """
+    Obtain a list of engineers' device's Bluetooth MAC address.
+
+    :return: list of engineers' device's Bluetooth MAC address
+    :rtype: dict
+    """
+    mac_addresses = list()
+    engineers = db.session.query(User).filter(
+            User.UserType.contains("ENGINEER")).all()
+    for engineer in engineers:
+        mac_addresses.append(engineer.MacAddress)
+    mac_payload = {
+        "macAddresses": mac_addresses
+    }
+    return mac_payload

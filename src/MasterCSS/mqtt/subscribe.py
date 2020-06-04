@@ -4,7 +4,7 @@ subscribe.py contains mqtt subscribe logic for MP.
 import paho.mqtt.client as mqtt
 from MasterCSS.mqtt.publish import *
 from MasterCSS.controllers.car import pickup_car, return_car
-from MasterCSS.controllers.auth import verify_login
+from MasterCSS.controllers.auth import verify_login, get_mac_addresses
 import json
 import os
 from dotenv import load_dotenv
@@ -29,6 +29,7 @@ class Subscriber:
         self.AUTH_UP_TOPIC = "AUTH/UP"
         self.RETURN_TOPIC = "RETURN"
         self.ENG_TOPIC = "ENG"
+        self.MAC_ADDR_REQ_TOPIC = "REQ/MAC_ADDR"
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.BROKER_PORT = int(BROKER_PORT)
 
@@ -56,6 +57,7 @@ class Subscriber:
             client.subscribe(self.AUTH_UP_TOPIC)
             client.subscribe(self.RETURN_TOPIC)
             client.subscribe(self.ENG_TOPIC)
+            client.subscribe(self.MAC_ADDR_REQ_TOPIC)
         else:
             print("[MQTT RES]  connection error, returned code=", rc)
 
@@ -99,6 +101,8 @@ class Subscriber:
                 pub.publish('RET', 'Return denied', 1)
         elif msg.topic == 'ENG':
             print("[MQTT LOG] Topic from recieved", msg.payload)
+        elif msg.topic == 'REQ/MAC_ADDR':
+            pub.publish('MAC', get_mac_addresses(), 1)
 
     def on_log(self, client, userdata, level, buf):
         """

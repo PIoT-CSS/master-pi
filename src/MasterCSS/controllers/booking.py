@@ -40,6 +40,23 @@ controllers = Blueprint("booking_controllers", __name__)
 # Define Car constant
 car_coordinates = Constant.CAR_COORDINATES
 
+@controllers.route(BOOKING_API_URL, methods=['GET'])
+@login_required
+def view_all_bookings():
+    """
+    Gets all booking entries from the database and renders template.
+    if logged in user is not admin redirect to 401.
+
+    :return: render template with all the bookings
+    :rtype: render_template
+    """
+    if current_user.UserType == "ADMIN":
+        # Obtain all the booking entries from the db.
+        bookings = db.session.query(Booking).all()
+        return render_template("myBooking.html", bookings=bookings,
+        car_coordinates=car_coordinates)
+    else:
+        return render_template("errors/401.html"), 401
 
 @controllers.route(BOOKING_API_URL + '/book', methods=['POST'])
 @login_required
@@ -215,12 +232,13 @@ def cancel():
     booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
     # prevent user from cancelling an non-existent booking
     if booking is None:
-        return redirect(url_for('template_controllers.unauthorised'))
+        return render_template("errors/401.html"), 401
     # prevent user from cancelling a non-confirmed booking
     if booking.Status != Booking.CONFIRMED:
-        return redirect(url_for('template_controllers.unauthorised'))
+        return render_template("errors/401.html"), 401
     # set booking status to canceled
     booking.Status = Booking.CANCELED
+    booking.removeCarID()
 
     # generate my bookings page to try cancelling again after oauth attempt
     try_again_oauth = redirect(
@@ -247,8 +265,7 @@ def cancel():
         service = build('calendar', 'v3', http_auth)
 
         # cancel event on google calendar
-        event = service.events().delete(calendarId='primary',
-                                        eventId=booking.CalRef).execute()
+        event = service.events().delete(calendarId='primary', eventId=booking.CalRef).execute()
 
     # commit changes made to booking
     db.session.commit()
@@ -269,7 +286,10 @@ def view():
     booking = db.session.query(Booking).filter_by(ID=int(booking_id)).scalar()
 
     # obtain car from booking
-    car = db.session.query(Car).filter_by(ID=int(booking.CarID)).scalar()
+    if booking.CarID != None:
+        car = db.session.query(Car).filter_by(ID=int(booking.CarID)).scalar()
+    else:
+        car = None
 
     return render_template(
         'booking/view.html',
