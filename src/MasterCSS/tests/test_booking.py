@@ -188,7 +188,6 @@ def test_view_booking(client):
 
     assert b'Booking ID: 1' in response.data
     assert b'Car ID: </strong> 1' not in response.data
-    assert b'User ID: </strong> 1' in response.data
     assert b'Pickup time: </strong> ' + \
         str.encode(PICKUP_DATE.strftime(
             DEFAULT_DATETIME_FORMAT)) in response.data
