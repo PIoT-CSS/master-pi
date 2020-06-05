@@ -127,16 +127,17 @@ def fixed_car(eng_id, issue_id):
     :rtype: string
     """
     issue = db.session.query(Issue).get(issue_id)
-    user = db.session.query(User).get(eng_id)
-    if user.UserType == 'Engineer':
+    if issue == None:
+        return "Issue doesn't exist! Please try again."
+    elif issue.Status == Issue.RESOLVED:
+        return "Issue has already been resolved!"
+    else:
+        user = db.session.query(User).get(eng_id)
         issue.UserID = eng_id
         issue.Status = Issue.RESOLVED
-
         db.session.commit()
-
-        return "Thank you engineer, car fixed"
-    else:
-        return "Not an engineer, car fixed not recorded"
+        return "Issue {} has been marked as resolved by engineer {}"\
+            .format(issue_id, eng_id)
 
 def send_notification(title, body):
     token = os.getenv('PB_TOKEN')
