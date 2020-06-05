@@ -141,7 +141,8 @@ def view_car(id):
     """
     if current_user.UserType == 'ADMIN':
         car=db.session.query(Car).filter_by(ID=id).scalar()
-        return render_template("admin/cars/view.html", car=car, car_coordinates=car_coordinates)
+        issues = db.session.query(Issue).filter_by(CarID=id).all()
+        return render_template("admin/cars/view.html", car=car, issues=issues, car_coordinates=car_coordinates)
     else:
         return render_template("errors/401.html"), 401
 

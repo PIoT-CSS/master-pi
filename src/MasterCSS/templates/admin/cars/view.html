@@ -2,6 +2,7 @@
 
 {% block container %}
 <div class="container">
+    <h2 class="title">View car</h2>
     <table class="table">
         {% if err %}
         <div class="notification is-danger is-light">
@@ -49,6 +50,41 @@
         <a href={{url_for('car_management_controllers.modify_car', id=car.ID)}} class="button is-info">Modify</a>
         <a href={{url_for('car_management_controllers.remove_car', id=car.ID)}} class="button is-info">Remove</a>
     </div>
+
+    <section>
+        <div class="container">
+            <h2 class="title">Issues</h2>
+            <div class="box">
+                <div class="table-container">
+                    <table class="table w-full text-center">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>EngineerID</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for issue in issues %}
+                                <tr>
+                                    <td>{{issue.ID}}</td>
+                                    <td>{{issue.UserID}}</td>
+                                    <td>{{issue.Title}}</td>
+                                    <td>{{issue.Description}}</td>
+                                    <td>{{issue.getStatus(issue.Status)}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a class="button is-success" href={{url_for('issue_controllers.create_new_issue', id=car.ID)}}>
+                Create Issue
+            </a>
+        </div>
+    </section>
 
 </div>
 {% endblock %}
