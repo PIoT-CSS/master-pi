@@ -5,7 +5,6 @@
 {% block container %} 
 <section>
     <div class="container">
-
         <div class="box">
             <div class="table-container">
                 <table class="table w-full text-center">
@@ -28,11 +27,6 @@
                                 <td>{{issue.Title}}</td>
                                 <td>{{issue.Description}}</td>
                                 <td>{{issue.getStatus(issue.Status)}}</td>
-                                {% if issue.Status != issue.RESOLVED %}
-                                    <td>
-                                        <a href={{url_for('issue_controllers.resolve_issue', id=issue.ID)}} class="button is-info">Resolve</a>
-                                    </td>
-                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
