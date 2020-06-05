@@ -106,3 +106,27 @@ def resolve_issue(id):
                 return redirect(url_for('issue_controllers.view_taken'))
     else:
         return render_template("errors/401.html"), 401
+
+def fixed_car(eng_id, issue_id):
+    """
+    Handles payload from AP containing eng_id, issue_id
+    that indicates the issue has been fixed by an engineer.
+
+    :param eng_id: user id that belongs to an engineer
+    :type eng_id: int
+    :param issue_id: issue id belongs to the issue being resolved
+    :type issue_id: int
+    :return: message whether the transaction is successful
+    :rtype: string
+    """
+    issue = db.session.query(Issue).get(issue_id)
+    user = db.session.query(User).get(eng_id)
+    if user.UserType == 'Engineer':
+        issue.UserID = eng_id
+        issue.Status = Issue.RESOLVED
+
+        db.session.commit()
+
+        return "Thank you engineer, car fixed"
+    else:
+        return "Not an engineer, car fixed not recorded"
