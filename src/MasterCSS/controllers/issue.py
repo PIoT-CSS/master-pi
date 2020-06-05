@@ -7,6 +7,8 @@ import os
 from MasterCSS.models.car import Car
 from MasterCSS.models.issue import Issue
 from MasterCSS.database import db
+import requests
+import json
 from flask import (
     request,
     url_for,
@@ -86,6 +88,11 @@ def create_new_issue(id):
             # add issue to db.
             db.session.add(issue)
             db.session.commit()
+            
+            # send request to pb api to send notification
+            notif_body = "Issue ID:{}, Description:{}".format(issue.ID, issue.Description)
+            notif_title = "New Issue for car {}, {}".format(car.ID, issue.Title)
+            send_notification(notif_title, notif_body)
 
             return redirect(url_for('issue_controllers.view_all_issues'))
     else:
@@ -130,3 +137,15 @@ def fixed_car(eng_id, issue_id):
         return "Thank you engineer, car fixed"
     else:
         return "Not an engineer, car fixed not recorded"
+
+def send_notification(title, body):
+    token = os.getenv('PB_TOKEN')
+    if token is None:
+        print('No PushBullet API Token found, notification will not be sent.')
+        return False
+    endpoint = 'https://api.pushbullet.com/v2/pushes'
+    content = {"type": "note", "title": title, "body": body}
+
+    response = requests.post(endpoint, data=json.dumps(content),
+                                headers={'Access-Token': token,
+                                        'Content-Type': 'application/json'})
