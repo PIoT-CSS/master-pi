@@ -37,8 +37,7 @@ class Issue(db.Model):
 
     # Issue status
     PENDING = 0
-    ACTIVE = 1
-    RESOLVED = 2
+    RESOLVED = 1
 
     def __init__(self, CarID, Title, Description, Status, ID=None, UserID=None):
         self.ID = ID
@@ -60,8 +59,6 @@ class Issue(db.Model):
         """
         if id == Issue.PENDING:
             return "Pending"
-        elif id == Issue.ACTIVE:
-            return "Active"
         elif id == Issue.RESOLVED:
             return "Resolved"
 

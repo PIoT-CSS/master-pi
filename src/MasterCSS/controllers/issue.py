@@ -60,22 +60,11 @@ def view_taken():
 @login_required
 def view_issue(id):
     issue = db.session.query(Issue).get(id)
+    car = db.session.query(Car).get(issue.CarID)
     usertype = current_user.UserType
     if usertype == "ADMIN" or usertype == "ENGINEER":
-        return render_template("engineer/view.html", issue=issue)
-    else:
-        return render_template("errors/401.html"), 401
-
-@controllers.route(ISSUE_API_URL + '/take/<int:id>', methods=['POST'])
-@login_required
-def take_issue(id):
-    issue = db.session.query(Issue).get(id)
-    if current_user.UserType == "ENGINEER":
-        issue.UserID = current_user.ID
-        issue.Status = Issue.ACTIVE
-        db.session.commit()
-
-        return redirect(url_for('issue_controllers.view_taken', id=current_user.ID))
+        return render_template("engineer/view.html", issue=issue, 
+            car=car, car_coordinates=Constant.CAR_COORDINATES)
     else:
         return render_template("errors/401.html"), 401
 
@@ -109,6 +98,7 @@ def resolve_issue(id):
     usertype = current_user.UserType
     if usertype == "ADMIN" or usertype == "ENGINEER":
             issue.Status = Issue.RESOLVED
+            issue.UserID = current_user.ID
             db.session.commit()
             if usertype == "ADMIN":
                 return redirect(url_for('issue_controllers.view_all_issues'))

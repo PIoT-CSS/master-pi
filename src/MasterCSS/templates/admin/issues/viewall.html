@@ -30,7 +30,7 @@
                                 <td>{{issue.getStatus(issue.Status)}}</td>
                                 {% if issue.Status != issue.RESOLVED %}
                                     <td>
-                                        <a href={{url_for('issue_controllers.resolve_issue', id=issue.ID)}} class="button is-link is-outlined">Resolve</a>
+                                        <a href={{url_for('issue_controllers.resolve_issue', id=issue.ID)}} class="button is-info">Resolve</a>
                                     </td>
                                 {% endif %}
                             </tr>
