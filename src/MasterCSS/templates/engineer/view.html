@@ -26,7 +26,7 @@
                 <td>{{issue.Title}}</td>
                 <td>{{issue.Description}}</td>
                 <td>{{issue.getStatus(issue.Status)}}</td>
-                {% if current_user == "ENGINEER" %}
+                {% if current_user.UserType == "ENGINEER" %}
                 <td>
                     <a href={{url_for('issue_controllers.resolve_issue', id=issue.ID)}} class="button is-info"
                         value="Fixed">Fix</a>
