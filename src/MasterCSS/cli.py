@@ -25,6 +25,7 @@ from MasterCSS.controllers.auth import controllers as AuthControllers
 from MasterCSS.controllers.management.user import (
     controllers as UserManagementControllers
 )
+from MasterCSS.controllers.issue import controllers as IssueControllers
 from MasterCSS.models.booking import Booking
 from MasterCSS.models.user import User
 
@@ -54,6 +55,7 @@ app.register_blueprint(CarManagementControllers)
 app.register_blueprint(UserManagementControllers)
 app.register_blueprint(CarControllers)
 app.register_blueprint(BookingControllers)
+app.register_blueprint(IssueControllers)
 
 # Enable python function calls for jinja
 app.jinja_env.globals.update(

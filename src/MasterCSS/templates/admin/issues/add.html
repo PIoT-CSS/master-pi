@@ -1,0 +1,78 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+<div class="box max-w-sm w-full mx-auto">
+    <h1 class="title">Create Issue</h1>
+{% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+{% endif %}
+    
+    <form action={{url_for("issue_controllers.create_new_issue", id=car.ID)}} method="post">
+
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input class="input is-info" name="title" type="text" required>
+            </div>
+        </div>
+        
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <input class="input is-info" name="description" type="text" required>
+            </div>
+        </div>
+
+        <div class="level">
+            <input class="button is-info" type="submit" name="add" value="Create Issue">
+        </div>
+    </form>
+
+</div>
+
+<div class="container">
+    <h1 class="title">Car Details</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Make</th>
+                <th>Seats</th>
+                <th>BodyType</th>
+                <th>Home Location</th>
+                <th>Current Location</th>
+                <th>Colour</th>
+                <th>CostPerHour</th>
+                <th>FuelType</th>
+                <th>TotalDistance</th>
+                <th>NumberPlate</th>
+                <th>CurrentBookingID</th>
+                <th>Agent ID</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{car.ID}}</td>
+                <td>{{car.Make}}</td>
+                <td>{{car.Seats}}</td>
+                <td>{{car.BodyType}}</td>
+                <td>{{car_coordinates[tuple(eval(car.HomeCoordinates))]}}</td>
+                <td>{{car.Coordinates}}</td>
+                <td>{{car.Colour}}</td>
+                <td>${{car.CostPerHour}}</td>
+                <td>{{car.FuelType}}</td>
+                <td>{{car.TotalDistance}}</td>
+                <td>{{car.NumberPlate}}</td>
+                <td>{{car.CurrentBookingID}}</td>
+                <td>{{car.AgentID}}</td>
+                <td><img src="{{car.Image}}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

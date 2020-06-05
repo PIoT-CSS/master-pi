@@ -23,6 +23,8 @@ from base64 import b64encode, b64decode
 from werkzeug.utils import secure_filename
 from MasterCSS.database import db
 from MasterCSS.models.user import User
+from MasterCSS.models.booking import Booking
+from MasterCSS.models.issue import Issue
 from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
@@ -242,15 +244,19 @@ def remove_user(id):
             err="You can't remove yourself."
             return render_template("admin/user/view.html", user=user.first(), err=err)
         else:
-            try:
+            bookings_exist = False
+            existing_bookings = db.session.query(Booking).filter_by(UserID=id).all()
+            for existing_booking in existing_bookings:
+                if existing_booking.Status < 2:
+                    bookings_exist = True
+                    break
+            if bookings_exist:
+                err="User has unresolved booking can't delete."
+                return render_template("admin/user/view.html", user=user.first(), err=err)
+            else:
                 user.delete()
                 db.session.commit()
                 return redirect(url_for('user_management_controllers.search_user'))
-            except e:
-                err="Error there's unresolved booking."
-                if user.UserType == 'ENGINEER':
-                    err="Error there's unresolved issues."
-                return render_template("admin/user/view.html", user=user.first(), err=err)
     else:
         return render_template("errors/401.html"), 401
 

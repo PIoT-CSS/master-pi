@@ -70,6 +70,11 @@
                                             <input type="submit" class="button is-success" name="view" value="View">
                                         </form>
                                     </td>
+                                    <td>
+                                        <a class="button is-success" href={{url_for('issue_controllers.create_new_issue', id=car.ID)}}>
+                                            Create Issue
+                                        </a>
+                                    </td>
                                 {% endif %}
                             </tr>
                         {% endfor %}

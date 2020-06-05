@@ -30,8 +30,8 @@ class Booking(db.Model):
     """
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=True)
-    CarID = db.Column(db.Integer, db.ForeignKey('Car.ID'), nullable=True)
+    UserID = db.Column(db.Integer, nullable=False)
+    CarID = db.Column(db.Integer, nullable=False)
     DateTimeBooked = db.Column(db.DateTime, nullable=False)
     DateTimeStart = db.Column(db.DateTime, nullable=False)
     DateTimeEnd = db.Column(db.DateTime, nullable=False)
@@ -89,8 +89,12 @@ class Booking(db.Model):
         :rtype: string
         """
         user = db.session.query(User).get(self.UserID)
+        if user == None:
+            return "Deleted user"
         return user.Username
 
-    def removeCarID(self):
-        self.CarID = None
-        self.UserID = None
+    def getCar(self):
+        car = db.session.query(Car).get(self.CarID)
+        if car == None:
+            return "Deleted user"
+        return car

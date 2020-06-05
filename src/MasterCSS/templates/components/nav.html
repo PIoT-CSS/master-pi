@@ -35,7 +35,16 @@
             <a href="/users/search" class="button is-white"> Manage users </a>
           </div>
           <div class="navbar-item">
-            <a href="#" class="button is-white"> Report issue </a>
+            <a href="/issue" class="button is-white"> View issues </a>
+          </div>
+        {% endif %}
+
+        {% if usertype == "ENGINEER" %}
+          <div class="navbar-item">
+            <a href="/issue/pending" class="button is-white"> Pending issues </a>
+          </div>
+          <div class="navbar-item">
+            <a href={{url_for('issue_controllers.view_taken')}} class="button is-white"> Your issues </a>
           </div>
         {% endif %}
        
