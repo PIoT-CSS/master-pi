@@ -27,6 +27,9 @@
                                 <td>{{issue.Title}}</td>
                                 <td>{{issue.Description}}</td>
                                 <td>{{issue.getStatus(issue.Status)}}</td>
+                                <td>
+                                    <a href={{url_for('issue_controllers.view_issue', id=issue.ID)}} class="button is-info">View</a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
