@@ -24,7 +24,7 @@ class IssueSchema(ma.Schema):
 class Issue(db.Model):
     """
     Issue model class represents a Issue in the database.
-    A issue has Booking as its foreign key.
+    An issue holds a booking id reference but is not a foreign key.
     Refererence: https://flask-marshmallow.readthedocs.io/en/latest/
     """
     __tablename__ = "Issue"

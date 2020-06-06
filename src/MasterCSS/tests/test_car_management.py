@@ -1,5 +1,5 @@
 """
-test_car.py contains unit tests for car management.
+test_management_car.py contains unit tests for car management.
 Tests related to controllers under /mangement/cars which is used to manage
 car entries in db.
 """
@@ -18,7 +18,7 @@ def test_setup(client):
     :param client: Flask app client
     :type client: Flask app instance
     """
-    # Register user (includes login)
+    # Register an admin user (includes login)
     with open("src/MasterCSS/tests/" +
               "testImages/example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
@@ -134,8 +134,7 @@ def test_change_car_detail(client):
             costperhour='12',
             totaldistance='0',
             numberplate="AHA456",
-            agent_id="2",
-            follow_redirect=True
+            agent_id="2"
         ),
         follow_redirects=True
     )

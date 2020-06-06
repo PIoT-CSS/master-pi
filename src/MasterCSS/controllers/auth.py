@@ -12,7 +12,8 @@ from flask import (
     request,
     redirect,
     url_for,
-    session
+    session,
+    current_app
 )
 from flask_login import (
     LoginManager,
@@ -97,8 +98,16 @@ def register():
     :rtype: render_template
     """
     
-    referrer = urlparse(request.referrer)
-    isAdminAdd = referrer.path == '/users/add'
+    isAdminAdd = False
+    
+    if not current_app.config["TESTING"]:
+        referrer = urlparse(request.referrer)
+        isAdminAdd = referrer.path == '/users/add'
+    elif current_user.is_authenticated:
+        if current_user.UserType == 'ADMIN':
+            isAdminAdd = True
+        else:
+            isAdminAdd = False
 
     if current_user.is_authenticated and not isAdminAdd:
         return redirect(url_for("template_controllers.index"))
@@ -220,7 +229,7 @@ def register():
                     }
                     QRGenerator.generate(engineer_profile)
                 if isAdminAdd:
-                    return redirect(url_for("user_management_controllers.add_user"))
+                    return redirect(url_for("user_management_controllers.search_user"))
                 else:
                     # save new user into database and login
                     login_user(new_user)
