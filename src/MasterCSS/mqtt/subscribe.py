@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 from MasterCSS.mqtt.publish import *
 from MasterCSS.controllers.car import pickup_car, return_car
 from MasterCSS.controllers.auth import verify_login, get_mac_addresses
+from MasterCSS.controllers.issue import handle_resolve_issue
 import json
 import os
 from dotenv import load_dotenv
@@ -100,7 +101,9 @@ class Subscriber:
             else:
                 pub.publish('RET', 'Return denied', 1)
         elif msg.topic == 'ENG':
-            print("[MQTT LOG] Topic from recieved", msg.payload)
+            # parsing to json again due to incomplete deserialisation
+            payload = json.loads(payload)
+            handle_resolve_issue(payload['ID'], payload['IssueID'])
         elif msg.topic == 'REQ/MAC_ADDR':
             pub.publish('MAC', get_mac_addresses(), 1)
 
