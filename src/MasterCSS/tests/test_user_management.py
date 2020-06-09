@@ -13,7 +13,7 @@ USER_MANAGEMENT_API_URL = '/users'
 
 def test_setup(client):
     """
-    Setup car test by registering user and add cars.
+    Setup user management test by registering an admin.
 
     :param client: Flask app client
     :type client: Flask app instance
