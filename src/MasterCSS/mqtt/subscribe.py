@@ -101,8 +101,9 @@ class Subscriber:
             else:
                 pub.publish('RET', 'Return denied', 1)
         elif msg.topic == 'ENG':
-            # parsing to json again due to incomplete deserialisation
-            payload = json.loads(payload)
+            if isinstance(payload, str):
+                # parsing to json again due to incomplete deserialisation
+                payload = json.loads(payload)
             handle_resolve_issue(payload['ID'], payload['IssueID'])
         elif msg.topic == 'REQ/MAC_ADDR':
             pub.publish('MAC', get_mac_addresses(), 1)
