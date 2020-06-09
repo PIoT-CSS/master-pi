@@ -6,6 +6,7 @@ from MasterCSS.constant import Constant
 import os
 from MasterCSS.models.car import Car
 from MasterCSS.models.issue import Issue
+from MasterCSS.models.user import User
 from MasterCSS.database import db
 import requests
 import json
@@ -28,6 +29,7 @@ controllers = Blueprint("issue_controllers", __name__)
 
 ISSUE_API_URL = '/issue'
 
+
 @controllers.route(ISSUE_API_URL, methods=['GET'])
 @login_required
 def view_all_issues():
@@ -37,6 +39,7 @@ def view_all_issues():
         return render_template("admin/issues/viewall.html", issues=issues)
     else:
         return render_template("errors/401.html"), 401
+
 
 @controllers.route(ISSUE_API_URL + '/pending', methods=['GET'])
 @login_required
@@ -48,6 +51,7 @@ def view_pending():
     else:
         return render_template("errors/401.html"), 401
 
+
 @controllers.route(ISSUE_API_URL + '/taken', methods=['GET'])
 @login_required
 def view_taken():
@@ -58,6 +62,7 @@ def view_taken():
     else:
         return render_template("errors/401.html"), 401
 
+
 @controllers.route(ISSUE_API_URL + '/view/<int:id>', methods=['GET'])
 @login_required
 def view_issue(id):
@@ -65,10 +70,11 @@ def view_issue(id):
     car = db.session.query(Car).get(issue.CarID)
     usertype = current_user.UserType
     if usertype == "ADMIN" or usertype == "ENGINEER":
-        return render_template("engineer/view.html", issue=issue, 
+        return render_template("engineer/view.html", issue=issue,
             car=car, car_coordinates=Constant.CAR_COORDINATES)
     else:
         return render_template("errors/401.html"), 401
+
 
 @controllers.route(ISSUE_API_URL + '/create/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -88,15 +94,18 @@ def create_new_issue(id):
             # add issue to db.
             db.session.add(issue)
             db.session.commit()
-            
+
             # send request to pb api to send notification
-            notif_body = "Issue ID:{}, Description:{}".format(issue.ID, issue.Description)
-            notif_title = "New Issue for car {}, {}".format(car.ID, issue.Title)
+            notif_body = "Issue ID:{}, Description:{}".format(
+                issue.ID, issue.Description)
+            notif_title = "New Issue for car {}, {}".format(
+                car.ID, issue.Title)
             send_notification(notif_title, notif_body)
 
             return redirect(url_for('issue_controllers.view_all_issues'))
     else:
         return render_template("errors/401.html"), 401
+
 
 @controllers.route(ISSUE_API_URL + '/resolve/<int:id>', methods=['GET'])
 @login_required
@@ -114,7 +123,8 @@ def resolve_issue(id):
     else:
         return render_template("errors/401.html"), 401
 
-def fixed_car(eng_id, issue_id):
+
+def handle_resolve_issue(eng_id, issue_id):
     """
     Handles payload from AP containing eng_id, issue_id
     that indicates the issue has been fixed by an engineer.
@@ -123,30 +133,36 @@ def fixed_car(eng_id, issue_id):
     :type eng_id: int
     :param issue_id: issue id belongs to the issue being resolved
     :type issue_id: int
-    :return: message whether the transaction is successful
-    :rtype: string
     """
-    issue = db.session.query(Issue).get(issue_id)
+    user = db.session.query(User).get(int(eng_id))
+    if user == None:
+        print("[AP Issue Resolver] User/Engineer {} doesn't exist!"
+            .format(eng_id))
+    elif user.UserType != "ENGINEER":
+        print("[AP Issue Resolver] User {} isn't an engineer!"
+            .format(eng_id))
+    issue = db.session.query(Issue).get(int(issue_id))
     if issue == None:
-        return "Issue doesn't exist! Please try again."
+        print("[AP Issue Resolver/ENG {}] Issue {} doesn't exist!"
+            .format(eng_id, issue_id))
     elif issue.Status == Issue.RESOLVED:
-        return "Issue has already been resolved!"
+        print("[AP Issue Resolver/ENG {}] Issue {} has already been resolved!"
+            .format(eng_id, issue_id))
     else:
-        user = db.session.query(User).get(eng_id)
-        issue.UserID = eng_id
+        issue.UserID = int(eng_id)
         issue.Status = Issue.RESOLVED
         db.session.commit()
-        return "Issue {} has been marked as resolved by engineer {}"\
-            .format(issue_id, eng_id)
+        print("[AP Issue Resolver/ENG {}] Issue {} has been marked as resolved!"
+            .format(eng_id, issue_id))
 
 def send_notification(title, body):
-    token = os.getenv('PB_TOKEN')
+    token=os.getenv('PB_TOKEN')
     if token is None:
         print('No PushBullet API Token found, notification will not be sent.')
         return False
-    endpoint = 'https://api.pushbullet.com/v2/pushes'
-    content = {"type": "note", "title": title, "body": body}
+    endpoint='https://api.pushbullet.com/v2/pushes'
+    content={"type": "note", "title": title, "body": body}
 
-    response = requests.post(endpoint, data=json.dumps(content),
+    response=requests.post(endpoint, data=json.dumps(content),
                                 headers={'Access-Token': token,
                                         'Content-Type': 'application/json'})
