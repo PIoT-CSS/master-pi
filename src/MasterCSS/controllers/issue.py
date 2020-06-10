@@ -1,5 +1,5 @@
 """
-booking.py contains booking controllers.
+issue.py contains issue controllers.
 """
 from ast import literal_eval as make_tuple
 from MasterCSS.constant import Constant
@@ -132,7 +132,9 @@ def create_new_issue(id):
                 issue.ID, issue.Description)
             notif_title = "New Issue for car {}, {}".format(
                 car.ID, issue.Title)
-            send_notification(notif_title, notif_body)
+
+            if not current_app.config["TESTING"]:
+                send_notification(notif_title, notif_body)
 
             return redirect(url_for('issue_controllers.view_all_issues'))
     else:
