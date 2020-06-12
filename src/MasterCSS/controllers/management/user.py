@@ -55,7 +55,7 @@ def add_user():
 @login_required
 def search_user():
     """
-    get search for user template. Post to query from the db.
+    get search for user template. Post to query a user from the db.
 
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
@@ -230,7 +230,7 @@ def modify_user(id):
 @login_required
 def remove_user(id):
     """
-    remove a particular user.
+    removes a particular user.
 
     :param id: user id
     :type id: int

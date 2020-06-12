@@ -1,5 +1,5 @@
 """
-booking.py contains booking controllers.
+issue.py contains issue controllers.
 """
 from ast import literal_eval as make_tuple
 from MasterCSS.constant import Constant
@@ -33,10 +33,17 @@ ISSUE_API_URL = '/issue'
 @controllers.route(ISSUE_API_URL, methods=['GET'])
 @login_required
 def view_all_issues():
+    """
+    Renders all the issues for admin users to see.
+
+    :return: viewall template that renders all the issues.
+    :rtype: render_template
+    """
     if current_user.UserType == "ADMIN":
-        # Obtain all the booking entries from the db.
+        # Obtain all the issue entries from the db.
         issues = db.session.query(Issue).all()
-        return render_template("admin/issues/viewall.html", issues=issues)
+        return render_template("admin/issues/viewall.html", 
+            issues=issues)
     else:
         return render_template("errors/401.html"), 401
 
@@ -47,7 +54,8 @@ def view_pending():
     if current_user.UserType == "ENGINEER":
         # Obtain all the pending issues from the db.
         issues = db.session.query(Issue).filter_by(Status=Issue.PENDING)
-        return render_template("engineer/viewpending.html", issues=issues)
+        return render_template("engineer/viewpending.html", 
+            issues=issues)
     else:
         return render_template("errors/401.html"), 401
 
@@ -55,6 +63,13 @@ def view_pending():
 @controllers.route(ISSUE_API_URL + '/taken', methods=['GET'])
 @login_required
 def view_taken():
+    """
+    View all the issues that an engineer has resolved
+
+    :return: viewtaken template that renders issues that hold a
+    user id that matches with a logged in engineer.
+    :rtype: render_template
+    """
     if current_user.UserType == "ENGINEER":
         # Obtain all the issues taken by the engineer entries from the db.
         issues = db.session.query(Issue).filter_by(UserID=current_user.ID)
@@ -66,6 +81,14 @@ def view_taken():
 @controllers.route(ISSUE_API_URL + '/view/<int:id>', methods=['GET'])
 @login_required
 def view_issue(id):
+    """
+    View a partiuclar issue
+
+    :param id: issue id.
+    :type id: int
+    :return: renders template to view issue details
+    :rtype: render_template
+    """
     issue = db.session.query(Issue).get(id)
     car = db.session.query(Car).get(issue.CarID)
     usertype = current_user.UserType
@@ -79,6 +102,15 @@ def view_issue(id):
 @controllers.route(ISSUE_API_URL + '/create/<int:id>', methods=['GET', 'POST'])
 @login_required
 def create_new_issue(id):
+    """
+    GET returns template of form to create issue, POST to 
+    add issue to the db
+
+    :param id: id of car
+    :type id: int
+    :return: renders either a form or viewall issues template.
+    :rtype: render_template
+    """
     car = db.session.query(Car).get(id)
     if current_user.UserType == "ADMIN":
         if request.method == 'GET':
@@ -100,7 +132,9 @@ def create_new_issue(id):
                 issue.ID, issue.Description)
             notif_title = "New Issue for car {}, {}".format(
                 car.ID, issue.Title)
-            send_notification(notif_title, notif_body)
+
+            if not current_app.config["TESTING"]:
+                send_notification(notif_title, notif_body)
 
             return redirect(url_for('issue_controllers.view_all_issues'))
     else:
@@ -110,6 +144,15 @@ def create_new_issue(id):
 @controllers.route(ISSUE_API_URL + '/resolve/<int:id>', methods=['GET'])
 @login_required
 def resolve_issue(id):
+    """
+    Resolves a particular issue, changing the issue status
+
+    :param id: issue id
+    :type id: int
+    :return: redirects to view taken controller if logged in user is an engineer,
+    if logged in user is an admin redirects to view all issues controller.
+    :rtype: redirect
+    """
     issue = db.session.query(Issue).get(id)
     usertype = current_user.UserType
     if usertype == "ADMIN" or usertype == "ENGINEER":
@@ -156,7 +199,18 @@ def handle_resolve_issue(eng_id, issue_id):
             .format(eng_id, issue_id))
 
 def send_notification(title, body):
-    token=os.getenv('PB_TOKEN')
+    """
+    sends a pb notification to all of the engineer 
+    devices that were registered in pushbullet account.
+
+    :param title: title of the notification
+    :type title: string
+    :param body: body of the notification
+    :type body: string
+    :return: if false then the token is not found within .env file
+    :rtype: boolean
+    """
+    token = os.getenv('PB_TOKEN')
     if token is None:
         print('No PushBullet API Token found, notification will not be sent.')
         return False

@@ -89,12 +89,13 @@ class Booking(db.Model):
         :rtype: string
         """
         user = db.session.query(User).get(self.UserID)
-        if user == None:
+        if user:
+            return user.Username
+        else:
             return "Deleted user"
-        return user.Username
 
     def getCar(self):
         car = db.session.query(Car).get(self.CarID)
         if car == None:
-            return "Deleted user"
+            return "Deleted car"
         return car
