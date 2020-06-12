@@ -71,10 +71,10 @@
             <div class="control">
                 <div class="select">
                     <select class="select" name="usertype">
-                        <option value="CUSTOMER">Customer</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="ENGINEER">Engineer</option>
-                        <option value="MANAGER">Manager</option>
+                        <option value="CUSTOMER" {{ "selected" if defaultValues != None and defaultValues['usertype'] == "CUSTOMER" }}>Customer</option>
+                        <option value="ADMIN"  {{ "selected" if defaultValues != None and defaultValues['usertype'] == "ADMIN" }}>Admin</option>
+                        <option value="ENGINEER"  {{ "selected" if defaultValues != None and defaultValues['usertype'] == "ENGINEER" }} >Engineer</option>
+                        <option value="MANAGER" {{ "selected" if defaultValues != None and defaultValues['usertype'] == "MANAGER" }}>Manager</option>
                     </select>
                 </div>
             </div>
@@ -82,7 +82,7 @@
         <div class="field" id=>
             <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
             <div class="control">
-                <input class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
+                <input class="input" name="macaddress" type="text" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }}>
             </div>
         </div>
         {% endif %}

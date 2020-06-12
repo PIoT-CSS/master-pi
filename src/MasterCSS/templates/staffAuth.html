@@ -5,7 +5,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="max-w-screen-sm mx-auto has-text-centered">
+<style>
+    body{
+      background-color: lightblue;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+</style>
+<div class="box max-w-screen-sm mx-auto has-text-centered">
     {% if err %}
     <div class="notification is-danger is-light">
         <p>{{err}}</p>

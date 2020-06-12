@@ -8,10 +8,10 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title has-text-black">
-                Welcome {{ current_user.Username }}! Get to work!
+                Welcome {{ current_user.Username }}!
             </h1>
             <div>
-                <h3 class="title has-text-black">Your QR code</h3>
+                <h3 class="subtitle has-text-black">Scan this QR code with Agent PI to log in.</h3>
                 <img src={{"static/qr/" + current_user.Username + "/" + current_user.Username + ".jpg"}}>
             </div>
         </div>
