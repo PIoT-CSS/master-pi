@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MasterCSS.exceptions package &#8212; Carshare 1.0.0 documentation</title>
+    <title>MasterCSS.qr package &#8212; Carshare 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MasterCSS.models package" href="MasterCSS.models.html" />
-    <link rel="prev" title="MasterCSS.controllers package" href="MasterCSS.controllers.html" />
+    <link rel="next" title="MasterCSS.tests package" href="MasterCSS.tests.html" />
+    <link rel="prev" title="MasterCSS.mqtt package" href="MasterCSS.mqtt.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -33,23 +33,35 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="mastercss-exceptions-package">
-<h1>MasterCSS.exceptions package<a class="headerlink" href="#mastercss-exceptions-package" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="mastercss-qr-package">
+<h1>MasterCSS.qr package<a class="headerlink" href="#mastercss-qr-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-MasterCSS.exceptions.error_value_exception">
-<span id="mastercss-exceptions-error-value-exception-module"></span><h2>MasterCSS.exceptions.error_value_exception module<a class="headerlink" href="#module-MasterCSS.exceptions.error_value_exception" title="Permalink to this headline">¶</a></h2>
-<dl class="py exception">
-<dt id="MasterCSS.exceptions.error_value_exception.ErrorValueException">
-<em class="property">exception </em><code class="sig-prename descclassname">MasterCSS.exceptions.error_value_exception.</code><code class="sig-name descname">ErrorValueException</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">payload</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.exceptions.error_value_exception.ErrorValueException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>Error Value Exception for serverside on REST payload</p>
+<div class="section" id="module-MasterCSS.qr.qr_generator">
+<span id="mastercss-qr-qr-generator-module"></span><h2>MasterCSS.qr.qr_generator module<a class="headerlink" href="#module-MasterCSS.qr.qr_generator" title="Permalink to this headline">¶</a></h2>
+<p>qr_generator.py contains QRGenerator class for generating QR code.</p>
+<dl class="py class">
+<dt id="MasterCSS.qr.qr_generator.QRGenerator">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.qr.qr_generator.</code><code class="sig-name descname">QRGenerator</code><a class="headerlink" href="#MasterCSS.qr.qr_generator.QRGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to generate QR code image containing engineer’s profile.</p>
+<dl class="py method">
+<dt id="MasterCSS.qr.qr_generator.QRGenerator.generate">
+<em class="property">static </em><code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.qr.qr_generator.QRGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate QR code image containing payload and save locally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>payload</strong> (<em>dict</em>) – engineer’s profile</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
-<div class="section" id="module-MasterCSS.exceptions">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.exceptions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-MasterCSS.qr">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.qr" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -84,8 +96,8 @@
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">MasterCSS</a><ul>
   <li><a href="MasterCSS.html">MasterCSS package</a><ul>
-      <li>Previous: <a href="MasterCSS.controllers.html" title="previous chapter">MasterCSS.controllers package</a></li>
-      <li>Next: <a href="MasterCSS.models.html" title="next chapter">MasterCSS.models package</a></li>
+      <li>Previous: <a href="MasterCSS.mqtt.html" title="previous chapter">MasterCSS.mqtt package</a></li>
+      <li>Next: <a href="MasterCSS.tests.html" title="next chapter">MasterCSS.tests package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -121,7 +133,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/MasterCSS.exceptions.rst.txt"
+      <a href="_sources/MasterCSS.qr.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

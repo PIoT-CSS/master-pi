@@ -11,6 +11,7 @@ Subpackages
    MasterCSS.exceptions
    MasterCSS.models
    MasterCSS.mqtt
+   MasterCSS.qr
    MasterCSS.tests
    MasterCSS.validators
 

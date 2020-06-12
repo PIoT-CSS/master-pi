@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MasterCSS.models package &#8212; Carshare 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -123,6 +124,20 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="MasterCSS.models.booking.Booking.getCar">
+<code class="sig-name descname">getCar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.booking.Booking.getCar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the car of the booking</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>car of the booking</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Car object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="MasterCSS.models.booking.Booking.getStatus">
 <em class="property">static </em><code class="sig-name descname">getStatus</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.booking.Booking.getStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>GET booking status.</p>
@@ -135,6 +150,20 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.models.booking.Booking.getUser">
+<code class="sig-name descname">getUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.booking.Booking.getUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the username of user who made the booking</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>username of user who made the booking</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -184,11 +213,6 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 <dl class="py attribute">
 <dt id="MasterCSS.models.car.Car.BodyType">
 <code class="sig-name descname">BodyType</code><a class="headerlink" href="#MasterCSS.models.car.Car.BodyType" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="MasterCSS.models.car.Car.Bookings">
-<code class="sig-name descname">Bookings</code><a class="headerlink" href="#MasterCSS.models.car.Car.Bookings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -278,12 +302,134 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 </dd></dl>
 
 </div>
+<div class="section" id="module-MasterCSS.models.issue">
+<span id="mastercss-models-issue-module"></span><h2>MasterCSS.models.issue module<a class="headerlink" href="#module-MasterCSS.models.issue" title="Permalink to this headline">¶</a></h2>
+<p>issue.py contains db model for issue.</p>
+<dl class="py class">
+<dt id="MasterCSS.models.issue.Issue">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.models.issue.</code><code class="sig-name descname">Issue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">CarID</span></em>, <em class="sig-param"><span class="n">Title</span></em>, <em class="sig-param"><span class="n">Description</span></em>, <em class="sig-param"><span class="n">Status</span></em>, <em class="sig-param"><span class="n">ID</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">UserID</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.issue.Issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Issue model class represents a Issue in the database.
+An issue holds a booking id reference but is not a foreign key.
+Refererence: <a class="reference external" href="https://flask-marshmallow.readthedocs.io/en/latest/">https://flask-marshmallow.readthedocs.io/en/latest/</a></p>
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.CarID">
+<code class="sig-name descname">CarID</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.CarID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.Description">
+<code class="sig-name descname">Description</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.Description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.ID">
+<code class="sig-name descname">ID</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.PENDING">
+<code class="sig-name descname">PENDING</code><em class="property"> = 0</em><a class="headerlink" href="#MasterCSS.models.issue.Issue.PENDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.RESOLVED">
+<code class="sig-name descname">RESOLVED</code><em class="property"> = 1</em><a class="headerlink" href="#MasterCSS.models.issue.Issue.RESOLVED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.Status">
+<code class="sig-name descname">Status</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.Status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.Title">
+<code class="sig-name descname">Title</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.Title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.Issue.UserID">
+<code class="sig-name descname">UserID</code><a class="headerlink" href="#MasterCSS.models.issue.Issue.UserID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.models.issue.Issue.getCar">
+<code class="sig-name descname">getCar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.issue.Issue.getCar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the car associated with the issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>car associated with issue.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.models.issue.Issue.getStatus">
+<em class="property">static </em><code class="sig-name descname">getStatus</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.issue.Issue.getStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET issue status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identity number of the status</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Booking status as string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.models.issue.Issue.getUser">
+<code class="sig-name descname">getUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.issue.Issue.getUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the username of user who made the booking</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>username of user who made the booking</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="MasterCSS.models.issue.IssueSchema">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.models.issue.</code><code class="sig-name descname">IssueSchema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">strict</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.issue.IssueSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_marshmallow.schema.Schema</span></code></p>
+<p>This IssueSchema stores the meta and schema of a issue.
+Refererence: <a class="reference external" href="https://flask-marshmallow.readthedocs.io/en/latest/">https://flask-marshmallow.readthedocs.io/en/latest/</a></p>
+<dl class="py class">
+<dt id="MasterCSS.models.issue.IssueSchema.Meta">
+<em class="property">class </em><code class="sig-name descname">Meta</code><a class="headerlink" href="#MasterCSS.models.issue.IssueSchema.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.IssueSchema.Meta.fields">
+<code class="sig-name descname">fields</code><em class="property"> = ('ID', 'CarID', 'UserID', 'Title', 'Description', 'Status')</em><a class="headerlink" href="#MasterCSS.models.issue.IssueSchema.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.issue.IssueSchema.opts">
+<code class="sig-name descname">opts</code><em class="property"> = &lt;marshmallow.schema.SchemaOpts object&gt;</em><a class="headerlink" href="#MasterCSS.models.issue.IssueSchema.opts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-MasterCSS.models.user">
 <span id="mastercss-models-user-module"></span><h2>MasterCSS.models.user module<a class="headerlink" href="#module-MasterCSS.models.user" title="Permalink to this headline">¶</a></h2>
 <p>userModel.py contains model for user and database logic.</p>
 <dl class="py class">
 <dt id="MasterCSS.models.user.User">
-<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.models.user.</code><code class="sig-name descname">User</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">FirstName</span></em>, <em class="sig-param"><span class="n">LastName</span></em>, <em class="sig-param"><span class="n">Username</span></em>, <em class="sig-param"><span class="n">Email</span></em>, <em class="sig-param"><span class="n">Password</span></em>, <em class="sig-param"><span class="n">PhoneNumber</span></em>, <em class="sig-param"><span class="n">UserType</span></em>, <em class="sig-param"><span class="n">ID</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.user.User" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.models.user.</code><code class="sig-name descname">User</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">FirstName</span></em>, <em class="sig-param"><span class="n">LastName</span></em>, <em class="sig-param"><span class="n">Username</span></em>, <em class="sig-param"><span class="n">Email</span></em>, <em class="sig-param"><span class="n">Password</span></em>, <em class="sig-param"><span class="n">PhoneNumber</span></em>, <em class="sig-param"><span class="n">UserType</span></em>, <em class="sig-param"><span class="n">ID</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">MacAddress</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.models.user.User" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_login.mixins.UserMixin</span></code></p>
 <p>User model class represents a user in the database.
 Refererence: <a class="reference external" href="https://flask-marshmallow.readthedocs.io/en/latest/">https://flask-marshmallow.readthedocs.io/en/latest/</a></p>
@@ -305,6 +451,11 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 <dl class="py attribute">
 <dt id="MasterCSS.models.user.User.LastName">
 <code class="sig-name descname">LastName</code><a class="headerlink" href="#MasterCSS.models.user.User.LastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="MasterCSS.models.user.User.MacAddress">
+<code class="sig-name descname">MacAddress</code><a class="headerlink" href="#MasterCSS.models.user.User.MacAddress" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -355,7 +506,7 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt id="MasterCSS.models.user.UserSchema.Meta.fields">
-<code class="sig-name descname">fields</code><em class="property"> = ('ID', 'FirstName', 'LastName', 'Username', 'Email', 'Password', 'PhoneNumber', 'UserType')</em><a class="headerlink" href="#MasterCSS.models.user.UserSchema.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fields</code><em class="property"> = ('ID', 'FirstName', 'LastName', 'Username', 'Email', 'Password', 'PhoneNumber', 'UserType', 'MacAddress')</em><a class="headerlink" href="#MasterCSS.models.user.UserSchema.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -437,7 +588,7 @@ Refererence: <a class="reference external" href="https://flask-marshmallow.readt
       &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -20,6 +20,14 @@ MasterCSS.models.car module
    :undoc-members:
    :show-inheritance:
 
+MasterCSS.models.issue module
+-----------------------------
+
+.. automodule:: MasterCSS.models.issue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 MasterCSS.models.user module
 ----------------------------
 
