@@ -44,6 +44,22 @@ MasterCSS.tests.test\_fixture module
    :undoc-members:
    :show-inheritance:
 
+MasterCSS.tests.test\_issues module
+-----------------------------------
+
+.. automodule:: MasterCSS.tests.test_issues
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MasterCSS.tests.test\_user\_management module
+---------------------------------------------
+
+.. automodule:: MasterCSS.tests.test_user_management
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

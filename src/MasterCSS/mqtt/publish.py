@@ -47,8 +47,7 @@ class Publisher:
         :param client: the client instance for this callback
         :type client: Client
 
-        :param userdata: the private user data as set in Client()
-        or user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: [type]
 
         :param result: Data being published
@@ -64,8 +63,7 @@ class Publisher:
         :param client: the mqtt client
         :type client: Client
 
-        :param userdata: the private user data as set in Client()
-        or user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: [type]
 
         :param rc: disconnection result
@@ -82,8 +80,7 @@ class Publisher:
         :param client: the mqtt client
         :type client: Client
 
-        :param userdata: the private user data as set in Client()
-        or user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: [type]
 
         :param rc: connection result
@@ -95,8 +92,7 @@ class Publisher:
         """
         sends header to identify image sent for facial recognition
 
-        :param client: sends header to identify image
-        sent for facial recognition
+        :param client: sends header to identify image sent for facial recognition
         :type client: Client
 
         :param filename: name of the file that's being sent
@@ -117,8 +113,7 @@ class Publisher:
         """
         sends end of file to identify image sent for facial recognition
 
-        :param client: sends header to identify image sent
-        for facial recognition
+        :param client: sends header to identify image sent for facial recognition
         :type client: Client
 
         :param filename: name of the file that's being sent
@@ -143,8 +138,7 @@ class Publisher:
         :param topic: topic to publish to
         :type topic: string
 
-        :param payload: the item that's being sent,
-        will be converted into json.
+        :param payload: the item that's being sent, will be converted into json.
         :type payload: any
 
         :param qos: quality of service level to use
@@ -181,8 +175,8 @@ class Publisher:
     def fr_publish(self, file_name, qos):
         """
         initialises client and binds functions, publish user's image
-         for facial recognition as payload to AP at a given topic
-         and disconnects.
+        for facial recognition as payload to AP at a given topic
+        and disconnects.
 
         :param file_name: filename being published
         :type file_name: string
@@ -210,6 +204,7 @@ class Publisher:
     def convertImageToByteArray(self, file_name):
         """
         converts user's image into byte array to be published
+        
         :return: bytes of the image
         :rtype: array of bytes
         """

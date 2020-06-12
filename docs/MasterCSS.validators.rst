@@ -12,6 +12,14 @@ MasterCSS.validators.email\_validator module
    :undoc-members:
    :show-inheritance:
 
+MasterCSS.validators.macaddress\_validator module
+-------------------------------------------------
+
+.. automodule:: MasterCSS.validators.macaddress_validator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 MasterCSS.validators.phone\_validator module
 --------------------------------------------
 

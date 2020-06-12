@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MasterCSS.tests package &#8212; Carshare 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="MasterCSS.validators package" href="MasterCSS.validators.html" />
-    <link rel="prev" title="MasterCSS.mqtt package" href="MasterCSS.mqtt.html" />
+    <link rel="prev" title="MasterCSS.qr package" href="MasterCSS.qr.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -231,6 +232,17 @@
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt id="MasterCSS.tests.test_booking.test_view_car_booking">
+<code class="sig-prename descclassname">MasterCSS.tests.test_booking.</code><code class="sig-name descname">test_view_car_booking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_booking.test_view_car_booking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test view booking details when the car is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-MasterCSS.tests.test_car">
 <span id="mastercss-tests-test-car-module"></span><h2>MasterCSS.tests.test_car module<a class="headerlink" href="#module-MasterCSS.tests.test_car" title="Permalink to this headline">¶</a></h2>
@@ -326,7 +338,7 @@
 </div>
 <div class="section" id="module-MasterCSS.tests.test_car_management">
 <span id="mastercss-tests-test-car-management-module"></span><h2>MasterCSS.tests.test_car_management module<a class="headerlink" href="#module-MasterCSS.tests.test_car_management" title="Permalink to this headline">¶</a></h2>
-<p>test_car.py contains unit tests for car management.
+<p>test_management_car.py contains unit tests for car management.
 Tests related to controllers under /mangement/cars which is used to manage
 car entries in db.</p>
 <dl class="py function">
@@ -363,6 +375,17 @@ car entries in db.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="MasterCSS.tests.test_car_management.test_setup">
+<code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup car test by registering user and add cars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="MasterCSS.tests.test_car_management.test_view_all_cars">
 <code class="sig-prename descclassname">MasterCSS.tests.test_car_management.</code><code class="sig-name descname">test_view_all_cars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_car_management.test_view_all_cars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test view all cars: should contain the 2 cars added in the previous test.</p>
@@ -390,8 +413,503 @@ car entries in db.</p>
 <p>test_fixture.py contains unit testing setup.</p>
 <dl class="py function">
 <dt id="MasterCSS.tests.test_fixture.client">
-<code class="sig-prename descclassname">MasterCSS.tests.test_fixture.</code><code class="sig-name descname">client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_fixture.client" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MasterCSS.tests.test_fixture.</code><code class="sig-name descname">client</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_fixture.client" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configure pytest, Flask app and database for unit testing.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_issues">
+<span id="mastercss-tests-test-issues-module"></span><h2>MasterCSS.tests.test_issues module<a class="headerlink" href="#module-MasterCSS.tests.test_issues" title="Permalink to this headline">¶</a></h2>
+<p>test_issues.py contains unit tests for issue related controllers.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_add_issue_form">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_add_issue_form</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_add_issue_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows if it renders the form to add issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_create_issue1">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_create_issue1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_create_issue1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an issue and see if it’s reflected in the app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_create_issue2">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_create_issue2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_create_issue2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an issue and see if it’s reflected in the app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_engineer_resolve">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_engineer_resolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_engineer_resolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve the issue and see it render correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_engineer_view_issue">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_engineer_view_issue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_engineer_view_issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>View issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_engineer_view_pending">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_engineer_view_pending</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_engineer_view_pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>View pending. resolved issues are not shown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_issue2_pending">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_issue2_pending</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_issue2_pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if issue2 is still pending</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_resolve_issue1">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_resolve_issue1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_resolve_issue1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve the first issue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_setup">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup issues test by registering admin user, creating an engineer,
+and a car</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_view_issue1">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_view_issue1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_view_issue1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Views the first issue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_issues.test_view_issue2">
+<code class="sig-prename descclassname">MasterCSS.tests.test_issues.</code><code class="sig-name descname">test_view_issue2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_issues.test_view_issue2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Views the second issue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.tests.test_user_management">
+<span id="mastercss-tests-test-user-management-module"></span><h2>MasterCSS.tests.test_user_management module<a class="headerlink" href="#module-MasterCSS.tests.test_user_management" title="Permalink to this headline">¶</a></h2>
+<p>test_user_management.py contains unit tests for user management.
+Tests related to controllers under /mangement/cars which is used to manage
+car entries in db.</p>
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_add_admin">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_add_admin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_add_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: adding another admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_add_customer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_add_customer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_add_customer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: adding a customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_add_engineer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_add_engineer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_add_engineer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: adding an engineer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_add_manager">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_add_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_add_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: adding a manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_add_user_page">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_add_user_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_add_user_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test add user page render for admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_manage_cars_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_manage_cars_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_manage_cars_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin logged in and dashboard renders Manage Cars button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_manage_users_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_manage_users_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_manage_users_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin logged in and dashboard renders Manage Users button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_review_bookings_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_review_bookings_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_review_bookings_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin logged in and dashboard renders Review Bookings button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_search_user_template">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_search_user_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_search_user_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin search user template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_admin_view_issues_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_admin_view_issues_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_admin_view_issues_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin logged in and dashboard renders View Issues button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_delete_admin_other">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_delete_admin_other</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_delete_admin_other" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: deleting other admin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_delete_admin_self">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_delete_admin_self</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_delete_admin_self" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: deleting admin oneself (shouldn’t work)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_delete_customer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_delete_customer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_delete_customer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: deleting a customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_delete_engineer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_delete_engineer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_delete_engineer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: deleting an engineer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_delete_manager">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_delete_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_delete_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: deleting a manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_engineer_dashboard_qr_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_engineer_dashboard_qr_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_engineer_dashboard_qr_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test engineer QR code render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_engineer_dashboard_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_engineer_dashboard_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_engineer_dashboard_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test engineer dashboard render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_engineer_pending_issues_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_engineer_pending_issues_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_engineer_pending_issues_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test engineer Pending Issues button render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_engineer_your_issues_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_engineer_your_issues_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_engineer_your_issues_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test engineer Your Issues button render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_logged_in_admin">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_logged_in_admin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_logged_in_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin logged in and dashboard render after test_setup registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_as_admin">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_as_admin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_as_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test logging in as admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_as_engineer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_as_engineer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_as_engineer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: logging in as engineer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_as_manager">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_as_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_as_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: logging in as manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_customer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_customer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_customer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin add account feature: logging in as customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_deleted_admin">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_deleted_admin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_deleted_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: logging in as a deleted admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_deleted_customer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_deleted_customer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_deleted_customer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: logging in as a deleted customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_deleted_engineer">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_deleted_engineer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_deleted_engineer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: logging in as a deleted engineer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_login_deleted_manager">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_login_deleted_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_login_deleted_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test admin delete account feature: logging in as a deleted manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_manager_daily_active_user_graph_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_manager_daily_active_user_graph_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_manager_daily_active_user_graph_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test manager daily active users graph render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_manager_daily_revenue_graph_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_manager_daily_revenue_graph_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_manager_daily_revenue_graph_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test manager daily revenue graph render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_manager_dashboard_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_manager_dashboard_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_manager_dashboard_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test manager dashboard render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_manager_total_bookings_car_graph_render">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_manager_total_bookings_car_graph_render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_manager_total_bookings_car_graph_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test manager total bookings of all cars graph render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.tests.test_user_management.test_setup">
+<code class="sig-prename descclassname">MasterCSS.tests.test_user_management.</code><code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.tests.test_user_management.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup user management test by registering an admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>client</strong> (<em>Flask app instance</em>) – Flask app client</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -431,7 +949,7 @@ car entries in db.</p>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">MasterCSS</a><ul>
   <li><a href="MasterCSS.html">MasterCSS package</a><ul>
-      <li>Previous: <a href="MasterCSS.mqtt.html" title="previous chapter">MasterCSS.mqtt package</a></li>
+      <li>Previous: <a href="MasterCSS.qr.html" title="previous chapter">MasterCSS.qr package</a></li>
       <li>Next: <a href="MasterCSS.validators.html" title="next chapter">MasterCSS.validators package</a></li>
   </ul></li>
   </ul></li>
@@ -464,7 +982,7 @@ car entries in db.</p>
       &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MasterCSS.mqtt package &#8212; Carshare 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +15,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MasterCSS.tests package" href="MasterCSS.tests.html" />
+    <link rel="next" title="MasterCSS.qr package" href="MasterCSS.qr.html" />
     <link rel="prev" title="MasterCSS.models package" href="MasterCSS.models.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -49,19 +50,23 @@ it will publish to the correct route.</p>
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.convertImageToByteArray">
 <code class="sig-name descname">convertImageToByteArray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.convertImageToByteArray" title="Permalink to this definition">¶</a></dt>
-<dd><p>converts user’s image into byte array to be published
-:return: bytes of the image
-:rtype: array of bytes</p>
+<dd><p>converts user’s image into byte array to be published</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bytes of the image</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array of bytes</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="MasterCSS.mqtt.publish.Publisher.fr_publish">
 <code class="sig-name descname">fr_publish</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em>, <em class="sig-param"><span class="n">qos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.mqtt.publish.Publisher.fr_publish" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>initialises client and binds functions, publish user’s image</dt><dd><p>for facial recognition as payload to AP at a given topic
+<dd><p>initialises client and binds functions, publish user’s image
+for facial recognition as payload to AP at a given topic
 and disconnects.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -80,15 +85,9 @@ and disconnects.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the mqtt client</p></li>
-<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+<li><p><strong>userdata</strong> (<em>[</em><em>type</em><em>]</em>) – the private user data as set in Client() or user_data_set()</p></li>
+<li><p><strong>rc</strong> (<em>int</em>) – connection result</p></li>
 </ul>
-</dd>
-</dl>
-<p>or user_data_set()
-:type userdata: [type]</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>rc</strong> (<em>int</em>) – connection result</p>
 </dd>
 </dl>
 </dd></dl>
@@ -101,15 +100,9 @@ and disconnects.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the mqtt client</p></li>
-<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+<li><p><strong>userdata</strong> (<em>[</em><em>type</em><em>]</em>) – the private user data as set in Client() or user_data_set()</p></li>
+<li><p><strong>rc</strong> (<em>int</em>) – disconnection result</p></li>
 </ul>
-</dd>
-</dl>
-<p>or user_data_set()
-:type userdata: [type]</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>rc</strong> (<em>int</em>) – disconnection result</p>
 </dd>
 </dl>
 </dd></dl>
@@ -122,15 +115,9 @@ and disconnects.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
-<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+<li><p><strong>userdata</strong> (<em>[</em><em>type</em><em>]</em>) – the private user data as set in Client() or user_data_set()</p></li>
+<li><p><strong>result</strong> (<em>String</em>) – Data being published</p></li>
 </ul>
-</dd>
-</dl>
-<p>or user_data_set()
-:type userdata: [type]</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>result</strong> (<em>String</em>) – Data being published</p>
 </dd>
 </dl>
 </dd></dl>
@@ -146,15 +133,9 @@ and disconnects.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
-<li><p><strong>payload</strong> – the item that’s being sent,</p></li>
+<li><p><strong>payload</strong> (<em>any</em>) – the item that’s being sent, will be converted into json.</p></li>
+<li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
 </ul>
-</dd>
-</dl>
-<p>will be converted into json.
-:type payload: any</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p>
 </dd>
 </dl>
 </dd></dl>
@@ -165,14 +146,8 @@ and disconnects.</p>
 <dd><p>sends end of file to identify image sent for facial recognition</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>client</strong> – sends header to identify image sent</p>
-</dd>
-</dl>
-<p>for facial recognition
-:type client: Client</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – sends header to identify image sent for facial recognition</p></li>
 <li><p><strong>filename</strong> (<em>string</em>) – name of the file that’s being sent</p></li>
 <li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
 <li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
@@ -187,14 +162,8 @@ and disconnects.</p>
 <dd><p>sends header to identify image sent for facial recognition</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>client</strong> – sends header to identify image</p>
-</dd>
-</dl>
-<p>sent for facial recognition
-:type client: Client</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<em>Client</em>) – sends header to identify image sent for facial recognition</p></li>
 <li><p><strong>filename</strong> (<em>string</em>) – name of the file that’s being sent</p></li>
 <li><p><strong>topic</strong> (<em>string</em>) – topic to publish to</p></li>
 <li><p><strong>qos</strong> (<em>integer</em>) – quality of service level to use</p></li>
@@ -223,15 +192,7 @@ connects to a broker, a specified address</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
-<li><p><strong>userdata</strong> – the private user data as</p></li>
-</ul>
-</dd>
-</dl>
-<p>set in Client() or user_data_set()
-:type userdata: any</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+<li><p><strong>userdata</strong> (<em>any</em>) – the private user data as set in Client() or user_data_set()</p></li>
 <li><p><strong>flags</strong> (<em>dict</em>) – response flags sent by the broker</p></li>
 <li><p><strong>rc</strong> (<em>integer</em>) – result of connection</p></li>
 </ul>
@@ -247,21 +208,10 @@ connects to a broker, a specified address</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
-<li><p><strong>userdata</strong> – the private user data as set in Client() or</p></li>
+<li><p><strong>userdata</strong> (<em>any</em>) – the private user data as set in Client() or user_data_set()</p></li>
+<li><p><strong>level</strong> (<em>MQTT_LOG_INFO</em><em>, </em><em>MQTT_LOG_NOTICE</em><em>, </em><em>MQTT_LOG_WARNING</em><em>, </em><em>MQTT_LOG_ERR</em><em>, </em><em>MQTT_LOG_DEBUG</em>) – severity of the message</p></li>
+<li><p><strong>buf</strong> (<em>bytes</em>) – message buffer</p></li>
 </ul>
-</dd>
-</dl>
-<p>user_data_set()
-:type userdata: any</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>level</strong> (<em>MQTT_LOG_INFO</em><em>, </em><em>MQTT_LOG_NOTICE</em><em>, </em><em>MQTT_LOG_WARNING</em><em>,</em>) – severity of the message</p>
-</dd>
-</dl>
-<p>MQTT_LOG_ERR, MQTT_LOG_DEBUG</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>buf</strong> (<em>bytes</em>) – message buffer</p>
 </dd>
 </dl>
 </dd></dl>
@@ -275,19 +225,11 @@ a given topic</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<em>Client</em>) – the client instance for this callback</p></li>
-<li><p><strong>userdata</strong> – the private user data as set in Client()</p></li>
+<li><p><strong>userdata</strong> (<em>any</em>) – the private user data as set in Client() or user_data_set()</p></li>
+<li><p><strong>msg</strong> (<em>MQTTMessage</em>) – an instance of MQTTMessage. This is a class with members topic, payload, qos, retain.</p></li>
 </ul>
 </dd>
 </dl>
-<p>or user_data_set()
-:type userdata: any</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>msg</strong> – an instance of MQTTMessage. This is a class with members</p>
-</dd>
-</dl>
-<p>topic, payload, qos, retain.
-:type msg: MQTTMessage</p>
 </dd></dl>
 
 <dl class="py method">
@@ -337,7 +279,7 @@ specified topic</p>
   <li><a href="modules.html">MasterCSS</a><ul>
   <li><a href="MasterCSS.html">MasterCSS package</a><ul>
       <li>Previous: <a href="MasterCSS.models.html" title="previous chapter">MasterCSS.models package</a></li>
-      <li>Next: <a href="MasterCSS.tests.html" title="next chapter">MasterCSS.tests package</a></li>
+      <li>Next: <a href="MasterCSS.qr.html" title="next chapter">MasterCSS.qr package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -369,7 +311,7 @@ specified topic</p>
       &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

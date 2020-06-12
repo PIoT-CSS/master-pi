@@ -12,7 +12,8 @@ from flask import (
     request,
     redirect,
     url_for,
-    session
+    session,
+    current_app
 )
 from flask_login import (
     LoginManager,
@@ -32,6 +33,8 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
+from MasterCSS.validators.macaddress_validator import MacAddressValidator
+
 from MasterCSS.qr.qr_generator import QRGenerator
 
 from urllib.parse import urlparse
@@ -52,8 +55,7 @@ def login():
     Authenticate an user with the given username and password.
     It will use base64decode with SALT to authenticate the user
 
-    :return: Dashboard if logged in successfully, otherwise
-    redirect to login html with error message.
+    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -92,13 +94,20 @@ def register():
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
     :raises ErrorValueException: if phone number exists or invalid
-    :return: Dashboard if successfully registered. Otherwise,
-    register page with errors.
+    :return: Dashboard if successfully registered. Otherwise, register page with errors.
     :rtype: render_template
     """
     
-    referrer = urlparse(request.referrer)
-    isAdminAdd = referrer.path == '/users/add'
+    isAdminAdd = False
+    
+    if not current_app.config["TESTING"]:
+        referrer = urlparse(request.referrer)
+        isAdminAdd = referrer.path == '/users/add'
+    elif current_user.is_authenticated:
+        if current_user.UserType == 'ADMIN':
+            isAdminAdd = True
+        else:
+            isAdminAdd = False
 
     if current_user.is_authenticated and not isAdminAdd:
         return redirect(url_for("template_controllers.index"))
@@ -173,6 +182,10 @@ def register():
                     .scalar() is not None:
                 takens.append("phone number")
             if user_type == "ENGINEER":
+                macaddressValidator = MacAddressValidator()
+                if macaddressValidator.check(new_user.MacAddress) is None:
+                    raise ErrorValueException(
+                        macaddressValidator.message(), payload=defaultValues)
                 if db.session.query(User). \
                     filter_by(MacAddress=new_user.MacAddress)\
                         .scalar() is not None:
@@ -220,7 +233,7 @@ def register():
                     }
                     QRGenerator.generate(engineer_profile)
                 if isAdminAdd:
-                    return redirect(url_for("user_management_controllers.add_user"))
+                    return redirect(url_for("user_management_controllers.search_user"))
                 else:
                     # save new user into database and login
                     login_user(new_user)

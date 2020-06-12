@@ -5,96 +5,98 @@
 {% endblock %}
 
 {% block container %}
-<div class="box max-w-sm w-full mx-auto">
-    {% if err %}
-    <div class="notification is-danger is-light">
-        <p>{{err}}</p>
+<div class="container">
+    <div class="box w-full mx-auto">
+        {% if err %}
+        <div class="notification is-danger is-light">
+            <p>{{err}}</p>
+        </div>
+        {% endif %}
+        <h1 class="title is-4">Add User</h1>
+        <form name="add_user_form" action={{url_for("auth_controllers.register")}} enctype=multipart/form-data method="post">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control has-icons-left">
+                    <input class="input is-info" class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left">
+                    <input class="input is-info" class="input" name="password" type="password" required>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-key"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left">
+                    <input class="input is-info" class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
+                    <span class="icon is-small is-left">
+                        <i class="fas  fa-envelope"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">First name</label>
+                <div class="control">
+                    <input class="input is-info" class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Last name</label>
+                <div class="control">
+                    <input class="input is-info" class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">User type</label>
+                <div class="control">
+                    <select class="select" name="usertype">
+                        <option value="CUSTOMER">customer</option>
+                        <option value="ADMIN">admin</option>
+                        <option value="ENGINEER">engineer</option>
+                        <option value="MANAGER">manager</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field" id=>
+                <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
+                <div class="control">
+                    <input class="input is-info" class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Phone number</label>
+                <div class="control">
+                    <input class="input is-info" class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Photo of user (JPG)</label>
+                <div class="control">
+                    <input type="file" name="image" accept="image/jpg;" required>
+                </div>
+            </div>
+
+            <div class="level">
+                <div class="level-left">
+                    <input class="button is-info" type="submit" name="register" value="Create">
+                </div>
+            </div>
+            
+        </form>
     </div>
-    {% endif %}
-    <h1 class="title is-4">Add User</h1>
-    <form name="add_user_form" action={{url_for("auth_controllers.register")}} enctype=multipart/form-data method="post">
-        <div class="field">
-            <label class="label">Username</label>
-            <div class="control has-icons-left">
-                <input class="input is-info" class="input" name="username" type="text" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }} pattern="[A-Za-z0-9]+" required>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control has-icons-left">
-                <input class="input is-info" class="input" name="password" type="password" required>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-key"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Email</label>
-            <div class="control has-icons-left">
-                <input class="input is-info" class="input" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }} type="email" required>
-                <span class="icon is-small is-left">
-                    <i class="fas  fa-envelope"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">First name</label>
-            <div class="control">
-                <input class="input is-info" class="input" name="firstname" {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }} type="text" required>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Last name</label>
-            <div class="control">
-                <input class="input is-info" class="input" name="lastname" {{ "value=" + defaultValues["lastname"] if defaultValues != None else 'CUSTOMER' }} type="text" required>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">User type</label>
-            <div class="control">
-                <select class="select" name="usertype">
-                    <option value="CUSTOMER">customer</option>
-                    <option value="ADMIN">admin</option>
-                    <option value="ENGINEER">engineer</option>
-                    <option value="MANAGER">manager</option>
-                </select>
-            </div>
-        </div>
-        <div class="field" id=>
-            <label class="label">Device's Bluetooth MAC Address (for Engineers only, else leave blank)</label>
-            <div class="control">
-                <input class="input is-info" class="input" name="macaddress" {{ "value=" + defaultValues["macaddress"] if defaultValues != None else '' }} type="text">
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Phone number</label>
-            <div class="control">
-                <input class="input is-info" class="input" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }} type="text" required>
-            </div>
-        </div>
-
-         <div class="field">
-            <label class="label">Photo of user (JPG)</label>
-            <div class="control">
-                <input type="file" name="image" accept="image/jpg;" required>
-            </div>
-        </div>
-
-        <div class="level">
-            <div class="level-left">
-                <input class="button is-info" type="submit" name="register" value="Create">
-            </div>
-        </div>
-        
-    </form>
 </div>
 {% endblock %}
