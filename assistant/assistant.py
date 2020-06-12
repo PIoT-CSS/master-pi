@@ -352,7 +352,7 @@ def main():
         # and playing back assistant response using the speaker.
         # When the once flag is set, don't wait for a trigger. Otherwise, wait.
         wait_for_user_trigger = not once
-        assistant = assistant.assist(text_query="talk to car share")
+        assistant.assist(text_query="talk to car share")
         while True:
             # if wait_for_user_trigger:
             #     click.pause(info='Press Enter to send a new request...')
