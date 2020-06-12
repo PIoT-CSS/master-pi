@@ -33,6 +33,8 @@ from MasterCSS.exceptions.error_value_exception import ErrorValueException
 from MasterCSS.validators.phone_validator import PhoneValidator
 from MasterCSS.validators.email_validator import EmailValidator
 from MasterCSS.validators.username_validator import UsernameValidator
+from MasterCSS.validators.macaddress_validator import MacAddressValidator
+
 from MasterCSS.qr.qr_generator import QRGenerator
 
 from urllib.parse import urlparse
@@ -182,6 +184,10 @@ def register():
                     .scalar() is not None:
                 takens.append("phone number")
             if user_type == "ENGINEER":
+                macaddressValidator = MacAddressValidator()
+                if macaddressValidator.check(new_user.MacAddress) is None:
+                    raise ErrorValueException(
+                        macaddressValidator.message(), payload=defaultValues)
                 if db.session.query(User). \
                     filter_by(MacAddress=new_user.MacAddress)\
                         .scalar() is not None:

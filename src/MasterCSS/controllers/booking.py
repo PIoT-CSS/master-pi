@@ -245,7 +245,7 @@ def cancel():
                 err="OAuth-ed, please try again."))
 
     # disable google oauth in unit tests
-    if not current_app.config["TESTING"]:
+    if not current_app.config["TESTING"] and current_user.UserType != "ADMIN":
         # redirect user for google oauth if
         # google oauth credentials don't exist
         if 'credentials' not in session:
