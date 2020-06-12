@@ -55,8 +55,7 @@ def login():
     Authenticate an user with the given username and password.
     It will use base64decode with SALT to authenticate the user
 
-    :return: Dashboard if logged in successfully, otherwise
-    redirect to login html with error message.
+    :return: Dashboard if logged in successfully, otherwise redirect to login html with error message.
     :rtype: render_template
     """
     if current_user.is_authenticated:
@@ -95,8 +94,7 @@ def register():
     :raises ErrorValueException: if username exists or invalid
     :raises ErrorValueException: if email exists or invalid
     :raises ErrorValueException: if phone number exists or invalid
-    :return: Dashboard if successfully registered. Otherwise,
-    register page with errors.
+    :return: Dashboard if successfully registered. Otherwise, register page with errors.
     :rtype: render_template
     """
     

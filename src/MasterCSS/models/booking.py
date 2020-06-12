@@ -95,6 +95,12 @@ class Booking(db.Model):
             return "Deleted user"
 
     def getCar(self):
+        """
+        Returns the car of the booking
+
+        :return: car of the booking
+        :rtype: Car object
+        """
         car = db.session.query(Car).get(self.CarID)
         if car == None:
             return "Deleted car"

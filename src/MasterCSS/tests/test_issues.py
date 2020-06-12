@@ -49,7 +49,7 @@ def test_setup(client):
             lastname="engineer",
             phonenumber="1234567190",
             usertype="ENGINEER",
-            macaddress="10:10:10:10:10",
+            macaddress="10:10:10:10:10:10",
             image=(user_image_read, 'example.jpg')
         ),
         follow_redirects=True

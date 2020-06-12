@@ -31,9 +31,12 @@ class QRGenerator:
             box_size=QRCODE_BOX_SIZE,
             border=QRCODE_BORDER,
         )
+        # add qr code content
         qr.add_data(json.dumps(payload))
         qr.make(fit=True)
+        # generate qr image
         qr_image = qr.make_image()
+        # save qr image into a static dir
         directory = "src/MasterCSS/static/qr/{}".format(
                     payload['Username'])
         if not os.path.exists(directory):

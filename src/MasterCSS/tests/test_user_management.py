@@ -236,7 +236,7 @@ def test_admin_add_engineer(client):
             lastname="engineer",
             phonenumber="1234567190",
             usertype="ENGINEER",
-            macaddress="10:10:10:10:10",
+            macaddress="10:10:10:10:10:10",
             image=(user_image_read, 'example.jpg')
         ),
         follow_redirects=True
@@ -304,8 +304,7 @@ def test_engineer_dashboard_render(client):
     """
     response = client.get('/')
 
-    assert b'Get to work!' in response.data
-    assert b'Your QR code' in response.data
+    assert b'Scan this QR code with Agent PI to log in.' in response.data
 
 def test_engineer_dashboard_qr_render(client):
     """

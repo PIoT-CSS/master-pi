@@ -51,6 +51,12 @@ def view_all_issues():
 @controllers.route(ISSUE_API_URL + '/pending', methods=['GET'])
 @login_required
 def view_pending():
+    """
+    Renders all pending issues for engineers to see.
+
+    :return: viewall template that renders all pending issues.
+    :rtype: render_template
+    """
     if current_user.UserType == "ENGINEER":
         # Obtain all the pending issues from the db.
         issues = db.session.query(Issue).filter_by(Status=Issue.PENDING)
@@ -66,8 +72,7 @@ def view_taken():
     """
     View all the issues that an engineer has resolved
 
-    :return: viewtaken template that renders issues that hold a
-    user id that matches with a logged in engineer.
+    :return: viewtaken template that renders issues that hold a user id that matches with a logged in engineer.
     :rtype: render_template
     """
     if current_user.UserType == "ENGINEER":
@@ -149,8 +154,7 @@ def resolve_issue(id):
 
     :param id: issue id
     :type id: int
-    :return: redirects to view taken controller if logged in user is an engineer,
-    if logged in user is an admin redirects to view all issues controller.
+    :return: redirects to view taken controller if logged in user is an engineer, if logged in user is an admin redirects to view all issues controller.
     :rtype: redirect
     """
     issue = db.session.query(Issue).get(id)
