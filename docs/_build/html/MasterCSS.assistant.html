@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterCSS.assistant package &#8212; Carshare 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MasterCSS.controllers package" href="MasterCSS.controllers.html" />
+    <link rel="prev" title="MasterCSS package" href="MasterCSS.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mastercss-assistant-package">
+<h1>MasterCSS.assistant package<a class="headerlink" href="#mastercss-assistant-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-MasterCSS.assistant.assistant">
+<span id="mastercss-assistant-assistant-module"></span><h2>MasterCSS.assistant.assistant module<a class="headerlink" href="#module-MasterCSS.assistant.assistant" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="MasterCSS.assistant.assistant.SampleAssistant">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.assistant.assistant.</code><code class="sig-name descname">SampleAssistant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">language_code</span></em>, <em class="sig-param"><span class="n">device_model_id</span></em>, <em class="sig-param"><span class="n">device_id</span></em>, <em class="sig-param"><span class="n">conversation_stream</span></em>, <em class="sig-param"><span class="n">display</span></em>, <em class="sig-param"><span class="n">channel</span></em>, <em class="sig-param"><span class="n">deadline_sec</span></em>, <em class="sig-param"><span class="n">device_handler</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant.SampleAssistant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sample Assistant that supports conversations and device actions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params device_model_id</dt>
+<dd class="field-odd"><p>identifier of the device model.</p>
+</dd>
+<dt class="field-even">Params device_id</dt>
+<dd class="field-even"><p>identifier of the registered device instance.</p>
+</dd>
+<dt class="field-odd">Params conversation_stream(ConversationStream)</dt>
+<dd class="field-odd"><p>audio stream
+for recording query and playing back assistant answer.</p>
+</dd>
+<dt class="field-even">Params channel</dt>
+<dd class="field-even"><p>authorized gRPC channel for connection to the
+Google Assistant API.</p>
+</dd>
+<dt class="field-odd">Params deadline_sec</dt>
+<dd class="field-odd"><p>gRPC deadline in seconds for Google Assistant API call.</p>
+</dd>
+<dt class="field-even">Params device_handler</dt>
+<dd class="field-even"><p>callback for device actions.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="MasterCSS.assistant.assistant.SampleAssistant.assist">
+<code class="sig-name descname">assist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_query</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant.SampleAssistant.assist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a voice request to the Assistant and playback the response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if conversation should continue.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.assistant.SampleAssistant.gen_assist_requests">
+<code class="sig-name descname">gen_assist_requests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant.SampleAssistant.gen_assist_requests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields: AssistRequest messages to send to the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.assistant.SampleAssistant.is_grpc_error_unavailable">
+<code class="sig-name descname">is_grpc_error_unavailable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant.SampleAssistant.is_grpc_error_unavailable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.assistant.assistant.main">
+<code class="sig-prename descclassname">MasterCSS.assistant.assistant.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.assistant.assistant_helpers">
+<span id="mastercss-assistant-assistant-helpers-module"></span><h2>MasterCSS.assistant.assistant_helpers module<a class="headerlink" href="#module-MasterCSS.assistant.assistant_helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for the Google Assistant API.</p>
+<dl class="py function">
+<dt id="MasterCSS.assistant.assistant_helpers.log_assist_request_without_audio">
+<code class="sig-prename descclassname">MasterCSS.assistant.assistant_helpers.</code><code class="sig-name descname">log_assist_request_without_audio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">assist_request</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant_helpers.log_assist_request_without_audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log AssistRequest fields without audio data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.assistant.assistant_helpers.log_assist_response_without_audio">
+<code class="sig-prename descclassname">MasterCSS.assistant.assistant_helpers.</code><code class="sig-name descname">log_assist_response_without_audio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">assist_response</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.assistant_helpers.log_assist_response_without_audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log AssistResponse fields without audio data.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.assistant.audio_helpers">
+<span id="mastercss-assistant-audio-helpers-module"></span><h2>MasterCSS.assistant.audio_helpers module<a class="headerlink" href="#module-MasterCSS.assistant.audio_helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for audio streams.</p>
+<dl class="py class">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.assistant.audio_helpers.</code><code class="sig-name descname">ConversationStream</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">sink</span></em>, <em class="sig-param"><span class="n">iter_size</span></em>, <em class="sig-param"><span class="n">sample_width</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Audio stream that supports half-duplex conversation.</p>
+<p>A conversation is the alternance of:
+- a recording operation
+- a playback operation</p>
+<p>Excepted usage:</p>
+<blockquote>
+<div><p>For each conversation:
+- start_recording()
+- read() or iter()
+- stop_recording()
+- start_playback()
+- write()
+- stop_playback()</p>
+<p>When conversations are finished:
+- close()</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Params source</dt>
+<dd class="field-odd"><p>file-like stream object to read input audio bytes from.</p>
+</dd>
+<dt class="field-even">Params sink</dt>
+<dd class="field-even"><p>file-like stream object to write output audio bytes to.</p>
+</dd>
+<dt class="field-odd">Params iter_size</dt>
+<dd class="field-odd"><p>read size in bytes for each iteration.</p>
+</dd>
+<dt class="field-even">Params sample_width</dt>
+<dd class="field-even"><p>size of a single sample in bytes.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close source and sink.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.playing">
+<em class="property">property </em><code class="sig-name descname">playing</code><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.playing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read bytes from the source (if currently recording).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.recording">
+<em class="property">property </em><code class="sig-name descname">recording</code><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.recording" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.sample_rate">
+<em class="property">property </em><code class="sig-name descname">sample_rate</code><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.start_playback">
+<code class="sig-name descname">start_playback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.start_playback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start playback to the audio sink.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.start_recording">
+<code class="sig-name descname">start_recording</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.start_recording" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start recording from the audio source.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.stop_playback">
+<code class="sig-name descname">stop_playback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.stop_playback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playback from the audio sink.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.stop_recording">
+<code class="sig-name descname">stop_recording</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.stop_recording" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop recording from the audio source.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.volume_percentage">
+<em class="property">property </em><code class="sig-name descname">volume_percentage</code><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.volume_percentage" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current volume setting as an integer percentage (1-100).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.ConversationStream.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.ConversationStream.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write bytes to the sink (if currently playing).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.assistant.audio_helpers.</code><code class="sig-name descname">SoundDeviceStream</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_rate</span></em>, <em class="sig-param"><span class="n">sample_width</span></em>, <em class="sig-param"><span class="n">block_size</span></em>, <em class="sig-param"><span class="n">flush_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Audio stream based on an underlying sound device.</p>
+<p>It can be used as an audio source (read) and a audio sink (write).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params sample_rate</dt>
+<dd class="field-odd"><p>sample rate in hertz.</p>
+</dd>
+<dt class="field-even">Params sample_width</dt>
+<dd class="field-even"><p>size of a single sample in bytes.</p>
+</dd>
+<dt class="field-odd">Params block_size</dt>
+<dd class="field-odd"><p>size in bytes of each read and write operation.</p>
+</dd>
+<dt class="field-even">Params flush_size</dt>
+<dd class="field-even"><p>size in bytes of silence data written during flush operation.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the underlying stream and audio interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.flush">
+<code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read bytes from the stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.sample_rate">
+<em class="property">property </em><code class="sig-name descname">sample_rate</code><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the underlying stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the underlying stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.audio_helpers.SoundDeviceStream.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.SoundDeviceStream.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write bytes to the stream.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.assistant.audio_helpers.align_buf">
+<code class="sig-prename descclassname">MasterCSS.assistant.audio_helpers.</code><code class="sig-name descname">align_buf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buf</span></em>, <em class="sig-param"><span class="n">sample_width</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.align_buf" title="Permalink to this definition">¶</a></dt>
+<dd><p>In case of buffer size not aligned to sample_width pad it with 0s</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="MasterCSS.assistant.audio_helpers.normalize_audio_buffer">
+<code class="sig-prename descclassname">MasterCSS.assistant.audio_helpers.</code><code class="sig-name descname">normalize_audio_buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buf</span></em>, <em class="sig-param"><span class="n">volume_percentage</span></em>, <em class="sig-param"><span class="n">sample_width</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.audio_helpers.normalize_audio_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the loudness of the audio data in the given buffer.</p>
+<p>Volume normalization is done by scaling the amplitude of the audio
+in the buffer by a scale factor of 2^(volume_percentage/100)-1.
+For example, 50% volume scales the amplitude by a factor of 0.414,
+and 75% volume scales the amplitude by a factor of 0.681.
+For now we only sample_width 2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params buf</dt>
+<dd class="field-odd"><p>byte string containing audio data to normalize.</p>
+</dd>
+<dt class="field-even">Params volume_percentage</dt>
+<dd class="field-even"><p>volume setting as an integer percentage (1-100).</p>
+</dd>
+<dt class="field-odd">Params sample_width</dt>
+<dd class="field-odd"><p>size of a single sample in bytes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.assistant.device_helpers">
+<span id="mastercss-assistant-device-helpers-module"></span><h2>MasterCSS.assistant.device_helpers module<a class="headerlink" href="#module-MasterCSS.assistant.device_helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for the Device Actions.</p>
+<dl class="py class">
+<dt id="MasterCSS.assistant.device_helpers.DeviceRequestHandler">
+<em class="property">class </em><code class="sig-prename descclassname">MasterCSS.assistant.device_helpers.</code><code class="sig-name descname">DeviceRequestHandler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.device_helpers.DeviceRequestHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Asynchronous dispatcher for Device actions commands.
+Dispatch commands to the given device handlers.</p>
+<dl class="py method">
+<dt id="MasterCSS.assistant.device_helpers.DeviceRequestHandler.command">
+<code class="sig-name descname">command</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">intent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.device_helpers.DeviceRequestHandler.command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a device action handlers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>intent</strong> (<em>string</em>) – intent to register</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.device_helpers.DeviceRequestHandler.dispatch_command">
+<code class="sig-name descname">dispatch_command</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command</span></em>, <em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.device_helpers.DeviceRequestHandler.dispatch_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch device commands to the appropriate handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>command</strong> (<em>string</em>) – command to dispatch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="MasterCSS.assistant.device_helpers.DeviceRequestHandler.submit_commands">
+<code class="sig-name descname">submit_commands</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">devices</span></em>, <em class="sig-param"><span class="n">execution</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MasterCSS.assistant.device_helpers.DeviceRequestHandler.submit_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit device command executions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>devices</strong> (<em>list</em>) – list of devices</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of concurrent.futures for scheduled executions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MasterCSS.assistant">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MasterCSS.assistant" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Carshare</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MasterCSS</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MasterCSS.html">MasterCSS package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">MasterCSS</a><ul>
+  <li><a href="MasterCSS.html">MasterCSS package</a><ul>
+      <li>Previous: <a href="MasterCSS.html" title="previous chapter">MasterCSS package</a></li>
+      <li>Next: <a href="MasterCSS.controllers.html" title="next chapter">MasterCSS.controllers package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ngoc Thang Pham (Austin), Jia Jun Yong, Alexander Witedja, Duy Linh Nguyen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/MasterCSS.assistant.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

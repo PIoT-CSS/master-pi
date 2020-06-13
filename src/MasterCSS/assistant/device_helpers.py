@@ -28,16 +28,9 @@ key_id_ = 'id'
 
 class DeviceRequestHandler(object):
     
-    """Asynchronous dispatcher for Device actions commands.
-
+    """
+    Asynchronous dispatcher for Device actions commands.
     Dispatch commands to the given device handlers.
-    
-    Example:
-      # Use as as decorator to register handler.
-      device_handler = DeviceRequestHandler('my-device')
-      @device_handler.command('INTENT_NAME')
-      def handler(param):
-          pass
     """
 
     def __init__(self, device_id):
