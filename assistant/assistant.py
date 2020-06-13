@@ -24,15 +24,15 @@ try:
     from . import (
         assistant_helpers,
         audio_helpers,
-        browser_helpers,
         device_helpers
     )
 except (SystemError, ImportError):
     import assistant_helpers
     import audio_helpers
-    import browser_helpers
     import device_helpers
 
+from dotenv import load_dotenv
+load_dotenv()
 
 ASSISTANT_API_ENDPOINT = 'embeddedassistant.googleapis.com'
 END_OF_UTTERANCE = embedded_assistant_pb2.AssistResponse.END_OF_UTTERANCE
@@ -45,15 +45,25 @@ DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 class SampleAssistant(object):
     """Sample Assistant that supports conversations and device actions.
 
-    Args:
-      device_model_id: identifier of the device model.
-      device_id: identifier of the registered device instance.
-      conversation_stream(ConversationStream): audio stream
-        for recording query and playing back assistant answer.
-      channel: authorized gRPC channel for connection to the
+    :params device_model_id: identifier of the device model.
+    :type device_model_id: string
+
+    :params device_id: identifier of the registered device instance.
+    :type device_id: string
+
+    :params conversation_stream(ConversationStream): audio stream
+      for recording query and playing back assistant answer.
+    :type conversation_stream: ConversationStream
+
+    :params channel: authorized gRPC channel for connection to the
         Google Assistant API.
-      deadline_sec: gRPC deadline in seconds for Google Assistant API call.
-      device_handler: callback for device actions.
+    :type channel: string
+
+    :params deadline_sec: gRPC deadline in seconds for Google Assistant API call.
+    :type deadline_sec: integer
+
+    :params device_handler: callback for device actions.
+    :type device_handler: function
     """
 
     def __init__(self, language_code, device_model_id, device_id,
@@ -101,7 +111,8 @@ class SampleAssistant(object):
     def assist(self, text_query=None):
         """Send a voice request to the Assistant and playback the response.
 
-        Returns: True if conversation should continue.
+        :returns: True if conversation should continue.
+        :rtype: boolean
         """
         continue_conversation = False
         device_actions_futures = []
@@ -177,9 +188,6 @@ class SampleAssistant(object):
                 fs = self.device_handler(device_request)
                 if fs:
                     device_actions_futures.extend(fs)
-            if self.display and resp.screen_out.data:
-                system_browser = browser_helpers.system_browser
-                system_browser.display(resp.screen_out.data)
 
         if len(device_actions_futures):
             logging.info('Waiting for device executions to complete.')
@@ -225,17 +233,19 @@ class SampleAssistant(object):
 
 
 def main():
-    # Variables
+    # Configuration
     api_endpoint = ASSISTANT_API_ENDPOINT
     credentials = os.path.join(click.get_app_dir('google-oauthlib-tool'),
                                    'credentials.json')
-    project_id = "a2-css-iot"
-    device_model_id = "a2-css-iot-car-share-smart-assistant-7jaln2"
-    device_id = "e469fd48-a4ad-11ea-8b53-b827ebae6e93"
+    project_id = os.getenv("PROJECT_ID")
+    device_model_id = os.getenv("DEVICE_MODEL_ID")
+    device_id = os.getenv("DEVICE_ID")
+    
     device_config = os.path.join(
                   click.get_app_dir('googlesamples-assistant'),
                   'device_config.json')
     lang = "en-US"
+
     display=False
     verbose=False
     audio_sample_rate=audio_helpers.DEFAULT_AUDIO_SAMPLE_RATE
@@ -244,8 +254,7 @@ def main():
     audio_block_size=audio_helpers.DEFAULT_AUDIO_DEVICE_BLOCK_SIZE
     audio_flush_size=audio_helpers.DEFAULT_AUDIO_DEVICE_FLUSH_SIZE
     grpc_deadline=DEFAULT_GRPC_DEADLINE
-    once=False
-    
+
     # Setup logging.
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
@@ -351,19 +360,11 @@ def main():
         # keep recording voice requests using the microphone
         # and playing back assistant response using the speaker.
         # When the once flag is set, don't wait for a trigger. Otherwise, wait.
-        wait_for_user_trigger = not once
+        
+        # Initialise car share app.
         assistant.assist(text_query="talk to car share")
         while True:
-            # if wait_for_user_trigger:
-            #     click.pause(info='Press Enter to send a new request...')
             continue_conversation = assistant.assist()
-            # wait for user trigger if there is no follow-up turn in
-            # the conversation.
-            wait_for_user_trigger = not continue_conversation
-
-            # If we only want one conversation, break.
-            if once and (not continue_conversation):
-                break
 
 
 if __name__ == '__main__':

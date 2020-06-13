@@ -27,13 +27,11 @@ key_id_ = 'id'
 
 
 class DeviceRequestHandler(object):
+    
     """Asynchronous dispatcher for Device actions commands.
 
     Dispatch commands to the given device handlers.
-
-    Args:
-      device_id: device id to match command against
-
+    
     Example:
       # Use as as decorator to register handler.
       device_handler = DeviceRequestHandler('my-device')
@@ -43,6 +41,12 @@ class DeviceRequestHandler(object):
     """
 
     def __init__(self, device_id):
+        """
+        Constructor setup device id and handler.
+
+        :param device_id: device id to match command against
+        :type device_id: string
+        """
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
         self.device_id = device_id
         self.handlers = {}
@@ -50,7 +54,8 @@ class DeviceRequestHandler(object):
     def __call__(self, device_request):
         """Handle incoming device request.
 
-        Returns: List of concurrent.futures for each command execution.
+        :return: List of concurrent.futures for each command execution.
+        :rtype: list
         """
         fs = []
         if key_inputs_ in device_request:
@@ -61,15 +66,24 @@ class DeviceRequestHandler(object):
         return fs
 
     def command(self, intent):
-        """Register a device action handlers."""
+        """Register a device action handlers.
+        
+        :param intent: intent to register
+        :type intent: string
+        """
+
         def decorator(fn):
             self.handlers[intent] = fn
         return decorator
 
     def submit_commands(self, devices, execution):
         """Submit device command executions.
-
-        Returns: a list of concurrent.futures for scheduled executions.
+        
+        :param devices: list of devices
+        :type devices: list
+        
+        :return: a list of concurrent.futures for scheduled executions.
+        :rtype: list
         """
         fs = []
         for device in devices:
@@ -88,7 +102,11 @@ class DeviceRequestHandler(object):
         return fs
 
     def dispatch_command(self, command, params=None):
-        """Dispatch device commands to the appropriate handler."""
+        """Dispatch device commands to the appropriate handler.
+        
+        :param command: command to dispatch.
+        :type command: string
+        """
         try:
             if command in self.handlers:
                 self.handlers[command](**params)
