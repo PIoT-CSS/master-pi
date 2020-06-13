@@ -1,0 +1,29 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+
+<section class="section hero justify-center items-center flex-row">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title has-text-black	">
+                Welcome {{ current_user.Username }}! Have a nice day.
+            </h1>
+            <div class="subtitle">
+                Please use the following tools below to manage system.
+
+            </div>
+            <div class="buttons">
+                <a href="/booking" class="button is-info is-outlined"> Review bookings </a>
+                <a href="/cars/search" class="button is-primary  is-outlined"> Manage cars </a>
+                <a href="/users/search" class="button is-danger is-outlined"> Manage users </a>
+                <a href="/issue" class="button is-outlined"> View issues </a>
+            </div>
+
+            
+        </div>
+    </div>
+</section>
+
+{% endblock %}

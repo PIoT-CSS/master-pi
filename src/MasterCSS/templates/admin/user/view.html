@@ -1,0 +1,37 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+{% block container %}
+<table class="table container">
+    {% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+    {% endif %}
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>User type</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{user.ID}}</td>
+            <td>{{user.Username}}</td>
+            <td>{{user.FirstName}}</td>
+            <td>{{user.LastName}}</td>
+            <td>{{user.Email}}</td>
+            <td>{{user.PhoneNumber}}</td>
+            <td>{{user.UserType}}</td>
+            <td><a href={{url_for('user_management_controllers.modify_user', id=user.ID)}} class="button is-link is-outlined">Modify</a></td>
+            <td><a href={{url_for('user_management_controllers.remove_user', id=user.ID)}} class="button is-link is-outlined">Remove</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

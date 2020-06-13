@@ -4,7 +4,8 @@ subscribe.py contains mqtt subscribe logic for MP.
 import paho.mqtt.client as mqtt
 from MasterCSS.mqtt.publish import *
 from MasterCSS.controllers.car import pickup_car, return_car
-from MasterCSS.controllers.auth import verify_login
+from MasterCSS.controllers.auth import verify_login, get_mac_addresses
+from MasterCSS.controllers.issue import handle_resolve_issue
 import json
 import os
 from dotenv import load_dotenv
@@ -28,6 +29,8 @@ class Subscriber:
         self.AUTH_FR_TOPIC = "AUTH/FR"
         self.AUTH_UP_TOPIC = "AUTH/UP"
         self.RETURN_TOPIC = "RETURN"
+        self.ENG_TOPIC = "ENG"
+        self.MAC_ADDR_REQ_TOPIC = "REQ/MAC_ADDR"
         self.BROKER_ADDRESS = str(BROKER_IP)
         self.BROKER_PORT = int(BROKER_PORT)
 
@@ -39,8 +42,7 @@ class Subscriber:
         :param client: the client instance for this callback
         :type client: Client
 
-        :param userdata: the private user data as
-        set in Client() or user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: any
 
         :param flags: response flags sent by the broker
@@ -54,6 +56,8 @@ class Subscriber:
             client.subscribe(self.AUTH_FR_TOPIC)
             client.subscribe(self.AUTH_UP_TOPIC)
             client.subscribe(self.RETURN_TOPIC)
+            client.subscribe(self.ENG_TOPIC)
+            client.subscribe(self.MAC_ADDR_REQ_TOPIC)
         else:
             print("[MQTT RES]  connection error, returned code=", rc)
 
@@ -65,12 +69,10 @@ class Subscriber:
         :param client: the client instance for this callback
         :type client: Client
 
-        :param userdata: the private user data as set in Client()
-        or user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: any
 
-        :param msg: an instance of MQTTMessage. This is a class with members
-        topic, payload, qos, retain.
+        :param msg: an instance of MQTTMessage. This is a class with members topic, payload, qos, retain.
         :type msg: MQTTMessage
         """
         print("[MQTT RES]  Payload received on topic: {}".format(msg.topic))
@@ -95,6 +97,13 @@ class Subscriber:
                 pub.publish('RET', 'Returned', 1)
             else:
                 pub.publish('RET', 'Return denied', 1)
+        elif msg.topic == 'ENG':
+            if isinstance(payload, str):
+                # parsing to json again due to incomplete deserialisation
+                payload = json.loads(payload)
+            handle_resolve_issue(payload['ID'], payload['IssueID'])
+        elif msg.topic == 'REQ/MAC_ADDR':
+            pub.publish('MAC', get_mac_addresses(), 1)
 
     def on_log(self, client, userdata, level, buf):
         """
@@ -103,13 +112,11 @@ class Subscriber:
         :param client: the client instance for this callback
         :type client: Client
 
-        :param userdata: the private user data as set in Client() or
-        user_data_set()
+        :param userdata: the private user data as set in Client() or user_data_set()
         :type userdata: any
 
         :param level: severity of the message
-        :type level: MQTT_LOG_INFO, MQTT_LOG_NOTICE, MQTT_LOG_WARNING,
-        MQTT_LOG_ERR, MQTT_LOG_DEBUG
+        :type level: MQTT_LOG_INFO, MQTT_LOG_NOTICE, MQTT_LOG_WARNING, MQTT_LOG_ERR, MQTT_LOG_DEBUG
 
         :param buf: message buffer
         :type buf: bytes

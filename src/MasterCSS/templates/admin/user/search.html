@@ -1,0 +1,110 @@
+<nav class="panel">
+    {% if err %}
+      <div class="notification is-danger is-light">
+          <p>{{err}}</p>
+      </div>
+    {% endif %}
+    <p class="panel-heading">
+      Search for a user
+    </p>
+<form action={{url_for("user_management_controllers.search_user")}} method="post">
+  <div class="panel-block">
+    <div class="field has-addons w-full">
+        <div class="control">
+            <a class="button is-light">
+              <span>User name</span>
+            </a>
+        </div>
+        <div class="control is-expanded">
+            <div class="select is-fullwidth is-light">
+              <input class="input" type="text" name="username" {{ "value=" + defaultValues["username"] if defaultValues != None else '' }}>
+            </div>
+        </div>
+    </div>
+  </div>
+    <div class="panel-block">
+      <div class="field has-addons w-full">
+          <div class="control">
+              <a class="button is-light">
+                <span>User First name</span>
+              </a>
+          </div>
+          <div class="control is-expanded">
+              <div class="select is-fullwidth is-light">
+                <input class="input" type="text" name="firstname"  {{ "value=" + defaultValues["firstname"] if defaultValues != None else '' }}>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="panel-block">
+      <div class="field has-addons w-full">
+          <div class="control">
+              <a class="button is-light">
+                <span>User Last name</span>
+              </a>
+          </div>
+          <div class="control is-expanded">
+              <div class="select is-fullwidth is-light">
+                <input class="input" type="text" name="lastname"  {{ "value=" + defaultValues["lastname"] if defaultValues != None else '' }}>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="panel-block">
+      <div class="field has-addons w-full">
+          <div class="control">
+              <a class="button is-light">
+                <span>User Phone number</span>
+              </a>
+          </div>
+          <div class="control is-expanded">
+              <div class="select is-fullwidth is-light">
+                <input class="input" type="text" name="phonenumber" {{ "value=" + defaultValues["phonenumber"] if defaultValues != None else '' }}>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="panel-block">
+      <div class="field has-addons w-full">
+          <div class="control">
+              <a class="button is-light">
+                <span>User Email</span>
+              </a>
+          </div>
+          <div class="control is-expanded">
+              <div class="select is-fullwidth is-light">
+                <input class="input" type="text" name="email" {{ "value=" + defaultValues["email"] if defaultValues != None else '' }}>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="panel-block">
+      <div class="field has-addons w-full">
+          <div class="control">
+              <a class="button is-light">
+                <span>User type</span>
+              </a>
+          </div>
+          <div class="control is-expanded">
+              <div class="select is-fullwidth is-light">
+                  <select name="usertype">
+                      <option value="Any">Any</option>
+                      {% for usertype in usertypes%}
+                        {% if defaultValues["usertype"] != None and defaultValues["usertype"] == usertype %}
+                            <option value="{{usertype}}" selected>{{usertype}}</option>
+                        {% else %}
+                            <option value="{{usertype}}">{{usertype}}</option>
+                        {% endif %}
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="panel-block">
+      <input type="submit" value="Search" class="button is-link is-outlined is-fullwidth">
+    </div>
+  </nav>
+</form>
+  

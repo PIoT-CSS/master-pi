@@ -30,7 +30,7 @@ def test_setup(client):
     :param client: Flask app client
     :type client: Flask app instance
     """
-    # Register user (includes login)
+    # Register user admin (includes login)
     with open("src/MasterCSS/tests/" +
               "testImages/example.jpg", "rb") as user_image:
         user_image_read = BytesIO(user_image.read())
@@ -43,6 +43,7 @@ def test_setup(client):
             firstname="alex",
             lastname="witedja",
             phonenumber="04325672682",
+            usertype="ADMIN",
             image=(user_image_read, 'example.jpg')
         )
     )
@@ -88,6 +89,26 @@ def test_setup(client):
             agent_id="2"
         ),
         content_type='multipart/form-data'
+    )
+
+    client.get('/logout')
+
+    # Register user customer (includes login)
+    with open("src/MasterCSS/tests/" +
+              "testImages/example.jpg", "rb") as user_image:
+        user_image_read = BytesIO(user_image.read())
+    response = client.post(
+        '/register',
+        data=dict(
+            username="example1",
+            password="password1",
+            email="example1@example.com",
+            firstname="alex1",
+            lastname="witedja1",
+            phonenumber="01325672682",
+            usertype="CUSTOMER",
+            image=(user_image_read, 'example.jpg')
+        )
     )
 
 

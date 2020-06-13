@@ -24,6 +24,15 @@ setup(
         "oauth2client",
         "google-api-python-client",
         "imutils",
-        "paho-mqtt"
+        "paho-mqtt",
+        "qrcode[pil]",
+        "google-assistant-grpc==0.2.1",
+        "google-auth-oauthlib>=0.1.0,<0.3",
+        "urllib3[secure]>=1.21,<2",
+        "sounddevice>=0.3.7,<0.4",
+        "tenacity>=4.1.0,<5",
+        "futures>=3.1.1,<4",
+        "pathlib2>=2.3.0,<3",
+        "click>=6.7,<7"
     ],
 )

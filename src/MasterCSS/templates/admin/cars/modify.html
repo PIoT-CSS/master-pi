@@ -1,0 +1,120 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+<div class="box max-w-sm w-full mx-auto">
+    <h1 class="title">Modify car</h1>
+{% if err %}
+    <div class="notification is-danger is-light">
+        <p>{{err}}</p>
+    </div>
+{% endif %}
+    
+<form action={{url_for("car_management_controllers.modify_car", id=car.ID)}} enctype=multipart/form-data method="post">
+
+    <div class="field">
+        <label class="label">Make</label>
+        <div class="control">
+            <input class="input is-info" name="make" type="text" value={{car.Make}} required>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">Seats</label>
+        <div class="control">
+            <select class="select" name="seats" value={{car.Seats}} required>
+                {% for seats in car_seats %}
+                    <option value="{{seats}}">{{seats}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Body type</label>
+        <div class="control">
+            <select class="select" name="bodytype" value={{car.BodyType}} required>
+                {% for body_type in car_body_types %}
+                    <option value="{{body_type}}">{{body_type}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Home Location</label>
+        <div class="control">
+            <select class="select" name="home_coordinates" value={{car.HomeCoordinates}} required>
+                {% for coordinates, location in car_coordinates.items() %}
+                    <option value="{{coordinates}}">{{location}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Colour</label>
+        <div class="control">
+            <select class="select" name="colour" value={{car.Colour}} required>
+                {% for colour in car_colours %}
+                    <option value="{{colour}}">{{colour}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Cost Per Hour</label>
+        <div class="control">
+            <input class="input is-info" name="costperhour" value={{car.CostPerHour}} type="number" required>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">Total distance</label>
+        <div class="control">
+            <input class="input is-info" name="totaldistance" value={{car.TotalDistance}} type="number" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Fuel type</label>
+        <div class="control">
+            <select class="select" name="fueltype" value={{car.FuelType}} required>
+                {% for fuel_type in car_fuel_types %}
+                    <option value="{{fuel_type}}">{{fuel_type}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">Number Plate</label>
+        <div class="control">
+            <input class="input is-info" name="numberplate" value={{car.NumberPlate}} type="text" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Agent ID</label>
+        <div class="control">
+            <input class="input is-info" name="agent_id" value={{car.AgentID}} type="text">
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">Car image</label>
+        <div class="control">
+            <input type="file" name="image" accept="image/jpg;" required>
+            <img class="is-2by2" src="{{car.Image}}">
+        </div>
+    </div>
+    <div class="level">
+        <input class="button is-info" type="submit" name="add" value="Add Car">
+    </div>
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 """
-test_car.py contains unit tests for car management.
+test_management_car.py contains unit tests for car management.
 Tests related to controllers under /mangement/cars which is used to manage
 car entries in db.
 """
@@ -11,6 +11,30 @@ from MasterCSS.tests.test_fixture import client
 
 CAR_MANAGEMENT_API_URL = '/management/cars'
 
+def test_setup(client):
+    """
+    Setup car test by registering user and add cars.
+
+    :param client: Flask app client
+    :type client: Flask app instance
+    """
+    # Register an admin user (includes login)
+    with open("src/MasterCSS/tests/" +
+              "testImages/example.jpg", "rb") as user_image:
+        user_image_read = BytesIO(user_image.read())
+    response = client.post(
+        '/register',
+        data=dict(
+            username="example",
+            password="password",
+            email="example@example.com",
+            firstname="alex",
+            lastname="witedja",
+            phonenumber="04325672682",
+            usertype="ADMIN",
+            image=(user_image_read, 'example.jpg')
+        )
+    )
 
 def test_add_car(client):
     """
@@ -24,7 +48,6 @@ def test_add_car(client):
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'),
             make="Honda Civic",
             seats="2",
             bodytype="Sedan",
@@ -45,7 +68,6 @@ def test_add_car(client):
     client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'),
             make="Honda CR-V",
             seats="4",
             fueltype="Diesel",
@@ -103,7 +125,6 @@ def test_change_car_detail(client):
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/1/modify',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'),
             make="Honda Civic",
             seats="2",
             bodytype="Sedan",
@@ -113,8 +134,7 @@ def test_change_car_detail(client):
             costperhour='12',
             totaldistance='0',
             numberplate="AHA456",
-            agent_id="2",
-            follow_redirect=True
+            agent_id="2"
         ),
         follow_redirects=True
     )

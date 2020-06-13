@@ -44,6 +44,7 @@ def test_setup(client):
             firstname="alex",
             lastname="witedja",
             phonenumber="04325672682",
+            usertype="ADMIN",
             image=(user_image_read, 'example.jpg')
         )
     )
@@ -54,7 +55,6 @@ def test_setup(client):
     response = client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'),
             make="Honda Civic",
             seats="2",
             bodytype="Sedan",
@@ -75,7 +75,6 @@ def test_setup(client):
     client.post(
         CAR_MANAGEMENT_API_URL + '/add',
         data=dict(
-            secretkey=os.getenv('SECRET_KEY'),
             make="Honda Civic",
             seats="2",
             fueltype="Diesel",
@@ -92,7 +91,7 @@ def test_setup(client):
     )
 
 
-def test_view_booking(client):
+def test_view_car_booking(client):
     """
     Test view booking details when the car is available.
 

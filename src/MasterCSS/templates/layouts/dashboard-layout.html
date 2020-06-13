@@ -8,7 +8,9 @@
 {% block content %}
 
 
-    {% with username=current_user.Username %}
+    {% with %}
+        {% set username=current_user.Username %}
+        {% set usertype=current_user.UserType %}
         {% include "components/nav.html" %}
     {% endwith %}
 

@@ -1,0 +1,56 @@
+{% extends "layouts/dashboard-layout.html" %}
+
+
+
+{% block container %} 
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 1em;
+        grid-template-areas: "main one" 
+                             "main two";
+    }
+      
+    .main { grid-area: main; }
+    
+    .one { grid-area: one; }
+    
+    .two { grid-area: two; }
+</style>
+<section class="section hero justify-center items-center flex-row">
+    <div class="container">
+        <div class="hero-body">
+                <h1 class="title has-text-black	has-background-red">
+                    Welcome {{ current_user.Username }}! Have a nice day.
+                </h1>
+                <div class="subtitle">
+                    This is the dashboard where you can see all the activities.
+                </div>
+            
+        </div>
+        <!-- <div class="columns"> -->
+        <div class="grid-container">
+            <div class="main">
+                <div class="box">
+                    <iframe name="total_bookings_car_graph" width="100%" height="840" src="https://datastudio.google.com/embed/reporting/16APLwjwpL56KlWsrQaB8WbZQzJiggSc0/page/BBxSB" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="one">
+                <div class="box">
+                    <iframe name="daily_revenue_graph" width="100%" height="390"" src="https://datastudio.google.com/embed/reporting/1aqMA15RgwXxd2IuWNS00LedKb8xp_zHT/page/zTxSB" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="two">
+                <div class="box">
+                    <iframe name="daily_active_user_graph" width="100%" height="390" src="https://datastudio.google.com/embed/reporting/1D0Gdi8UzqogqyrsbyE5iNBcMZLa_Zx_5/page/ZewSB" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+            <!-- </div> -->
+    </div>
+</section>
+
+{% endblock %}

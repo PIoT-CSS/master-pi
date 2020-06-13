@@ -4,6 +4,7 @@ booking.py contains db model for booking.
 import os
 from flask import Flask
 from MasterCSS.database import db, ma
+from MasterCSS.models.user import User
 
 
 class BookingSchema(ma.Schema):
@@ -29,8 +30,8 @@ class Booking(db.Model):
     """
     __tablename__ = "Booking"
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    UserID = db.Column(db.Integer, db.ForeignKey('User.ID'), nullable=False)
-    CarID = db.Column(db.Integer, db.ForeignKey('Car.ID'), nullable=False)
+    UserID = db.Column(db.Integer, nullable=False)
+    CarID = db.Column(db.Integer, nullable=False)
     DateTimeBooked = db.Column(db.DateTime, nullable=False)
     DateTimeStart = db.Column(db.DateTime, nullable=False)
     DateTimeEnd = db.Column(db.DateTime, nullable=False)
@@ -60,7 +61,7 @@ class Booking(db.Model):
         self.Distance = Distance
         self.Status = Status
         self.CalRef = CalRef
-
+    
     @staticmethod
     def getStatus(id):
         """
@@ -79,3 +80,28 @@ class Booking(db.Model):
             return "Confirmed"
         elif id == Booking.CANCELED:
             return "Canceled"
+
+    def getUser(self):
+        """
+        Returns the username of user who made the booking
+
+        :return: username of user who made the booking
+        :rtype: string
+        """
+        user = db.session.query(User).get(self.UserID)
+        if user:
+            return user.Username
+        else:
+            return "Deleted user"
+
+    def getCar(self):
+        """
+        Returns the car of the booking
+
+        :return: car of the booking
+        :rtype: Car object
+        """
+        car = db.session.query(Car).get(self.CarID)
+        if car == None:
+            return "Deleted car"
+        return car
